@@ -6,15 +6,16 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  ComponentStyleType,
+} from './global/typing';
 
 export namespace Components {
   interface AzButton {
     /**
-    * Button caption
+    * Button type
     */
-    'caption': string;
-    'iconPosition': string;
+    'type': ComponentStyleType;
   }
 }
 
@@ -34,10 +35,9 @@ declare global {
 declare namespace LocalJSX {
   interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
     /**
-    * Button caption
+    * Button type
     */
-    'caption'?: string;
-    'iconPosition'?: string;
+    'type'?: ComponentStyleType;
   }
 
   interface IntrinsicElements {
