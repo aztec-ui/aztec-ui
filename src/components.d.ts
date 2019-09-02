@@ -9,53 +9,39 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MyComponent {
+  interface AzButton {
     /**
-    * The first name
+    * Button caption
     */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
+    'caption': string;
+    'iconPosition': string;
   }
 }
 
 declare global {
 
 
-  interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  interface HTMLAzButtonElement extends Components.AzButton, HTMLStencilElement {}
+  var HTMLAzButtonElement: {
+    prototype: HTMLAzButtonElement;
+    new (): HTMLAzButtonElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'az-button': HTMLAzButtonElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MyComponent extends JSXBase.HTMLAttributes<HTMLMyComponentElement> {
+  interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
     /**
-    * The first name
+    * Button caption
     */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
+    'caption'?: string;
+    'iconPosition'?: string;
   }
 
   interface IntrinsicElements {
-    'my-component': MyComponent;
+    'az-button': AzButton;
   }
 }
 
