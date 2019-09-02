@@ -1,4 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
+import { ComponentStyleType} from '../../global/typing';
 
 @Component({
   tag: 'az-button',
@@ -7,16 +8,18 @@ import { Component, Prop, h } from '@stencil/core';
 })
 export class AzButton {
   /**
-   * Button caption
+   * Button type
    */
-  @Prop() caption: string;
-  @Prop() iconPosition: string = 'left';
+  @Prop() type: ComponentStyleType = ComponentStyleType.Plain;
+
   render() {
     return (
-      <button>
-        {this.iconPosition === 'left' && <slot name="icon"></slot>}
-        {this.caption}
-        {this.iconPosition === 'right' && <slot name="icon"></slot>}
+      <button class={this.type}>
+        <slot name="before"></slot>
+        <span class="caption">
+          <slot></slot>
+        </span>
+        <slot name="after"></slot>
       </button>
     );
   }
