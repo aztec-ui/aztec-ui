@@ -4,17 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
-
+  <link rel="stylesheet" href="/build/aztec-ui.css" />
   <script type="module" src="/build/aztec-ui.esm.js"></script>
   <script nomodule src="/build/aztec-ui.js"></script>
 
 </head>
 <body>
-
-  <az-button class="small">
-    <i class="icon" slot="after">😏</i>
-    Hello Aztec!
-  </az-button>
-
+  <style>
+    #demo {
+      background-color: var(--az-primary-color);
+      padding: .5em;
+    }
+  </style>
+  <az-panel caption="Demo" id="demo">
+    <az-section caption="Buttons">
+      <az-button class="mini right" slot="header">Collapse</az-button>
+      <az-button class="mini" test="123" onclick="hehe">OK</az-button>
+    </az-section>
+    <az-section caption="Select">
+      <az-select>
+        <option value="0">Primary</option>
+        <option value="0">Success</option>
+      </az-select>
+    </az-section>
+  </az-panel>
 </body>
 </html>

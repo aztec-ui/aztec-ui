@@ -17,6 +17,17 @@ export namespace Components {
     */
     'type': ComponentStyleType;
   }
+  interface AzPanel {
+    'caption': string;
+  }
+  interface AzSection {
+    'caption': string;
+    'collapsable': boolean;
+    'collapse': () => Promise<void>;
+    'collapsed': boolean;
+    'expand': () => Promise<void>;
+  }
+  interface AzSelect {}
 }
 
 declare global {
@@ -27,8 +38,29 @@ declare global {
     prototype: HTMLAzButtonElement;
     new (): HTMLAzButtonElement;
   };
+
+  interface HTMLAzPanelElement extends Components.AzPanel, HTMLStencilElement {}
+  var HTMLAzPanelElement: {
+    prototype: HTMLAzPanelElement;
+    new (): HTMLAzPanelElement;
+  };
+
+  interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
+  var HTMLAzSectionElement: {
+    prototype: HTMLAzSectionElement;
+    new (): HTMLAzSectionElement;
+  };
+
+  interface HTMLAzSelectElement extends Components.AzSelect, HTMLStencilElement {}
+  var HTMLAzSelectElement: {
+    prototype: HTMLAzSelectElement;
+    new (): HTMLAzSelectElement;
+  };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
+    'az-panel': HTMLAzPanelElement;
+    'az-section': HTMLAzSectionElement;
+    'az-select': HTMLAzSelectElement;
   }
 }
 
@@ -39,9 +71,21 @@ declare namespace LocalJSX {
     */
     'type'?: ComponentStyleType;
   }
+  interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
+    'caption'?: string;
+  }
+  interface AzSection extends JSXBase.HTMLAttributes<HTMLAzSectionElement> {
+    'caption'?: string;
+    'collapsable'?: boolean;
+    'collapsed'?: boolean;
+  }
+  interface AzSelect extends JSXBase.HTMLAttributes<HTMLAzSelectElement> {}
 
   interface IntrinsicElements {
     'az-button': AzButton;
+    'az-panel': AzPanel;
+    'az-section': AzSection;
+    'az-select': AzSelect;
   }
 }
 
