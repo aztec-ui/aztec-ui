@@ -18,5 +18,6 @@ export const config: Config = {
   ],
   plugins: [
     stylus()
-  ]
+  ],
+  globalStyle: 'src/global/variables.css'
 };

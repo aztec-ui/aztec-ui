@@ -1,0 +1,29 @@
+:root {
+  /* global */
+  --az-font-family: Roboto,-apple-system,BlinkMacSystemFont,'Helvetica Neue','Segoe UI',Oxygen,Ubuntu,Cantarell,'Open Sans',SourceHanSansCN-Normal,sans-serif;
+  --az-font-size-normal: 12px;
+  --az-border-radius-mini: 3px;
+
+  /* colors */
+  --az-caption-color: #ddd;
+  --az-primary-color: #494949;
+
+  /* animation */
+  --az-transform-animation-duration: 100ms;
+
+
+  /* button */
+  --az-button-caption-color: var(--az-caption-color);
+  --az-button-border: 1px solid #727272;
+  --az-button-border-default: 1px solid #727272;
+  --az-button-bg-color: var(--az-primary-color);
+
+  /* section */
+  --az-section-caption-color: var(--az-caption-color);
+  --az-section-font-size: var(--az-font-size-normal);
+  --az-section-content-padding: 0.5em;
+
+  /* panel */
+  --az-panel-padding: 1em;
+  --az-panel-caption-color: var(--az-caption-color);
+}
