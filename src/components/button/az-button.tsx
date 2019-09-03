@@ -1,5 +1,7 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, Element, h } from '@stencil/core';
 import { ComponentStyleType} from '../../global/typing';
+import { migrateAttributes } from '../../utils/utils';
+import { HostElement } from '@stencil/core/dist/declarations';
 
 @Component({
   tag: 'az-button',
@@ -7,14 +9,22 @@ import { ComponentStyleType} from '../../global/typing';
   shadow: true
 })
 export class AzButton {
+  @Element() el: HostElement;
   /**
    * Button type
    */
-  @Prop() type: ComponentStyleType = ComponentStyleType.Plain;
+  @Prop() type: ComponentStyleType = 'plain';
+
+  componentDidLoad() {
+    migrateAttributes(this.el);
+  }
 
   render() {
     return (
-      <button class={this.type}>
+      <button class={{
+        'az-button': true,
+        [this.type]: true
+      }} {...this.el.attributes}>
         <slot name="before"></slot>
         <span class="caption">
           <slot></slot>
