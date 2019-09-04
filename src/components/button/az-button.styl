@@ -1,7 +1,7 @@
-:host {
+az-button {
   display: inline-block;
 }
-:host button {
+az-button button {
   font-size: 1rem;
   font-family: var(--az-font-family);
   cursor: pointer;
@@ -21,60 +21,45 @@
 
   color: var(--az-button-caption-color);
   background-color: var(--az-button-bg-color);
-  background-image: linear-gradient(#585858,#444);
+  // background-image: linear-gradient(#585858,#444);
 
 }
 
-::slotted(.icon) {
+az-button .icon {
   font-style: normal;
 }
 
-
-:host(.mini) button{
+az-button.mini button{
   font-size: .66666667rem;
   height: 18px
 }
 
-:host(.tiny) button{
+az-button.tiny button{
   font-size: .91666667rem;
   height: 21px
 }
 
-:host(.small) button{
+az-button.small button{
   font-size: .91666667rem;
   height: 24px
 }
 
-:host(.large) button{
+az-button.large button{
   font-size: 1.16666667rem;
   height: 29px
 }
 
-:host(.big) button{
+az-button.big button{
   font-size: 1.33333333rem;
   height: 33px
 }
 
-:host(.huge) button{
+az-button.huge button{
   font-size: 1.5rem;
   height: 36px
 }
 
-:host(.massive) button{
+az-button.massive button{
   font-size: 1.83333333rem;
   height: 44px
-}
-
-:host(:hover) {
-  background-image: linear-gradient(#626262, #4e4e4e);
-  color: #d1d1d1
-}
-
-:host([focused]) {
-  border-color: #fd942b
-}
-
-:host([pressed]) {
-  color: #8b8b8b;
-  background: #3a3a3a
 }
