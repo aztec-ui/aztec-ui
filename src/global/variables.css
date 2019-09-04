@@ -23,7 +23,15 @@
   --az-section-font-size: var(--az-font-size-normal);
   --az-section-content-padding: 0.5em;
 
+  /* select */
+  --az-select-border-raidus: var(--az-border-radius-mini);
+  --az-select-border: 1px solid #727272;
+  --az-select-bg-color: var(--az-primary-color);
+
   /* panel */
   --az-panel-padding: 1em;
   --az-panel-caption-color: var(--az-caption-color);
+
+  /* tabs */
+  --az-tabs-border-raidus: var(--az-border-radius-mini);
 }
