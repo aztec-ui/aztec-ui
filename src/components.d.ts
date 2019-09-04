@@ -28,6 +28,13 @@ export namespace Components {
     'expand': () => Promise<void>;
   }
   interface AzSelect {}
+  interface AzTabs {
+    'activeIndex': number;
+    'addItem': (it: any) => Promise<void>;
+    'items': any[];
+    'removeItem': (it: any) => Promise<void>;
+    'removeItemAt': (index: number) => Promise<void>;
+  }
 }
 
 declare global {
@@ -56,11 +63,18 @@ declare global {
     prototype: HTMLAzSelectElement;
     new (): HTMLAzSelectElement;
   };
+
+  interface HTMLAzTabsElement extends Components.AzTabs, HTMLStencilElement {}
+  var HTMLAzTabsElement: {
+    prototype: HTMLAzTabsElement;
+    new (): HTMLAzTabsElement;
+  };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
     'az-panel': HTMLAzPanelElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
+    'az-tabs': HTMLAzTabsElement;
   }
 }
 
@@ -80,12 +94,17 @@ declare namespace LocalJSX {
     'collapsed'?: boolean;
   }
   interface AzSelect extends JSXBase.HTMLAttributes<HTMLAzSelectElement> {}
+  interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
+    'activeIndex'?: number;
+    'items'?: any[];
+  }
 
   interface IntrinsicElements {
     'az-button': AzButton;
     'az-panel': AzPanel;
     'az-section': AzSection;
     'az-select': AzSelect;
+    'az-tabs': AzTabs;
   }
 }
 

@@ -18,8 +18,15 @@
   </style>
   <az-panel caption="Demo" id="demo">
     <az-section caption="Buttons">
-      <az-button class="mini right" slot="header">Collapse</az-button>
-      <az-button class="mini" test="123" onclick="hehe">OK</az-button>
+      <az-button class="mini right" slot="header" onclick="alert(1)">Collapse</az-button>
+      <az-tabs items="['Normal', 'Disabled']" active-index="1">
+        <az-panel>
+          <az-button class="mini">OK</az-button>
+        </az-panel>
+        <az-panel>
+          <az-button class="mini">Canecel</az-button>
+        </az-panel>
+      </az-tabs>
     </az-section>
     <az-section caption="Select">
       <az-select>
