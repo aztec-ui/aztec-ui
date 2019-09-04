@@ -1,7 +1,7 @@
-:host {
+az-section {
   display: block;
 }
-:host section {
+az-section section {
   font-size: var(--az-section-font-size);
   font-family: var(--az-font-family);
   background-color: var(--az-primary-color);
@@ -15,7 +15,7 @@
     margin-bottom: 0.5em;
     padding-bottom: 0.2em;
     border-bottom: 1px solid #666;
-    .caption {
+    & > .caption {
       cursor: pointer;
       &:before {
         transform: rotate(90deg);
@@ -28,7 +28,7 @@
         transition: transform var(--az-transform-animation-duration);
       }
     }
-    ::slotted(.right) {
+    .right {
       float: right;
     }
   }

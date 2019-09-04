@@ -3,7 +3,7 @@ import { Component, Method, Prop, h } from '@stencil/core';
 @Component({
   tag: 'az-section',
   styleUrl: 'az-section.styl',
-  shadow: true
+  shadow: false
 })
 export class AzSection {
   @Prop() caption: string = '';
