@@ -1,0 +1,29 @@
+az-tabs {
+  display: block;
+  .tabs {
+    border-bottom: 1px solid #666;
+  }
+  ul {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    flex: 1;
+    margin: 0;
+    padding: 0.5em 0.5em;
+    list-style: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-top-left-radius: var(--az-tabs-border-raidus);
+    border-top-right-radius: var(--az-tabs-border-raidus);
+  }
+  li.active {
+    font-weight: bold;
+    border: 1px solid #666;
+    border-bottom: none;
+  }
+  content > :not(.visible) {
+    display: none;
+  }
+}
