@@ -1,17 +1,16 @@
 import { Component, Element, h } from '@stencil/core';
-import { migrateAttributes, moveChildren } from '../../utils/utils';
+import { Inject } from '../../utils/utils';
 import { HostElement } from "@stencil/core/dist/declarations";
 
 @Component({
   tag: 'az-select',
   styleUrl: 'az-select.styl',
-  shadow: true
+  shadow: false
 })
 export class AzSelect {
   @Element() el: HostElement;
+  @Inject({children: [HTMLOptionElement, HTMLSelectElement]})
   componentDidLoad() {
-    migrateAttributes(this.el);
-    moveChildren(this.el, [HTMLOptionElement, HTMLSelectElement]);
   }
   render() {
     return (
