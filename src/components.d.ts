@@ -17,6 +17,12 @@ export namespace Components {
     */
     'type': ComponentStyleType;
   }
+  interface AzIcon {
+    'color': string;
+    'height': number;
+    'icon': string;
+    'width': number;
+  }
   interface AzPanel {
     'caption': string;
   }
@@ -46,6 +52,12 @@ declare global {
     new (): HTMLAzButtonElement;
   };
 
+  interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
+  var HTMLAzIconElement: {
+    prototype: HTMLAzIconElement;
+    new (): HTMLAzIconElement;
+  };
+
   interface HTMLAzPanelElement extends Components.AzPanel, HTMLStencilElement {}
   var HTMLAzPanelElement: {
     prototype: HTMLAzPanelElement;
@@ -71,6 +83,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
+    'az-icon': HTMLAzIconElement;
     'az-panel': HTMLAzPanelElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
@@ -84,6 +97,12 @@ declare namespace LocalJSX {
     * Button type
     */
     'type'?: ComponentStyleType;
+  }
+  interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
+    'color'?: string;
+    'height'?: number;
+    'icon'?: string;
+    'width'?: number;
   }
   interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
     'caption'?: string;
@@ -101,6 +120,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'az-button': AzButton;
+    'az-icon': AzIcon;
     'az-panel': AzPanel;
     'az-section': AzSection;
     'az-select': AzSelect;
