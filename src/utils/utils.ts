@@ -12,7 +12,7 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
 
 export function migrateAttributes(host: HostElement) {
   // @ts-ignore
-  return copyAttributes(host, host.shadowRoot.lastElementChild, ['class', 'slot'], true);
+  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], true);
 }
 
 export function moveChildren(host: HostElement, filters?: Function[]) {
