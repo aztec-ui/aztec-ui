@@ -17,13 +17,11 @@ az-section section {
     border-bottom: 1px solid #666;
     & > .caption {
       cursor: pointer;
-      &:before {
+      & az-icon {
         transform: rotate(90deg);
+        transform-origin: 50% 30%;
         text-align: center;
-        content: '▶';
         display: inline-block;
-        display: none;
-        transform-origin: 40% 50%;
         margin-right: 0.5em;
         transition: transform var(--az-transform-animation-duration);
       }
@@ -38,7 +36,7 @@ az-section section {
     padding: var(--az-section-content-padding, 0.5em);
   }
   &.collapsed {
-    .header .caption:before {
+    .header .caption az-icon {
       transform: rotate(0deg);
     }
     .content {
