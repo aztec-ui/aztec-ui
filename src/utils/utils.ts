@@ -17,12 +17,10 @@ export function migrateAttributes(host: HostElement) {
 
 export function moveChildren(host: HostElement, filters?: Function[]) {
   const ele = (host.shadowRoot || host).lastElementChild;
-  while (host.children.length > 0) {
-    const opt = host.childNodes[0];
+  for (let i = host.children.length; i >= 0; i--) {
+    const opt = host.children[i];
     if (filters.find(Ctor => opt instanceof Ctor)) {
       ele.appendChild(opt);
-    } else {
-      opt.parentNode.removeChild(opt);
     }
   }
 }
