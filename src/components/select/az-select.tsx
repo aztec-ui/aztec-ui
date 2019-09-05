@@ -9,7 +9,7 @@ import { HostElement } from "@stencil/core/dist/declarations";
 })
 export class AzSelect {
   @Element() el: HostElement;
-  @Inject({children: [HTMLOptionElement, HTMLSelectElement]})
+  @Inject({children: [HTMLOptionElement, HTMLOptGroupElement]})
   componentDidLoad() {
   }
   render() {
