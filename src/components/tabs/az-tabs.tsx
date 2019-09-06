@@ -62,15 +62,13 @@ export class AzTabs {
         </li>
       );
     });
-    return (
-      <div>
-        <div class="tabs">
-          <ul>{tabs}</ul>
-        </div>
-        <content>
-          <slot></slot>
-        </content>
-      </div>
-    );
+    return [
+      <div class="tabs">
+        <ul>{tabs}</ul>
+      </div>,
+      <content>
+        <slot></slot>
+      </content>
+    ];
   }
 }
