@@ -19,7 +19,7 @@ __._(name => {
 });
 _(`export default {`)
 __._(name => {
-_(`  "${name}": ${camelize(name)}`);
+_(`  "${name}": ${camelize(name)},`);
 });
 _(`};`)
 
