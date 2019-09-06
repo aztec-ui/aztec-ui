@@ -17,6 +17,10 @@ export namespace Components {
     */
     'type': ComponentStyleType;
   }
+  interface AzCheckbox {
+    'caption': string;
+    'checked': boolean;
+  }
   interface AzIcon {
     'color': string;
     'height': number;
@@ -52,6 +56,12 @@ declare global {
     new (): HTMLAzButtonElement;
   };
 
+  interface HTMLAzCheckboxElement extends Components.AzCheckbox, HTMLStencilElement {}
+  var HTMLAzCheckboxElement: {
+    prototype: HTMLAzCheckboxElement;
+    new (): HTMLAzCheckboxElement;
+  };
+
   interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
   var HTMLAzIconElement: {
     prototype: HTMLAzIconElement;
@@ -83,6 +93,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
+    'az-checkbox': HTMLAzCheckboxElement;
     'az-icon': HTMLAzIconElement;
     'az-panel': HTMLAzPanelElement;
     'az-section': HTMLAzSectionElement;
@@ -97,6 +108,10 @@ declare namespace LocalJSX {
     * Button type
     */
     'type'?: ComponentStyleType;
+  }
+  interface AzCheckbox extends JSXBase.HTMLAttributes<HTMLAzCheckboxElement> {
+    'caption'?: string;
+    'checked'?: boolean;
   }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
@@ -120,6 +135,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'az-button': AzButton;
+    'az-checkbox': AzCheckbox;
     'az-icon': AzIcon;
     'az-panel': AzPanel;
     'az-section': AzSection;
