@@ -18,6 +18,9 @@
   --az-button-border-default: 1px solid #727272;
   --az-button-bg-color: var(--az-primary-color);
 
+  /* checkbox */
+  --az-checkbox-border-color: 1px solid #727272;
+
   /* section */
   --az-section-caption-color: var(--az-caption-color);
   --az-section-font-size: var(--az-font-size-normal);
