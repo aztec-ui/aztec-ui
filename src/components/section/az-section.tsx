@@ -24,7 +24,7 @@ export class AzSection {
         collapsed: this.collapsed
       }}>
         <div class="header">
-          <span class="caption" onClick={() => this.collapsed = !this.collapsed}>
+          <span class="az-section-caption az-caption" onClick={() => this.collapsed = !this.collapsed}>
             <az-icon icon="arrow-right"></az-icon>
             {this.caption}
           </span>
