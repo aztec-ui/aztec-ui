@@ -6,13 +6,14 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
     const attr = attrs[i];
     if (excludes && excludes.includes(attr.name)) continue;
     dest.setAttribute(attr.name, attr.value);
+    if (attr.name === 'value' && dest instanceof HTMLInputElement) dest.value = attr.value;
     if (remove) src.removeAttribute(attr.name);
   }
 }
 
 export function migrateAttributes(host: HostElement) {
   // @ts-ignore
-  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], true);
+  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], false);
 }
 
 export function moveChildren(host: HostElement, filters?: Function[]) {
