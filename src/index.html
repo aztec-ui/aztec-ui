@@ -15,6 +15,13 @@
       background-color: var(--az-primary-color);
       padding: .5em;
     }
+    .icons .content az-icon {
+      border: var(--az-button-border);
+      padding: 0.5em;
+    }
+    az-section .content {
+      padding-bottom: 1em !important;
+    }
   </style>
   <az-panel caption="Demo" id="demo">
     <az-section caption="Buttons">
@@ -42,6 +49,17 @@
     <az-section caption="Input">
       <az-input type="text" caption="Name" value="with caption"></az-input>
       <az-input type="text" placeholder="placeholder"></az-input><br/>
+    </az-section>
+    <az-section caption="Icons" class="icons">
+      <az-icon icon="arrow-right"></az-icon>
+      <az-icon icon="check"></az-icon>
+      <az-icon icon="close"></az-icon>
+      <az-icon icon="minus"></az-icon>
+      <az-icon icon="move"></az-icon>
+      <az-icon icon="plus"></az-icon>
+      <az-icon icon="redo"></az-icon>
+      <az-icon icon="refresh"></az-icon>
+      <az-icon icon="undo"></az-icon>
     </az-section>
   </az-panel>
 </body>
