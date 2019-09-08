@@ -27,11 +27,14 @@ export class AzIcon {
   }
 }
 
-function svgIcon(d: string) {
+function svgIcon(d: string | string[]) {
   return (width: number, height: number, fill: string) => {
+    const paths = (Array.isArray(d) ? d : [d]).map(p => {
+      return <path fill={fill} d={p}></path>
+    });
     return (
       <svg class="icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 1024 1024">
-        <path fill={fill} d={d}/>
+        {paths}
       </svg>
     );
   };
