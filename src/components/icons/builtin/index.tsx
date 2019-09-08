@@ -2,6 +2,7 @@
 import ArrowRight from './arrow-right';
 import Check from './check';
 import Close from './close';
+import Download from './download';
 import Minus from './minus';
 import Move from './move';
 import Plus from './plus';
@@ -12,6 +13,7 @@ const builtinIcons: Record<string, string> = {
   "arrow-right": ArrowRight,
   "check": Check,
   "close": Close,
+  "download": Download,
   "minus": Minus,
   "move": Move,
   "plus": Plus,
@@ -25,6 +27,7 @@ export default builtinIcons;
   <az-icon icon="arrow-right"></az-icon>
   <az-icon icon="check"></az-icon>
   <az-icon icon="close"></az-icon>
+  <az-icon icon="download"></az-icon>
   <az-icon icon="minus"></az-icon>
   <az-icon icon="move"></az-icon>
   <az-icon icon="plus"></az-icon>
