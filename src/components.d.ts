@@ -12,6 +12,7 @@ import {
 
 export namespace Components {
   interface AzButton {
+    'caption': string;
     /**
     * Button type
     */
@@ -20,12 +21,18 @@ export namespace Components {
   interface AzCheckbox {
     'caption': string;
     'checked': boolean;
+    'toggle': () => Promise<void>;
   }
   interface AzIcon {
     'color': string;
     'height': number;
     'icon': string;
     'width': number;
+  }
+  interface AzInput {
+    'caption': string;
+    'type': string;
+    'value': string;
   }
   interface AzPanel {
     'caption': string;
@@ -68,6 +75,12 @@ declare global {
     new (): HTMLAzIconElement;
   };
 
+  interface HTMLAzInputElement extends Components.AzInput, HTMLStencilElement {}
+  var HTMLAzInputElement: {
+    prototype: HTMLAzInputElement;
+    new (): HTMLAzInputElement;
+  };
+
   interface HTMLAzPanelElement extends Components.AzPanel, HTMLStencilElement {}
   var HTMLAzPanelElement: {
     prototype: HTMLAzPanelElement;
@@ -95,6 +108,7 @@ declare global {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
     'az-icon': HTMLAzIconElement;
+    'az-input': HTMLAzInputElement;
     'az-panel': HTMLAzPanelElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
@@ -104,6 +118,7 @@ declare global {
 
 declare namespace LocalJSX {
   interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
+    'caption'?: string;
     /**
     * Button type
     */
@@ -118,6 +133,11 @@ declare namespace LocalJSX {
     'height'?: number;
     'icon'?: string;
     'width'?: number;
+  }
+  interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
+    'caption'?: string;
+    'type'?: string;
+    'value'?: string;
   }
   interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
     'caption'?: string;
@@ -137,6 +157,7 @@ declare namespace LocalJSX {
     'az-button': AzButton;
     'az-checkbox': AzCheckbox;
     'az-icon': AzIcon;
+    'az-input': AzInput;
     'az-panel': AzPanel;
     'az-section': AzSection;
     'az-select': AzSelect;
