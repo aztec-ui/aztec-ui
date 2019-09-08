@@ -8,7 +8,9 @@ import icons from './builtin';
 })
 export class AzIcon {
   static icons = icons;
-
+  static registerIcon(name, fn) {
+    AzIcon.icons[name] = fn;
+  };
   @Prop() icon: string = '';
   @Prop() width: number = 12;
   @Prop() height: number = 12;
