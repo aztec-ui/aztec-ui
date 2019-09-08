@@ -11,6 +11,11 @@ export class AzCheckbox {
   @Prop() caption: string = '';
   @Prop() checked: boolean = false;
 
+  @Method()
+  toggle() {
+    this.checked = !this.checked;
+  }
+
   render () {
     return [
       <i class={{
@@ -19,10 +24,7 @@ export class AzCheckbox {
       }} onClick={() => this.toggle()}>
         <az-icon icon="check"></az-icon>
       </i>,
-      <span class="az-checkbox-label" onClick={() => this.toggle()}><slot></slot></span>
+      <span class="az-checkbox-caption az-caption" onClick={() => this.toggle()}><slot></slot></span>
     ];
-  }
-  toggle() {
-    this.checked = !this.checked;
   }
 }

@@ -9,11 +9,11 @@ az-checkbox {
     display: inline-block;
     margin-right: 0.5em;
     az-icon {
-      transform: scale(0);
+      transform: translate(0, -1px) scale(0);
       transition: transform var(--az-transform-animation-duration);
     }
     &.checked az-icon {
-      transform: scale(1);
+      transform: translate(0, -1px) scale(1);
       transition: transform var(--az-transform-animation-duration);
     }
   }
