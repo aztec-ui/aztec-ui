@@ -20,7 +20,8 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "gen-icon-index": "node bin/gen-icon-index.js > ./src/components/icons/builtin/index.tsx"
+    "gen-icon-index": "node bin/gen-icon-index.js > ./src/components/icons/builtin/index.tsx",
+    "gen-version": "node bin/gen-version.js > ./src/version.tsx"
   },
   "devDependencies": {
     "@stencil/core": "^1.3.0",
