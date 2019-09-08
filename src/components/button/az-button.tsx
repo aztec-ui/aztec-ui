@@ -15,6 +15,8 @@ export class AzButton {
    */
   @Prop() type: ComponentStyleType = 'plain';
 
+  @Prop() caption: string = '';
+
   @Inject({
     attrs: true
   })
@@ -27,9 +29,8 @@ export class AzButton {
         [this.type]: true
       }}>
         <slot name="before"></slot>
-        <span class="caption">
-          <slot></slot>
-        </span>
+        {this.caption && <span class="az-button-caption az-caption">{this.caption}</span>}
+        <slot></slot>
         <slot name="after"></slot>
       </button>
     );
