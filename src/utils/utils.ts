@@ -125,3 +125,29 @@ export function Inject (opts: {
     };
   }
 }
+
+declare global {
+  interface Window {
+    aztec: object;
+  }
+}
+
+export function exportToGlobal(name: string, desc: object | Function) {
+  if (typeof window.aztec === 'undefined') window.aztec = {};
+  if (typeof desc === 'function') {
+    window.aztec[name] = desc;
+  } else {
+    Object.defineProperty(window.aztec, name, {
+      ...desc,
+      configurable: false,
+      enumerable: false
+    });
+  }
+}
+
+import version from '../version';
+exportToGlobal('version', {
+  get() {
+    return version;
+  }
+});
