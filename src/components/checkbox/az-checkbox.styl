@@ -9,12 +9,16 @@ az-checkbox {
     display: inline-block;
     margin-right: 0.5em;
     az-icon {
-      transform: translate(0, -1px) scale(0);
       transition: transform var(--az-transform-animation-duration);
     }
-    &.checked az-icon {
-      transform: translate(0, -1px) scale(1);
-      transition: transform var(--az-transform-animation-duration);
+    az-icon.check {
+      transform: translate(0, -3px) scale(0);
+    }
+    &.checked az-icon.check {
+      transform: translate(0, -3px) scale(1);
+    }
+    az-icon.minus {
+      transform: translate(0, -3px) scale(0.6);
     }
   }
 }
