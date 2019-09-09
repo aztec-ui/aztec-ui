@@ -22,7 +22,8 @@
     "generate": "stencil generate",
     "gen-icon-index": "node bin/gen-icon-index.js > ./src/components/icons/builtin/index.tsx",
     "gen-version": "node bin/gen-version.js > ./src/version.tsx",
-    "gen-icon": "node bin/gen-icon.js"
+    "gen-icon": "node bin/gen-icon.js",
+    "gen-comp": "node bin/gen-comp.js"
   },
   "devDependencies": {
     "@stencil/core": "^1.3.0",
