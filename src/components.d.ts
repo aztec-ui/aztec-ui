@@ -68,8 +68,8 @@ export namespace Components {
   interface AzTreeItem {
     'addItem': (item: string | AzTreeItem) => Promise<void>;
     'caption': string;
-    'children': AzTreeItem[];
     'expanded': boolean;
+    'items': AzTreeItem[];
     'level': number;
     'selected': false;
     'tree': AzTree;
@@ -197,8 +197,8 @@ declare namespace LocalJSX {
   }
   interface AzTreeItem extends JSXBase.HTMLAttributes<HTMLAzTreeItemElement> {
     'caption'?: string;
-    'children'?: AzTreeItem[];
     'expanded'?: boolean;
+    'items'?: AzTreeItem[];
     'level'?: number;
     'selected'?: false;
     'tree'?: AzTree;

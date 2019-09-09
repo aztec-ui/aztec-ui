@@ -71,13 +71,13 @@
       <az-tree />
     </az-section>
   </az-panel>
-  <script type="module">
-    (async () => {
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', async () => {
       const tree = document.querySelector('az-tree');
       await tree.addItem('root1');
       await tree.addItem('item1');
       await tree.addItem('item2');
-    })();
+    });
   </script>
 </body>
 </html>
