@@ -1,1 +1,1 @@
-export type ComponentStyleType = 'plain' | 'primary' | 'success' | 'info' | 'warning' | 'danger';
+export type ComponentStyleType = '' | 'plain' | 'primary' | 'success' | 'info' | 'warning' | 'danger';
