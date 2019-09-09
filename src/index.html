@@ -12,6 +12,7 @@
 <body>
   <style>
     #demo {
+      font-size: 12px;
       background-color: var(--az-primary-color);
       padding: .5em;
     }
@@ -25,13 +26,17 @@
   </style>
   <az-panel caption="Demo" id="demo">
     <az-section caption="Buttons">
-      <az-button class="mini right" slot="header" onclick="alert(1)">Collapse</az-button>
+      <az-button class="mini right" type="plain" slot="header" onclick="alert(1)">Collapse</az-button>
       <az-tabs items="['Normal', 'Disabled']" active-index="1">
         <az-panel>
-          <az-button class="mini">OK</az-button>
+          <az-button class="small" caption="OK">
+            <az-icon icon="check" slot="before"></az-icon>
+          </az-button>
         </az-panel>
         <az-panel>
-          <az-button class="mini">Canecel</az-button>
+          <az-button class="small" caption="Canecel">
+            <az-icon icon="close"></az-icon>
+          </az-button>
         </az-panel>
       </az-tabs>
     </az-section>
@@ -62,6 +67,17 @@
       <az-icon icon="refresh"></az-icon>
       <az-icon icon="undo"></az-icon>
     </az-section>
+    <az-section caption="Tree">
+      <az-tree />
+    </az-section>
   </az-panel>
+  <script type="module">
+    (async () => {
+      const tree = document.querySelector('az-tree');
+      await tree.addItem('root1');
+      await tree.addItem('item1');
+      await tree.addItem('item2');
+    })();
+  </script>
 </body>
 </html>
