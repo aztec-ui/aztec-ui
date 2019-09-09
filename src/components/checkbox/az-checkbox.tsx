@@ -1,4 +1,4 @@
-import { Component, Element, Prop, Method, h, Watch} from '@stencil/core';
+import { Component, Element, Prop, Method, h, Event, EventEmitter} from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 
 @Component({
@@ -12,6 +12,8 @@ export class AzCheckbox {
   @Prop() checked: boolean = false;
   @Prop() indeterminate: boolean = false;
 
+  @Event() changed: EventEmitter;
+
   @Method()
   toggle() {
     if (this.indeterminate) {
@@ -20,6 +22,7 @@ export class AzCheckbox {
       return;
     }
     this.checked = !this.checked;
+    this.changed.emit(this.checked);
   }
 
   render () {
