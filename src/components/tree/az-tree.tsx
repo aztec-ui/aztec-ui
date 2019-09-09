@@ -32,7 +32,7 @@ export class AzTree {
       parent = this.roots[this.roots.length - 1];
     }
     item.level = parent.level + 1;
-    parent.children = [...parent.children, item];
+    parent.items = [...parent.items, item];
     this.el.forceUpdate();
     return item;
   }
