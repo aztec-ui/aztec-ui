@@ -1,0 +1,26 @@
+az-tree {
+  display: block;
+  az-tree-item {
+    display: block;
+  }
+  .az-tree-item-caption {
+    cursor: pointer;
+    line-height: 26px;
+    .joint {
+      margin-right: 0.5em;
+      svg {
+        padding: 1px;
+        border: 1px solid var(--az-caption-color);
+      }
+    }
+  }
+  .az-tree-item-caption:hover {
+    background-color: #292929;
+    & > .az-tree-children {
+      height: 0;
+    }
+    & > .az-tree-children.expanded {
+      height: auto;
+    }
+  }
+}
