@@ -9,6 +9,12 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ComponentStyleType,
 } from './global/typing';
+import {
+  AzTreeItem,
+} from './components/tree/az-tree-item';
+import {
+  AzTree,
+} from './components/tree/az-tree';
 
 export namespace Components {
   interface AzButton {
@@ -21,13 +27,14 @@ export namespace Components {
   interface AzCheckbox {
     'caption': string;
     'checked': boolean;
+    'indeterminate': boolean;
     'toggle': () => Promise<void>;
   }
   interface AzIcon {
     'color': string;
-    'height': number;
+    'height': number | string;
     'icon': string;
-    'width': number;
+    'width': number | string;
   }
   interface AzInput {
     'caption': string;
@@ -51,6 +58,21 @@ export namespace Components {
     'items': any[];
     'removeItem': (it: any) => Promise<void>;
     'removeItemAt': (index: number) => Promise<void>;
+  }
+  interface AzTree {
+    'addItem': (itemOrCaption: string | AzTreeItem, parent?: AzTreeItem) => Promise<AzTreeItem>;
+    'caption': string;
+    'roots': AzTreeItem[];
+    'selecting': boolean;
+  }
+  interface AzTreeItem {
+    'addItem': (item: string | AzTreeItem) => Promise<void>;
+    'caption': string;
+    'children': AzTreeItem[];
+    'expanded': boolean;
+    'level': number;
+    'selected': false;
+    'tree': AzTree;
   }
 }
 
@@ -104,6 +126,18 @@ declare global {
     prototype: HTMLAzTabsElement;
     new (): HTMLAzTabsElement;
   };
+
+  interface HTMLAzTreeElement extends Components.AzTree, HTMLStencilElement {}
+  var HTMLAzTreeElement: {
+    prototype: HTMLAzTreeElement;
+    new (): HTMLAzTreeElement;
+  };
+
+  interface HTMLAzTreeItemElement extends Components.AzTreeItem, HTMLStencilElement {}
+  var HTMLAzTreeItemElement: {
+    prototype: HTMLAzTreeItemElement;
+    new (): HTMLAzTreeItemElement;
+  };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
@@ -113,6 +147,8 @@ declare global {
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-tabs': HTMLAzTabsElement;
+    'az-tree': HTMLAzTreeElement;
+    'az-tree-item': HTMLAzTreeItemElement;
   }
 }
 
@@ -127,12 +163,14 @@ declare namespace LocalJSX {
   interface AzCheckbox extends JSXBase.HTMLAttributes<HTMLAzCheckboxElement> {
     'caption'?: string;
     'checked'?: boolean;
+    'indeterminate'?: boolean;
+    'onChanged'?: (event: CustomEvent<any>) => void;
   }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
-    'height'?: number;
+    'height'?: number | string;
     'icon'?: string;
-    'width'?: number;
+    'width'?: number | string;
   }
   interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
     'caption'?: string;
@@ -152,6 +190,19 @@ declare namespace LocalJSX {
     'activeIndex'?: number;
     'items'?: any[];
   }
+  interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
+    'caption'?: string;
+    'roots'?: AzTreeItem[];
+    'selecting'?: boolean;
+  }
+  interface AzTreeItem extends JSXBase.HTMLAttributes<HTMLAzTreeItemElement> {
+    'caption'?: string;
+    'children'?: AzTreeItem[];
+    'expanded'?: boolean;
+    'level'?: number;
+    'selected'?: false;
+    'tree'?: AzTree;
+  }
 
   interface IntrinsicElements {
     'az-button': AzButton;
@@ -162,6 +213,8 @@ declare namespace LocalJSX {
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-tabs': AzTabs;
+    'az-tree': AzTree;
+    'az-tree-item': AzTreeItem;
   }
 }
 
