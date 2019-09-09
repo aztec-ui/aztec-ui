@@ -14,8 +14,8 @@ export class AzIcon {
   }, {});
 
   @Prop() icon: string = '';
-  @Prop() width: number = 12;
-  @Prop() height: number = 12;
+  @Prop() width: number | string = 12;
+  @Prop() height: number | string = 12;
   @Prop() color: string = 'white';
 
   render () {
