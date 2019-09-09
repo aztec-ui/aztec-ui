@@ -13,7 +13,7 @@ export class AzButton {
   /**
    * Button type
    */
-  @Prop() type: ComponentStyleType = 'plain';
+  @Prop() type: ComponentStyleType = '';
 
   @Prop() caption: string = '';
 
@@ -25,7 +25,6 @@ export class AzButton {
   render() {
     return (
       <button class={{
-        'az-button': true,
         [this.type]: true
       }}>
         <slot name="before"></slot>
