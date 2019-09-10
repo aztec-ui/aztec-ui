@@ -12,9 +12,6 @@ import {
 import {
   AzTreeItem,
 } from './components/tree/az-tree-item';
-import {
-  AzTree,
-} from './components/tree/az-tree';
 
 export namespace Components {
   interface AzButton {
@@ -60,19 +57,10 @@ export namespace Components {
     'removeItemAt': (index: number) => Promise<void>;
   }
   interface AzTree {
-    'addItem': (itemOrCaption: string | AzTreeItem, parent?: AzTreeItem) => Promise<AzTreeItem>;
+    'addItem': (itemOrCaption: string | AzTreeItem, parent?: number | AzTreeItem, attrs?: any) => Promise<AzTreeItem>;
     'caption': string;
     'roots': AzTreeItem[];
     'selecting': boolean;
-  }
-  interface AzTreeItem {
-    'addItem': (item: string | AzTreeItem) => Promise<void>;
-    'caption': string;
-    'expanded': boolean;
-    'items': AzTreeItem[];
-    'level': number;
-    'selected': false;
-    'tree': AzTree;
   }
 }
 
@@ -132,12 +120,6 @@ declare global {
     prototype: HTMLAzTreeElement;
     new (): HTMLAzTreeElement;
   };
-
-  interface HTMLAzTreeItemElement extends Components.AzTreeItem, HTMLStencilElement {}
-  var HTMLAzTreeItemElement: {
-    prototype: HTMLAzTreeItemElement;
-    new (): HTMLAzTreeItemElement;
-  };
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
@@ -148,7 +130,6 @@ declare global {
     'az-select': HTMLAzSelectElement;
     'az-tabs': HTMLAzTabsElement;
     'az-tree': HTMLAzTreeElement;
-    'az-tree-item': HTMLAzTreeItemElement;
   }
 }
 
@@ -192,16 +173,12 @@ declare namespace LocalJSX {
   }
   interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
     'caption'?: string;
+    'onCollapsed'?: (event: CustomEvent<any>) => void;
+    'onExpanded'?: (event: CustomEvent<any>) => void;
+    'onInserted'?: (event: CustomEvent<any>) => void;
+    'onSelected'?: (event: CustomEvent<any>) => void;
     'roots'?: AzTreeItem[];
     'selecting'?: boolean;
-  }
-  interface AzTreeItem extends JSXBase.HTMLAttributes<HTMLAzTreeItemElement> {
-    'caption'?: string;
-    'expanded'?: boolean;
-    'items'?: AzTreeItem[];
-    'level'?: number;
-    'selected'?: false;
-    'tree'?: AzTree;
   }
 
   interface IntrinsicElements {
@@ -214,7 +191,6 @@ declare namespace LocalJSX {
     'az-select': AzSelect;
     'az-tabs': AzTabs;
     'az-tree': AzTree;
-    'az-tree-item': AzTreeItem;
   }
 }
 
