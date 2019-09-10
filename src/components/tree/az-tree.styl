@@ -1,26 +1,40 @@
 az-tree {
   display: block;
-  az-tree-item {
+  .az-tree-item {
     display: block;
+    &.expanded .az-tree-item-children{
+      height: auto;
+      transform: scaleY(1);
+      transition: transform var(--az-transform-animation-duration);
+    }
+    &.collapsed .az-tree-item-children{
+      overflow: hidden;
+      height: 0;
+      transform: scaleY(0);
+      transition: transform var(--az-transform-animation-duration);
+    }
+  }
+  .collapsed .joint {
+    transform: rotate(90deg);
+  }
+  .hide {
+    visibility: hidden;
   }
   .az-tree-item-caption {
     cursor: pointer;
-    line-height: 26px;
+    line-height: 24px;
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 100%;
+    az-icon {
+      height: 24px;
+    }
     .joint {
-      margin-right: 0.5em;
-      svg {
-        padding: 1px;
-        border: 1px solid var(--az-caption-color);
-      }
+      width: 24px;
+      transition: transform var(--az-transform-animation-duration);
     }
-  }
-  .az-tree-item-caption:hover {
-    background-color: #292929;
-    & > .az-tree-items {
-      height: 0;
-    }
-    & > .az-tree-items.expanded {
-      height: auto;
+    &:hover {
+      background-color: #4e4e4e;
     }
   }
 }

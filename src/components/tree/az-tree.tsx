@@ -1,5 +1,5 @@
 
-import { Component, Prop, Element, h, Method } from '@stencil/core';
+import { Component, Prop, Element, h, Method, Host, Event, EventEmitter } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { AzTreeItem } from './az-tree-item';
 
@@ -14,8 +14,13 @@ export class AzTree {
   @Prop() selecting: boolean = false;
   @Prop() roots: AzTreeItem[] = [];
 
+  @Event() selected: EventEmitter;
+  @Event() expanded: EventEmitter;
+  @Event() collapsed: EventEmitter;
+  @Event() inserted: EventEmitter;
+
   @Method()
-  async addItem(itemOrCaption: AzTreeItem | string, parent: AzTreeItem = null) {
+  async addItem(itemOrCaption: AzTreeItem | string, parent: AzTreeItem | number = null, attrs: any = {}) {
     let item: AzTreeItem;
     if (typeof itemOrCaption === 'string') {
       item = new AzTreeItem(itemOrCaption);
@@ -24,22 +29,25 @@ export class AzTree {
     }
     if (!item) return;
     item.tree = this;
-    if (!parent) {
-      if (!this.roots.length) {
-        this.roots = [...this.roots, item];
-        return;
-      }
-      parent = this.roots[this.roots.length - 1];
+    Object.assign(item, attrs);
+    if (parent === null) {
+      this.roots = [...this.roots, item];
+      this.inserted.emit(item);
+      return;
+    } else if (typeof parent === 'number') {
+      parent = this.roots[parent];;
     }
+    item.parent = parent;
     item.level = parent.level + 1;
     parent.items = [...parent.items, item];
     this.el.forceUpdate();
+    this.inserted.emit(item);
     return item;
   }
 
-  componentDidLoad() {}
-
   render() {
-    return this.roots.map((c: AzTreeItem) => <az-tree-item data-id="0">{c.render()}</az-tree-item>);
+    return <Host>
+      {this.roots.map((c: AzTreeItem) => c.render())}
+    </Host>
   }
 }
