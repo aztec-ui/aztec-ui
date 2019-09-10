@@ -18,7 +18,8 @@ export class AzButton {
   @Prop() caption: string = '';
 
   @Inject({
-    attrs: true
+    attrs: true,
+    remove: true
   })
   componentDidLoad() {}
 
