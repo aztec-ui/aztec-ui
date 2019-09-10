@@ -28,7 +28,7 @@ export default builtinIcons;
 // for Demo
 /*`);
 __._(name => {
-_(`  <az-icon icon="${name}"></az-icon>`)
+_(`  <az-icon icon="${name}" title="${name}"></az-icon>`)
 });
 _('*/');
 
