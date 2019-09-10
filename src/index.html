@@ -19,6 +19,7 @@
     .icons .content az-icon {
       border: var(--az-button-border);
       padding: 0.5em;
+      margin-bottom: 4px;
     }
     az-section .content {
       padding-bottom: 1em !important;
@@ -57,15 +58,35 @@
     </az-section>
     <az-section caption="Icons" class="icons">
       <az-icon icon="arrow-right"></az-icon>
+      <az-icon icon="backward"></az-icon>
+      <az-icon icon="bars"></az-icon>
+      <az-icon icon="book"></az-icon>
       <az-icon icon="check"></az-icon>
       <az-icon icon="close"></az-icon>
+      <az-icon icon="cog"></az-icon>
+      <az-icon icon="cogs"></az-icon>
+      <az-icon icon="copy"></az-icon>
       <az-icon icon="download"></az-icon>
+      <az-icon icon="ellipsis-h"></az-icon>
+      <az-icon icon="ellipsis-v"></az-icon>
+      <az-icon icon="exchange"></az-icon>
+      <az-icon icon="fast-backward"></az-icon>
+      <az-icon icon="fast-forward"></az-icon>
+      <az-icon icon="forward"></az-icon>
+      <az-icon icon="list"></az-icon>
       <az-icon icon="minus"></az-icon>
+      <az-icon icon="mouse-pointer"></az-icon>
       <az-icon icon="move"></az-icon>
+      <az-icon icon="pause"></az-icon>
       <az-icon icon="plus"></az-icon>
       <az-icon icon="redo"></az-icon>
       <az-icon icon="refresh"></az-icon>
+      <az-icon icon="search"></az-icon>
+      <az-icon icon="square"></az-icon>
+      <az-icon icon="triangle"></az-icon>
       <az-icon icon="undo"></az-icon>
+      <az-icon icon="zoom-in"></az-icon>
+      <az-icon icon="zoom-out"></az-icon>
     </az-section>
     <az-section caption="Tree">
       <az-tree />
@@ -74,9 +95,14 @@
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
       const tree = document.querySelector('az-tree');
-      await tree.addItem('root1');
-      await tree.addItem('item1');
-      await tree.addItem('item2');
+      await tree.addItem('Colors', null, {icon: 'book'});
+      const red = await tree.addItem('Red', 0);
+      await tree.addItem('Orange', 0);
+      await tree.addItem('Yellow', 0);
+      await tree.addItem('Green', 0);
+      await tree.addItem('Blue', 0);
+      await tree.addItem('Purple', 0);
+      await red.addItem('Ruby');
     });
   </script>
 </body>
