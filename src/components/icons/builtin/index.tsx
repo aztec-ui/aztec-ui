@@ -64,34 +64,34 @@ const builtinIcons: Record<string, string> = {
 export default builtinIcons;
 // for Demo
 /*
-  <az-icon icon="arrow-right"></az-icon>
-  <az-icon icon="backward"></az-icon>
-  <az-icon icon="bars"></az-icon>
-  <az-icon icon="book"></az-icon>
-  <az-icon icon="check"></az-icon>
-  <az-icon icon="close"></az-icon>
-  <az-icon icon="cog"></az-icon>
-  <az-icon icon="cogs"></az-icon>
-  <az-icon icon="copy"></az-icon>
-  <az-icon icon="download"></az-icon>
-  <az-icon icon="ellipsis-h"></az-icon>
-  <az-icon icon="ellipsis-v"></az-icon>
-  <az-icon icon="exchange"></az-icon>
-  <az-icon icon="fast-backward"></az-icon>
-  <az-icon icon="fast-forward"></az-icon>
-  <az-icon icon="forward"></az-icon>
-  <az-icon icon="list"></az-icon>
-  <az-icon icon="minus"></az-icon>
-  <az-icon icon="mouse-pointer"></az-icon>
-  <az-icon icon="move"></az-icon>
-  <az-icon icon="pause"></az-icon>
-  <az-icon icon="plus"></az-icon>
-  <az-icon icon="redo"></az-icon>
-  <az-icon icon="refresh"></az-icon>
-  <az-icon icon="search"></az-icon>
-  <az-icon icon="square"></az-icon>
-  <az-icon icon="triangle"></az-icon>
-  <az-icon icon="undo"></az-icon>
-  <az-icon icon="zoom-in"></az-icon>
-  <az-icon icon="zoom-out"></az-icon>
+  <az-icon icon="arrow-right" title="arrow-right"></az-icon>
+  <az-icon icon="backward" title="backward"></az-icon>
+  <az-icon icon="bars" title="bars"></az-icon>
+  <az-icon icon="book" title="book"></az-icon>
+  <az-icon icon="check" title="check"></az-icon>
+  <az-icon icon="close" title="close"></az-icon>
+  <az-icon icon="cog" title="cog"></az-icon>
+  <az-icon icon="cogs" title="cogs"></az-icon>
+  <az-icon icon="copy" title="copy"></az-icon>
+  <az-icon icon="download" title="download"></az-icon>
+  <az-icon icon="ellipsis-h" title="ellipsis-h"></az-icon>
+  <az-icon icon="ellipsis-v" title="ellipsis-v"></az-icon>
+  <az-icon icon="exchange" title="exchange"></az-icon>
+  <az-icon icon="fast-backward" title="fast-backward"></az-icon>
+  <az-icon icon="fast-forward" title="fast-forward"></az-icon>
+  <az-icon icon="forward" title="forward"></az-icon>
+  <az-icon icon="list" title="list"></az-icon>
+  <az-icon icon="minus" title="minus"></az-icon>
+  <az-icon icon="mouse-pointer" title="mouse-pointer"></az-icon>
+  <az-icon icon="move" title="move"></az-icon>
+  <az-icon icon="pause" title="pause"></az-icon>
+  <az-icon icon="plus" title="plus"></az-icon>
+  <az-icon icon="redo" title="redo"></az-icon>
+  <az-icon icon="refresh" title="refresh"></az-icon>
+  <az-icon icon="search" title="search"></az-icon>
+  <az-icon icon="square" title="square"></az-icon>
+  <az-icon icon="triangle" title="triangle"></az-icon>
+  <az-icon icon="undo" title="undo"></az-icon>
+  <az-icon icon="zoom-in" title="zoom-in"></az-icon>
+  <az-icon icon="zoom-out" title="zoom-out"></az-icon>
 */
