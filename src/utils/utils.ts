@@ -11,9 +11,9 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
   }
 }
 
-export function migrateAttributes(host: HostElement) {
+export function migrateAttributes(host: HostElement, remove = false) {
   // @ts-ignore
-  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], false);
+  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], remove);
 }
 
 export function moveChildren(host: HostElement, filters?: Function[]) {
@@ -68,15 +68,18 @@ export function Inject (opts: {
   style?: boolean,
   attrs?: boolean,
   parse?: boolean,
+  remove?: boolean,
   children?: any[]} = {
   style: false,
   attrs: false,
+  remove: false,
   parse: true,
   children: []
 }) {
   opts = Object.assign({
     style: false,
     attrs: false,
+    remove: false,
     parse: true,
     children: []
   }, opts);
@@ -101,7 +104,7 @@ export function Inject (opts: {
         const boundFn = function (...args) {
           if (opts.style) injectCustomStyleFor(this.el);
           if (opts.parse) parseArrayObjectAttr(this, this.el);
-          if (opts.attrs) migrateAttributes(this.el);
+          if (opts.attrs) migrateAttributes(this.el, opts.remove);
           if (opts.children && opts.children.length) moveChildren(this.el, opts.children);
           fn.apply(this, args);
         };
