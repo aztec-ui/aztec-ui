@@ -57,6 +57,11 @@ export namespace Components {
     'removeItem': (it: any) => Promise<void>;
     'removeItemAt': (index: number) => Promise<void>;
   }
+  interface AzToolbarButton {
+    'caption': string;
+    'icon': string;
+    'type': ComponentStyleType;
+  }
   interface AzTree {
     'addItem': (itemOrCaption: string | AzTreeItem, parent?: number | AzTreeItem, attrs?: any) => Promise<AzTreeItem>;
     'caption': string;
@@ -116,6 +121,12 @@ declare global {
     new (): HTMLAzTabsElement;
   };
 
+  interface HTMLAzToolbarButtonElement extends Components.AzToolbarButton, HTMLStencilElement {}
+  var HTMLAzToolbarButtonElement: {
+    prototype: HTMLAzToolbarButtonElement;
+    new (): HTMLAzToolbarButtonElement;
+  };
+
   interface HTMLAzTreeElement extends Components.AzTree, HTMLStencilElement {}
   var HTMLAzTreeElement: {
     prototype: HTMLAzTreeElement;
@@ -130,6 +141,7 @@ declare global {
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-tabs': HTMLAzTabsElement;
+    'az-toolbar-button': HTMLAzToolbarButtonElement;
     'az-tree': HTMLAzTreeElement;
   }
 }
@@ -173,6 +185,11 @@ declare namespace LocalJSX {
     'activeIndex'?: number;
     'items'?: any[];
   }
+  interface AzToolbarButton extends JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement> {
+    'caption'?: string;
+    'icon'?: string;
+    'type'?: ComponentStyleType;
+  }
   interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
     'caption'?: string;
     'onCollapsed'?: (event: CustomEvent<any>) => void;
@@ -192,6 +209,7 @@ declare namespace LocalJSX {
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-tabs': AzTabs;
+    'az-toolbar-button': AzToolbarButton;
     'az-tree': AzTree;
   }
 }
