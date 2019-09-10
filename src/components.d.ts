@@ -31,6 +31,7 @@ export namespace Components {
     'color': string;
     'height': number | string;
     'icon': string;
+    'register': boolean;
     'width': number | string;
   }
   interface AzInput {
@@ -151,6 +152,7 @@ declare namespace LocalJSX {
     'color'?: string;
     'height'?: number | string;
     'icon'?: string;
+    'register'?: boolean;
     'width'?: number | string;
   }
   interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
