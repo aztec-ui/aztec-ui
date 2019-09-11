@@ -27,6 +27,10 @@ export namespace Components {
     'indeterminate': boolean;
     'toggle': () => Promise<void>;
   }
+  interface AzColorPicker {
+    'caption': string;
+    'color': string;
+  }
   interface AzIcon {
     'color': string;
     'height': number | string;
@@ -88,6 +92,12 @@ declare global {
     new (): HTMLAzCheckboxElement;
   };
 
+  interface HTMLAzColorPickerElement extends Components.AzColorPicker, HTMLStencilElement {}
+  var HTMLAzColorPickerElement: {
+    prototype: HTMLAzColorPickerElement;
+    new (): HTMLAzColorPickerElement;
+  };
+
   interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
   var HTMLAzIconElement: {
     prototype: HTMLAzIconElement;
@@ -144,6 +154,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
+    'az-color-picker': HTMLAzColorPickerElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-panel': HTMLAzPanelElement;
@@ -169,6 +180,10 @@ declare namespace LocalJSX {
     'checked'?: boolean;
     'indeterminate'?: boolean;
     'onChanged'?: (event: CustomEvent<any>) => void;
+  }
+  interface AzColorPicker extends JSXBase.HTMLAttributes<HTMLAzColorPickerElement> {
+    'caption'?: string;
+    'color'?: string;
   }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
@@ -216,6 +231,7 @@ declare namespace LocalJSX {
   interface IntrinsicElements {
     'az-button': AzButton;
     'az-checkbox': AzCheckbox;
+    'az-color-picker': AzColorPicker;
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-panel': AzPanel;
