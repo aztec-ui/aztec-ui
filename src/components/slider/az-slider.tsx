@@ -1,6 +1,7 @@
 
 import { Component, Prop, Element, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
+import { Inject } from '../../utils/utils';
 
 @Component({
   tag: 'az-slider',
@@ -12,6 +13,10 @@ export class AzSlider {
 
   @Prop() caption: string = '';
 
+  @Inject({
+    attrs: true,
+    remove: true
+  })
   componentDidLoad() {}
 
   render() {
