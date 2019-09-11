@@ -21,7 +21,7 @@ export class AzSlider {
       <slot name="after"></slot>,
     ];
     if (this.caption) {
-      vdom.unshift(<span class="az-slider-caption az-caption">{this.caption}</span);
+      vdom.unshift(<span class="az-slider-caption az-caption">{this.caption}</span>);
     }
     return vdom;
   }
