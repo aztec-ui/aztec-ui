@@ -50,6 +50,9 @@ export namespace Components {
     'expand': () => Promise<void>;
   }
   interface AzSelect {}
+  interface AzSlider {
+    'caption': string;
+  }
   interface AzTabs {
     'activeIndex': number;
     'addItem': (it: any) => Promise<void>;
@@ -115,6 +118,12 @@ declare global {
     new (): HTMLAzSelectElement;
   };
 
+  interface HTMLAzSliderElement extends Components.AzSlider, HTMLStencilElement {}
+  var HTMLAzSliderElement: {
+    prototype: HTMLAzSliderElement;
+    new (): HTMLAzSliderElement;
+  };
+
   interface HTMLAzTabsElement extends Components.AzTabs, HTMLStencilElement {}
   var HTMLAzTabsElement: {
     prototype: HTMLAzTabsElement;
@@ -140,6 +149,7 @@ declare global {
     'az-panel': HTMLAzPanelElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
+    'az-slider': HTMLAzSliderElement;
     'az-tabs': HTMLAzTabsElement;
     'az-toolbar-button': HTMLAzToolbarButtonElement;
     'az-tree': HTMLAzTreeElement;
@@ -181,6 +191,9 @@ declare namespace LocalJSX {
     'collapsed'?: boolean;
   }
   interface AzSelect extends JSXBase.HTMLAttributes<HTMLAzSelectElement> {}
+  interface AzSlider extends JSXBase.HTMLAttributes<HTMLAzSliderElement> {
+    'caption'?: string;
+  }
   interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
     'activeIndex'?: number;
     'items'?: any[];
@@ -208,6 +221,7 @@ declare namespace LocalJSX {
     'az-panel': AzPanel;
     'az-section': AzSection;
     'az-select': AzSelect;
+    'az-slider': AzSlider;
     'az-tabs': AzTabs;
     'az-toolbar-button': AzToolbarButton;
     'az-tree': AzTree;
