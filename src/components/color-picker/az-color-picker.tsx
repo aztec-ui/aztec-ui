@@ -16,6 +16,7 @@ export class AzColorPicker {
   @State() left: number = 0;
   @State() top: number = 0;
   @State() dragging: boolean = false;
+  @State() transparency: number = 100;
   constructor() {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -46,14 +47,21 @@ export class AzColorPicker {
   render() {
     return (
       <Host>
-        <div class="az-color-picker-panel"
+        <div class="az-color-picker_panel"
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onMouseMove}
           onMouseUp={this.onMouseUp}
           style={{backgroundColor: this.color}}>
-          <div class="az-color-picker-straw" style={{left: `${this.left}px`, top: `${this.top}px`}}></div>
+          <div class="az-color-picker_straw" style={{left: `${this.left}px`, top: `${this.top}px`}}></div>
         </div>
-        <az-slider class="spectrum-h"></az-slider>
+        <div>
+          <az-slider class="spectrum-h"></az-slider>
+          <az-slider class="checkerboard" value={this.transparency}></az-slider>
+          <div class="az-color-picker_value">
+            <span class="az-color-picker_current-color" style={{backgroundColor: this.color}}></span>
+            <az-input class="az-color-picker_color-value" type="text" value={this.color}></az-input>
+          </div>
+        </div>
       </Host>
     );
   }
