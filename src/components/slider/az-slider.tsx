@@ -12,17 +12,22 @@ export class AzSlider {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
+  @Prop() value: string | number = '50';
+
+  input: HTMLInputElement;
 
   @Inject({
     attrs: true,
     remove: true
   })
-  componentDidLoad() {}
+  componentDidLoad() {
+    this.input.onchange = () => this.value = this.input.value;
+  }
 
   render() {
     const vdom = [
       <slot name="before"></slot>,
-      <input type="range"></input>,
+      <input type="range" ref={(el: HTMLInputElement) => this.input = el}></input>,
       <slot name="after"></slot>,
     ];
     if (this.caption) {
