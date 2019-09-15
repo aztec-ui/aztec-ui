@@ -34,5 +34,8 @@
     "jest-cli": "24.8.0",
     "puppeteer": "1.19.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "color-convert": "^2.0.1"
+  }
 }
