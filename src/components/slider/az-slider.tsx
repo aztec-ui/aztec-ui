@@ -1,5 +1,5 @@
 
-import { Component, Prop, Element, h } from '@stencil/core';
+import { Component, Prop, Element, h, Watch } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
@@ -13,6 +13,8 @@ export class AzSlider {
 
   @Prop() caption: string = '';
   @Prop() value: string | number = '50';
+  @Prop({reflect: true}) min: string | number = 0;
+  @Prop({reflect: true}) max: string | number = 100;
 
   input: HTMLInputElement;
 
@@ -21,7 +23,16 @@ export class AzSlider {
     remove: true
   })
   componentDidLoad() {
-    this.input.onchange = () => this.value = this.input.value;
+    this.input.addEventListener('change', () => {
+      this.value = this.input.value;
+    });
+  }
+
+  @Watch('value')
+  onValueChange(newValue, oldValue) {
+    if (oldValue !== newValue) {
+      this.input.value = newValue;
+    }
   }
 
   render() {
