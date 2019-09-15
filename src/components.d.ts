@@ -56,6 +56,9 @@ export namespace Components {
   interface AzSelect {}
   interface AzSlider {
     'caption': string;
+    'max': string | number;
+    'min': string | number;
+    'value': string | number;
   }
   interface AzTabs {
     'activeIndex': number;
@@ -208,6 +211,9 @@ declare namespace LocalJSX {
   interface AzSelect extends JSXBase.HTMLAttributes<HTMLAzSelectElement> {}
   interface AzSlider extends JSXBase.HTMLAttributes<HTMLAzSliderElement> {
     'caption'?: string;
+    'max'?: string | number;
+    'min'?: string | number;
+    'value'?: string | number;
   }
   interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
     'activeIndex'?: number;
