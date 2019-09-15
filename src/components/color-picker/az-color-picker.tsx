@@ -1,6 +1,7 @@
 
 import { Component, Prop, Element, Host, h, State } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
+// import { ColorConvert } from 'color-convert';
 
 @Component({
   tag: 'az-color-picker',
@@ -13,10 +14,17 @@ export class AzColorPicker {
   @Prop() caption: string = '';
   @Prop() color: string = '#f00';
 
-  @State() left: number = 0;
-  @State() top: number = 0;
+  @State() strawLeft: number = 0;
+  @State() strawTop: number = 0;
   @State() dragging: boolean = false;
   @State() transparency: number = 100;
+
+  @State() hue: number = 0;
+  @State() saturation: number = 1
+  @State() value: number = 1;
+
+  panel: HTMLDivElement;
+
   constructor() {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -39,24 +47,37 @@ export class AzColorPicker {
     this.dragging = false;
   }
   update(e: MouseEvent) {
-    this.left = e.offsetX;
-    this.top = e.offsetY;
+    const rect = this.panel.getBoundingClientRect();
+    this.saturation = confine(Math.ceil(e.offsetX / rect.width * 100), 0, 100);
+    this.value = confine(Math.floor(100 - e.offsetY / rect.height * 100), 0, 100);
+    
+    this.strawLeft = e.offsetX;
+    this.strawTop = e.offsetY;
     this.el.forceUpdate();
+  }
+
+  onHueChange(e) {
+    this.hue = parseInt(e.target.value, 10);
+  }
+
+  onTransparentcyChange(e) {
+    this.transparency = parseInt(e.target.value, 10);
   }
 
   render() {
     return (
       <Host>
         <div class="az-color-picker_panel"
+          ref={(el) => this.panel = el}
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onMouseMove}
           onMouseUp={this.onMouseUp}
           style={{backgroundColor: this.color}}>
-          <div class="az-color-picker_straw" style={{left: `${this.left}px`, top: `${this.top}px`}}></div>
+          <div class="az-color-picker_straw" style={{left: `${this.strawLeft}px`, top: `${this.strawTop}px`}}></div>
         </div>
         <div>
-          <az-slider class="spectrum-h"></az-slider>
-          <az-slider class="checkerboard" value={this.transparency}></az-slider>
+          <az-slider class="spectrum-h" min="0" max="360" onChange={(e) => this.onHueChange(e)}></az-slider>
+          <az-slider class="checkerboard" min="0" max="100" value={this.transparency} onChange={(e) => this.onTransparentcyChange(e)}></az-slider>
           <div class="az-color-picker_value">
             <span class="az-color-picker_current-color" style={{backgroundColor: this.color}}></span>
             <az-input class="az-color-picker_color-value" type="text" value={this.color}></az-input>
@@ -65,4 +86,12 @@ export class AzColorPicker {
       </Host>
     );
   }
+
+
 }
+
+const confine = (value: number, min:number, max: number) => {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+};
