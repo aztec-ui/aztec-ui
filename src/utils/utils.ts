@@ -1,13 +1,20 @@
 import { HostElement } from "@stencil/core/dist/declarations";
 
+const HTMLInputElementSpecialAttrs = ['value', 'autocomplete', 'autocorrect', 'autocapitalize', 'spellcheck'];
+
 export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: string[], remove?: boolean) {
   const attrs = Array.prototype.slice.call(src.attributes, 0);
   for (let i = 0; i < attrs.length; i++) {
     const attr = attrs[i];
     if (excludes && excludes.includes(attr.name)) continue;
     dest.setAttribute(attr.name, attr.value);
-    if ('value' in src && dest instanceof HTMLInputElement) dest.value = attr.value;
     if (remove) src.removeAttribute(attr.name);
+  }
+  if (dest instanceof HTMLInputElement) {
+    HTMLInputElementSpecialAttrs.forEach((key: string) => {
+      if (key in src) dest[key] = src[key];
+      if (remove) delete src[key];
+    });
   }
 }
 
