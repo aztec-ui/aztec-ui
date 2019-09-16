@@ -12,6 +12,12 @@ export class AzInput {
   @Prop() caption: string = '';
   @Prop() type: string = '';
   @Prop() value: string = '';
+  @Prop() native: HTMLInputElement;
+
+  @Prop() autocomplete: 'on' | 'off' = 'on';
+  @Prop() autocorrect: 'on' | 'off' = 'on';
+  @Prop() autocapitalize: 'on' | 'off' = 'on';
+  @Prop() spellcheck: boolean = true;
 
   @Inject({
     attrs: true,
@@ -22,7 +28,7 @@ export class AzInput {
   render() {
     return [
       (this.caption && <span class="az-input-caption az-caption">{this.caption}</span>),
-      <input type={this.type} value={this.value}></input>
+      <input ref={el => this.native = el} type={this.type} value={this.value}></input>
     ];
   }
 }
