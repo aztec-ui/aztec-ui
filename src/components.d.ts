@@ -31,6 +31,10 @@ export namespace Components {
     'caption': string;
     'color': string;
   }
+  interface AzDialog {
+    'caption': string;
+    'fixed': boolean;
+  }
   interface AzIcon {
     'color': string;
     'height': number | string;
@@ -50,6 +54,12 @@ export namespace Components {
   }
   interface AzPanel {
     'caption': string;
+  }
+  interface AzPopover {
+    'caption': string;
+    'close': (reason?: string) => Promise<void>;
+    'hide': () => Promise<void>;
+    'show': () => Promise<void>;
   }
   interface AzSection {
     'caption': string;
@@ -106,6 +116,12 @@ declare global {
     new (): HTMLAzColorPickerElement;
   };
 
+  interface HTMLAzDialogElement extends Components.AzDialog, HTMLStencilElement {}
+  var HTMLAzDialogElement: {
+    prototype: HTMLAzDialogElement;
+    new (): HTMLAzDialogElement;
+  };
+
   interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
   var HTMLAzIconElement: {
     prototype: HTMLAzIconElement;
@@ -122,6 +138,12 @@ declare global {
   var HTMLAzPanelElement: {
     prototype: HTMLAzPanelElement;
     new (): HTMLAzPanelElement;
+  };
+
+  interface HTMLAzPopoverElement extends Components.AzPopover, HTMLStencilElement {}
+  var HTMLAzPopoverElement: {
+    prototype: HTMLAzPopoverElement;
+    new (): HTMLAzPopoverElement;
   };
 
   interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
@@ -163,9 +185,11 @@ declare global {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
     'az-color-picker': HTMLAzColorPickerElement;
+    'az-dialog': HTMLAzDialogElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-panel': HTMLAzPanelElement;
+    'az-popover': HTMLAzPopoverElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
@@ -194,6 +218,10 @@ declare namespace LocalJSX {
     'color'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
   }
+  interface AzDialog extends JSXBase.HTMLAttributes<HTMLAzDialogElement> {
+    'caption'?: string;
+    'fixed'?: boolean;
+  }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
     'height'?: number | string;
@@ -213,6 +241,10 @@ declare namespace LocalJSX {
   }
   interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
     'caption'?: string;
+  }
+  interface AzPopover extends JSXBase.HTMLAttributes<HTMLAzPopoverElement> {
+    'caption'?: string;
+    'onClosed'?: (event: CustomEvent<any>) => void;
   }
   interface AzSection extends JSXBase.HTMLAttributes<HTMLAzSectionElement> {
     'caption'?: string;
@@ -249,9 +281,11 @@ declare namespace LocalJSX {
     'az-button': AzButton;
     'az-checkbox': AzCheckbox;
     'az-color-picker': AzColorPicker;
+    'az-dialog': AzDialog;
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-panel': AzPanel;
+    'az-popover': AzPopover;
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
