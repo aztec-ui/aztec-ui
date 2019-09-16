@@ -76,11 +76,13 @@ export function Inject (opts: {
   attrs?: boolean,
   parse?: boolean,
   remove?: boolean,
+  after?: boolean,
   children?: any[]} = {
   style: false,
   attrs: false,
   remove: false,
   parse: true,
+  after: false,
   children: []
 }) {
   opts = Object.assign({
@@ -88,6 +90,7 @@ export function Inject (opts: {
     attrs: false,
     remove: false,
     parse: true,
+    after: false,
     children: []
   }, opts);
   return function inject(target: any, key: string, descriptor: any) {
@@ -109,11 +112,12 @@ export function Inject (opts: {
           return fn;
         }
         const boundFn = function (...args) {
+          if (opts.after) fn.apply(this, args);
           if (opts.style) injectCustomStyleFor(this.el);
           if (opts.parse) parseArrayObjectAttr(this, this.el);
           if (opts.attrs) migrateAttributes(this.el, opts.remove);
           if (opts.children && opts.children.length) moveChildren(this.el, opts.children);
-          fn.apply(this, args);
+          if (!opts.after) fn.apply(this, args);
         };
         definingProperty = true;
         Object.defineProperty(this, key, {
