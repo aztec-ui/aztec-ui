@@ -1,0 +1,17 @@
+az-popover {
+  position: fixed;
+  border-radius: var(--az-border-radius-mini);
+  border: 1px solid #727272;
+  background-color: var(--az-primary-color);
+  box-shadow: 3px 2px 4px 0px rgba(0, 0, 0, 0.2)
+  width: 400px;
+  height: 300px;
+  z-index: 2000;
+  color: var(--az-caption-color);
+}
+
+az-popover.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
