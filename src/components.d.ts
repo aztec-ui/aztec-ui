@@ -39,7 +39,12 @@ export namespace Components {
     'width': number | string;
   }
   interface AzInput {
+    'autocapitalize': 'on' | 'off';
+    'autocomplete': 'on' | 'off';
+    'autocorrect': 'on' | 'off';
     'caption': string;
+    'native': HTMLInputElement;
+    'spellcheck': boolean;
     'type': string;
     'value': string;
   }
@@ -196,7 +201,12 @@ declare namespace LocalJSX {
     'width'?: number | string;
   }
   interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
+    'autocapitalize'?: 'on' | 'off';
+    'autocomplete'?: 'on' | 'off';
+    'autocorrect'?: 'on' | 'off';
     'caption'?: string;
+    'native'?: HTMLInputElement;
+    'spellcheck'?: boolean;
     'type'?: string;
     'value'?: string;
   }
