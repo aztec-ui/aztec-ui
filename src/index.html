@@ -105,6 +105,10 @@
     <az-section caption="Color Picker">
       <az-color-picker></az-color-picker>
     </az-section>
+    <az-section caption="Popovers">
+      <az-button class="mini" onclick="document.getElementById('popover1').style.display = ''">Show</az-button>
+    </az-section>
+    <az-popover id="popover1" style="display:none;" class="center" onclick="this.hide()">Hello!</az-popover>
   </az-panel>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
