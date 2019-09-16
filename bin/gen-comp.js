@@ -15,8 +15,9 @@ rl.question('Component name:', name => {
   const compName = `az-${name}`;
   const camelizedName = camelize(compName);
   const code = ts.replace(/{{name}}/g, name).replace(/{{camelizedName}}/g, camelizedName);
+  const style = styl.replace(/{{name}}/g, name).replace(/{{camelizedName}}/g, camelizedName);
   $fs.writeFileSync($path.join(dir, compName) + '.tsx', code);
-  $fs.writeFileSync($path.join(dir, compName) + '.styl', '');
+  $fs.writeFileSync($path.join(dir, compName) + '.styl', style);
   rl.close();
 });
 
@@ -42,4 +43,9 @@ export class {{camelizedName}} {
       </div>
     );
   }
-}`;
+}`.trim();
+
+const styl = `
+az-{{name}} {
+
+}`.trim();
