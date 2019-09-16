@@ -1,0 +1,33 @@
+az-popover.az-dialog {
+  display: flex;
+  padding: 1px;
+  flex-direction: column;
+  &.center {
+    top: 38.2%;
+  }
+  .az-dialog__header {
+    background-color: #727272;
+    text-align: center;
+  }
+  .az-dialog__title {
+    font-size: var(--az-font-size-normal);
+  }
+  .az-dialog__icons {
+    float: right;
+    az-icon {
+      cursor: pointer;
+    }
+  }
+  .az-dialog__body {
+    flex: 1;
+  }
+  .az-dialog__footer {
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5em;
+    & az-button {
+      margin-left: 0.5em;
+    }
+  }
+}
