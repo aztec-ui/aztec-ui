@@ -1,4 +1,4 @@
-import { Component, Prop, Element, h} from '@stencil/core';
+import { Component, Prop, Element, h, Watch} from '@stencil/core';
 import { Inject } from '../../utils/utils';
 import { HostElement } from '@stencil/core/dist/declarations';
 
@@ -23,7 +23,18 @@ export class AzInput {
     attrs: true,
     parse: false
   })
-  componentDidLoad() {}
+  componentDidLoad() {
+    this.native.addEventListener('change', () => {
+      this.value = this.native.value;
+    });
+  }
+
+  @Watch('value')
+  onValueChange(newValue, oldValue) {
+    if (oldValue !== newValue) {
+      this.native.value = newValue;
+    }
+  }
 
   render() {
     return [
