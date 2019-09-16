@@ -11,7 +11,7 @@ import { Inject } from '../../utils/utils';
 export class AzSlider {
   @Element() el: HostElement;
 
-  @Prop() caption: string = '';
+  @Prop({reflect: true}) caption: string = '';
   @Prop() value: string | number = '50';
   @Prop({reflect: true}) min: string | number = 0;
   @Prop({reflect: true}) max: string | number = 100;
