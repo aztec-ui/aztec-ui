@@ -192,6 +192,7 @@ declare namespace LocalJSX {
   interface AzColorPicker extends JSXBase.HTMLAttributes<HTMLAzColorPickerElement> {
     'caption'?: string;
     'color'?: string;
+    'onChanged'?: (event: CustomEvent<any>) => void;
   }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
