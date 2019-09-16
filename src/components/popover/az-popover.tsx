@@ -1,14 +1,10 @@
-import { Component, Prop, Element, h, Host, Method } from '@stencil/core';
+import { Component, Prop, Element, h, Host, Method, Event, EventEmitter } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
-import { exportToGlobal } from '../../utils/utils';
+import { exportToGlobal, migrateAttributes } from '../../utils/utils';
 
 const Popovers = {
   containerId: `az-popovers`,
-  create() {
-    const popover = document.createElement('az-popover');
-    this.append(popover);
-    return popover;
-  },
+  popoverContainerTags: ['AZ-DIALOG'],
   append(popover: HTMLElement) {
     let ctn = document.getElementById(Popovers.containerId);
     if (!ctn) {
@@ -16,6 +12,9 @@ const Popovers = {
       ctn.id = Popovers.containerId;
       ctn.style.width = ctn.style.height = '0';
       document.body.prepend(ctn);
+    }
+    if (Popovers.popoverContainerTags.includes(popover.parentElement.tagName)) {
+      migrateAttributes(popover.parentElement);
     }
     ctn.appendChild(popover);
     return popover;
@@ -44,13 +43,16 @@ export class AzPopover {
 
   @Prop() caption: string = '';
 
+  @Event() closed: EventEmitter;
+
   componentDidLoad() {
     Popovers.append(this.el);
   }
 
   @Method()
-  async close() {
+  async close(reason: string = 'close') {
     this.el.parentNode.removeChild(this.el);
+    this.closed.emit(reason);
   }
 
   @Method()
