@@ -161,3 +161,8 @@ exportToGlobal('version', {
     return version;
   }
 });
+exportToGlobal('HTMLInputElementSpecialAttrs', {
+  get() {
+    return HTMLInputElementSpecialAttrs;
+  }
+});
