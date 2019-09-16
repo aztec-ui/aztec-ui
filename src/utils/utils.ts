@@ -6,7 +6,7 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
     const attr = attrs[i];
     if (excludes && excludes.includes(attr.name)) continue;
     dest.setAttribute(attr.name, attr.value);
-    if (attr.name === 'value' && dest instanceof HTMLInputElement) dest.value = attr.value;
+    if ('value' in src && dest instanceof HTMLInputElement) dest.value = attr.value;
     if (remove) src.removeAttribute(attr.name);
   }
 }
