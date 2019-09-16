@@ -1,5 +1,5 @@
 
-import { Component, Prop, Element, Host, h, State } from '@stencil/core';
+import { Component, Prop, Element, Host, h, State, Event, EventEmitter } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import parseColor from 'parse-color';
 import colorConvert from 'color-convert';
@@ -23,6 +23,8 @@ export class AzColorPicker {
   @State() hue: number = 0;
   @State() saturation: number = 1
   @State() value: number = 1;
+
+  @Event() changed: EventEmitter;
 
   panel: HTMLDivElement;
   input: HTMLInputElement;
@@ -79,6 +81,7 @@ export class AzColorPicker {
     } else {
       this.color = this.getColorHex(true);
     }
+    this.changed.emit(this.color);
   }
 
   onHueChange(e: Event) {
@@ -118,17 +121,19 @@ export class AzColorPicker {
     const rect = this.panel.getBoundingClientRect();
     this.strawLeft = Math.floor((this.saturation / 100) * rect.width);
     this.strawTop = Math.floor((1 - this.value / 100) * rect.height);
+    this.color = this.format(this.input.value);
+    this.changed.emit(this.color);
   }
 
   format(e: MouseEvent | string) {
     let result: string;
     if (typeof e === 'string' || (e instanceof MouseEvent && e.shiftKey)) {
       const str = this.color;
-      if (e == 'hsl' || e === 'hsla' || str.indexOf('rgb') === 0) {
+      if (typeof e === 'string' && e.indexOf('hsl') === 0 || str.indexOf('rgb') === 0) {
         const c = colorConvert.hsv.hsl(this.hue, this.saturation, this.value);
         const aa = this.transparency / 100;
         result = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
-      } else if (e === 'hex' || str.indexOf('hsl') === 0) {
+      } else if (typeof e === 'string' && e.indexOf('#') === 0 || str.indexOf('hsl') === 0) {
         result = this.getColorHex(true);
       } else {
         const c = colorConvert.hsv.rgb(this.hue, this.saturation, this.value);
