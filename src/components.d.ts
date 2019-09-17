@@ -59,6 +59,7 @@ export namespace Components {
     'caption': string;
     'close': (reason?: string) => Promise<void>;
     'hide': () => Promise<void>;
+    'inline': boolean;
     'show': () => Promise<void>;
   }
   interface AzSection {
@@ -86,6 +87,10 @@ export namespace Components {
     'caption': string;
     'icon': string;
     'type': ComponentStyleType;
+  }
+  interface AzTooltip {
+    'caption': string;
+    'placement': 'top' | 'bottom' | 'left' | 'right';
   }
   interface AzTree {
     'addItem': (itemOrCaption: string | AzTreeItem, parent?: number | AzTreeItem, attrs?: any) => Promise<AzTreeItem>;
@@ -176,6 +181,12 @@ declare global {
     new (): HTMLAzToolbarButtonElement;
   };
 
+  interface HTMLAzTooltipElement extends Components.AzTooltip, HTMLStencilElement {}
+  var HTMLAzTooltipElement: {
+    prototype: HTMLAzTooltipElement;
+    new (): HTMLAzTooltipElement;
+  };
+
   interface HTMLAzTreeElement extends Components.AzTree, HTMLStencilElement {}
   var HTMLAzTreeElement: {
     prototype: HTMLAzTreeElement;
@@ -195,6 +206,7 @@ declare global {
     'az-slider': HTMLAzSliderElement;
     'az-tabs': HTMLAzTabsElement;
     'az-toolbar-button': HTMLAzToolbarButtonElement;
+    'az-tooltip': HTMLAzTooltipElement;
     'az-tree': HTMLAzTreeElement;
   }
 }
@@ -244,6 +256,7 @@ declare namespace LocalJSX {
   }
   interface AzPopover extends JSXBase.HTMLAttributes<HTMLAzPopoverElement> {
     'caption'?: string;
+    'inline'?: boolean;
     'onClosed'?: (event: CustomEvent<any>) => void;
   }
   interface AzSection extends JSXBase.HTMLAttributes<HTMLAzSectionElement> {
@@ -266,6 +279,10 @@ declare namespace LocalJSX {
     'caption'?: string;
     'icon'?: string;
     'type'?: ComponentStyleType;
+  }
+  interface AzTooltip extends JSXBase.HTMLAttributes<HTMLAzTooltipElement> {
+    'caption'?: string;
+    'placement'?: 'top' | 'bottom' | 'left' | 'right';
   }
   interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
     'caption'?: string;
@@ -291,6 +308,7 @@ declare namespace LocalJSX {
     'az-slider': AzSlider;
     'az-tabs': AzTabs;
     'az-toolbar-button': AzToolbarButton;
+    'az-tooltip': AzTooltip;
     'az-tree': AzTree;
   }
 }
