@@ -90,7 +90,10 @@ export namespace Components {
   }
   interface AzTooltip {
     'caption': string;
+    'delay': number;
+    'isShow': boolean;
     'placement': 'top' | 'bottom' | 'left' | 'right';
+    'trigger': 'hover' | 'click' | 'manual';
   }
   interface AzTree {
     'addItem': (itemOrCaption: string | AzTreeItem, parent?: number | AzTreeItem, attrs?: any) => Promise<AzTreeItem>;
@@ -282,7 +285,10 @@ declare namespace LocalJSX {
   }
   interface AzTooltip extends JSXBase.HTMLAttributes<HTMLAzTooltipElement> {
     'caption'?: string;
+    'delay'?: number;
+    'isShow'?: boolean;
     'placement'?: 'top' | 'bottom' | 'left' | 'right';
+    'trigger'?: 'hover' | 'click' | 'manual';
   }
   interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
     'caption'?: string;
