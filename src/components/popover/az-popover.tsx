@@ -3,33 +3,15 @@ import { HostElement } from '@stencil/core/dist/declarations';
 import { exportToGlobal, migrateAttributes } from '../../utils/utils';
 
 const Popovers = {
-  containerId: `az-popovers`,
+  container: `body`,
   popoverContainerTags: ['AZ-DIALOG'],
   append(popover: HTMLElement) {
-    let ctn = document.getElementById(Popovers.containerId);
-    if (!ctn) {
-      ctn = document.createElement('div');
-      ctn.id = Popovers.containerId;
-      ctn.style.width = ctn.style.height = '0';
-      document.body.prepend(ctn);
-    }
     if (Popovers.popoverContainerTags.includes(popover.parentElement.tagName)) {
       migrateAttributes(popover.parentElement);
+      popover.parentElement.remove();
     }
-    ctn.appendChild(popover);
+    document.body.appendChild(popover);
     return popover;
-  },
-  hide() {
-    let ctn = document.getElementById(Popovers.containerId);
-    if (ctn) {
-      ctn.style.display = 'none';
-    }
-  },
-  show() {
-    let ctn = document.getElementById(Popovers.containerId);
-    if (ctn) {
-      ctn.style.display = '';
-    }
   }
 };
 
@@ -42,11 +24,17 @@ export class AzPopover {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
-
+  @Prop() inline: boolean = false;
   @Event() closed: EventEmitter;
 
+
   componentDidLoad() {
-    Popovers.append(this.el);
+    if (!this.inline) {
+      Popovers.append(this.el);
+    } else {
+      this.el.style.position = 'absolute';
+      this.el.parentElement.style.position = 'relative';
+    }
   }
 
   @Method()
