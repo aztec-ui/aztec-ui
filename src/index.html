@@ -106,16 +106,28 @@
       <az-color-picker></az-color-picker>
     </az-section>
     <az-section caption="Popovers">
-      <az-button class="mini" onclick="document.getElementById('popover1').style.display = ''">Show Generic Popover</az-button>
-      <az-button class="mini" onclick="document.getElementById('dialog1').style.display = ''">Show Dialog</az-button>
+        <az-popover id="popover1" style="display:none;" class="center" onclick="this.hide()">Hello!</az-popover>
+        <az-dialog id="dialog1" caption="AztecUI">
+          <br/>
+          <br/>
+          <center><h2>Welcome using AztecUI!</h2></center>
+          <az-button slot="footer" caption="OK" class="mini" onclick="dialog1.hide()"></az-button>
+        </az-dialog>
+      <az-button class="mini" onclick="document.getElementById('popover1').style.display = ''">
+        Show Generic Popover
+      </az-button>
+      <az-button class="mini" onclick="document.getElementById('dialog1').style.display = ''">
+        Open Dialog
+      </az-button>
     </az-section>
-    <az-popover id="popover1" style="display:none;" class="center" onclick="this.hide()">Hello!</az-popover>
-    <az-dialog id="dialog1" caption="AztecUI">
-      <br/>
-      <br/>
-      <center><h2>Welcome using AztecUI!</h2></center>
-      <az-button slot="foot" caption="OK"></az-button>
-    </az-dialog>
+    <az-section caption="Tooltip">
+      <az-button class="mini" style="margin: 6em" caption="Tooltip">
+        <az-tooltip placement="top" caption="Top"></az-tooltip>
+        <az-tooltip placement="right" caption="Right"></az-tooltip>
+        <az-tooltip placement="bottom" caption="Bottom"></az-tooltip>
+        <az-tooltip placement="left" caption="Left"></az-tooltip>
+      </az-button>
+    </az-section>
   </az-panel>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
