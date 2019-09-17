@@ -13,8 +13,8 @@ export class AzDialog {
   @Prop() caption: string = '';
   @Prop() fixed: boolean = false;
 
-  popover: HTMLAzPopoverElement;
   head: HTMLElement;
+  popover: any;
 
   componentDidLoad() {
     if (!this.fixed) draggable(this.popover, this.head);
@@ -26,7 +26,9 @@ export class AzDialog {
         <div ref={el => this.head = el} class="az-dialog__header">
           <span class="az-dialog__title">{this.caption}</span>
           <span class="az-dialog__icons">
-            <az-icon icon="close" onclick={() => this.popover.close()}></az-icon>
+            <slot name="icons">
+              <az-icon icon="close" onClick={() => this.popover.close()}></az-icon>
+            </slot>
           </span>
         </div>
         <div class="az-dialog__body">
@@ -34,10 +36,10 @@ export class AzDialog {
         </div>
         <div class="az-dialog__footer">
           <slot name="footer">
-            <az-button class="mini" caption="OK" onclick={() => this.popover.close('ok')}>
+            <az-button class="mini" caption="OK" onClick={() => this.popover.close('ok')}>
               <az-icon icon="check"></az-icon>
             </az-button>
-            <az-button class="mini" caption="Cancel" onclick={() => this.popover.close('cancel')}>
+            <az-button class="mini" caption="Cancel" onClick={() => this.popover.close('cancel')}>
               <az-icon icon="close"></az-icon>
             </az-button>
             </slot>
