@@ -19,7 +19,8 @@ export class AzButton {
 
   @Inject({
     attrs: true,
-    remove: true
+    remove: true,
+    keep: ['caption', 'type']
   })
   componentDidLoad() {}
 
