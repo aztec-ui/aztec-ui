@@ -1,11 +1,14 @@
-az-popover.az-tooltip {
+az-tooltip {
   font-size: var(--az-font-size-normal);
-  transform-origin: center top;
   background: var(--az-primary-color);
   padding: 1em;
   border: 1px solid #727272;
   width: auto;
   height: auto;
+  position: absolute;
+  box-shadow: 3px 2px 4px 0px rgba(0, 0, 0, 0.2)
+  z-index: 2000;
+  border-radius: var(--az-border-radius-mini);
   &::before {
     content: '';
     display: inline-block;
