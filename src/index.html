@@ -107,10 +107,10 @@
     </az-section>
     <az-section caption="Popovers">
         <az-popover id="popover1" style="display:none;" class="center" onclick="this.hide()">Hello!</az-popover>
-        <az-dialog id="dialog1" caption="AztecUI">
+        <az-dialog id="dialog1" style="display:none;" caption="AztecUI">
           <br/>
           <br/>
-          <center><h2>Welcome using AztecUI!</h2></center>
+          <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
           <az-button slot="footer" caption="OK" class="mini" onclick="dialog1.hide()"></az-button>
         </az-dialog>
       <az-button class="mini" onclick="document.getElementById('popover1').style.display = ''">
@@ -121,12 +121,20 @@
       </az-button>
     </az-section>
     <az-section caption="Tooltip">
-      <az-button class="mini" style="margin: 6em" caption="Tooltip">
-        <az-tooltip placement="top" caption="Top"></az-tooltip>
-        <az-tooltip placement="right" caption="Right"></az-tooltip>
-        <az-tooltip placement="bottom" caption="Bottom"></az-tooltip>
-        <az-tooltip placement="left" caption="Left"></az-tooltip>
-      </az-button>
+      <div style="margin: 6em 10em">
+        <az-button class="mini" caption="show='true'">
+          <az-tooltip placement="left" is-show="true" caption="show='true'"></az-tooltip>
+        </az-button>
+        <az-button class="mini" caption="trigger='hover' delay='1000'">
+            <az-tooltip placement="top" is-show="true" caption="trigger='hover' delay='1000'" trigger="hover" delay="1000"></az-tooltip>
+        </az-button>
+        <az-button class="mini" caption="trigger='click'">
+            <az-tooltip placement="bottom" is-show="true" caption="trigger='click'" trigger="click"></az-tooltip>
+        </az-button>
+        <az-button class="mini" caption="trigger='manual'">
+            <az-tooltip placement="right" is-show="true" caption="trigger='manual'" trigger="manual"></az-tooltip>
+        </az-button>
+    </div>
     </az-section>
   </az-panel>
   <script type="text/javascript">
