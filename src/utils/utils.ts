@@ -18,9 +18,21 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
   }
 }
 
-export function migrateAttributes(host: HostElement, remove = false) {
+const IgnoredAttrsWhenMigrateAttributes = ['class', 'slot'];
+exportToGlobal('IgnoredAttrsWhenMigrateAttributes', {
+  get() {
+    return IgnoredAttrsWhenMigrateAttributes;
+  }
+});
+
+export function migrateAttributes(host: HostElement, remove = false, keepAttrs: string[] = null) {
+  if (!keepAttrs) {
+    keepAttrs = IgnoredAttrsWhenMigrateAttributes.slice(0);
+  } else {
+    keepAttrs = keepAttrs.concat(IgnoredAttrsWhenMigrateAttributes);
+  }
   // @ts-ignore
-  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, ['class', 'slot'], remove);
+  return copyAttributes(host, (host.shadowRoot || host).lastElementChild, keepAttrs, remove);
 }
 
 export function moveChildren(host: HostElement, filters?: Function[]) {
@@ -77,12 +89,14 @@ export function Inject (opts: {
   parse?: boolean,
   remove?: boolean,
   after?: boolean,
+  keep?: string[],
   children?: any[]} = {
   style: false,
   attrs: false,
   remove: false,
   parse: true,
   after: false,
+  keep: null,
   children: []
 }) {
   opts = Object.assign({
@@ -91,6 +105,7 @@ export function Inject (opts: {
     remove: false,
     parse: true,
     after: false,
+    keep: null,
     children: []
   }, opts);
   return function inject(target: any, key: string, descriptor: any) {
@@ -115,7 +130,7 @@ export function Inject (opts: {
           if (opts.after) fn.apply(this, args);
           if (opts.style) injectCustomStyleFor(this.el);
           if (opts.parse) parseArrayObjectAttr(this, this.el);
-          if (opts.attrs) migrateAttributes(this.el, opts.remove);
+          if (opts.attrs) migrateAttributes(this.el, opts.remove, opts.keep);
           if (opts.children && opts.children.length) moveChildren(this.el, opts.children);
           if (!opts.after) fn.apply(this, args);
         };
