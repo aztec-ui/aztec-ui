@@ -1,0 +1,55 @@
+az-popover.az-tooltip {
+  font-size: var(--az-font-size-normal);
+  transform-origin: center top;
+  background: var(--az-primary-color);
+  padding: 1em;
+  border: 1px solid #727272;
+  width: auto;
+  height: auto;
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    border: 6px solid transparent;
+    border-color: transparent #494949 #494949 transparent;
+    box-shadow: 1px 1px 0px 0px rgb(114, 114, 114);
+  }
+  &.top {
+    top: 0;
+    transform: translate(0, -100%) translateY(-1em);
+    &::before {
+      left: 50%;
+      bottom: 0;
+      transform: rotate(45deg) translate(0, 70%);
+    }
+  }
+  &.bottom {
+    bottom: 0;
+    transform: translate(0, 100%) translateY(1em);
+    &::before {
+      top: 0;
+      left: 50%;
+      transform: rotate(-135deg) translate(70%, 0%);
+    }
+  }
+  &.right {
+    right: 0;
+    transform: translate(100%, 0) translateX(1em);
+    &::before {
+      left: 0;
+      top: 50%;
+      transform: translate(-45%, -50%) rotate(135deg)
+    }
+  }
+  &.left {
+    left: 0;
+    transform: translate(-100%, 0) translateX(-1em);
+    &::before {
+      right: 0;
+      top: 50%;
+      transform: translate(45%, -50%) rotate(-45deg)
+    }
+  }
+}
