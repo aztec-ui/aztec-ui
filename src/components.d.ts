@@ -25,7 +25,6 @@ export namespace Components {
     'caption': string;
     'checked': boolean;
     'indeterminate': boolean;
-    'toggle': () => Promise<void>;
   }
   interface AzColorPicker {
     'caption': string;
@@ -43,9 +42,9 @@ export namespace Components {
     'width': number | string;
   }
   interface AzInput {
-    'autocapitalize': 'on' | 'off';
-    'autocomplete': 'on' | 'off';
-    'autocorrect': 'on' | 'off';
+    'autocapitalize': string;
+    'autocomplete': string;
+    'autocorrect': string;
     'caption': string;
     'native': HTMLInputElement;
     'spellcheck': boolean;
@@ -63,9 +62,7 @@ export namespace Components {
   interface AzSection {
     'caption': string;
     'collapsable': boolean;
-    'collapse': () => Promise<void>;
     'collapsed': boolean;
-    'expand': () => Promise<void>;
   }
   interface AzSelect {}
   interface AzSlider {
@@ -80,10 +77,7 @@ export namespace Components {
   }
   interface AzTabs {
     'activeIndex': number;
-    'addItem': (it: any) => Promise<void>;
     'items': any[];
-    'removeItem': (it: any) => Promise<void>;
-    'removeItemAt': (index: number) => Promise<void>;
   }
   interface AzToolbarButton {
     'caption': string;
@@ -255,9 +249,9 @@ declare namespace LocalJSX {
     'width'?: number | string;
   }
   interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
-    'autocapitalize'?: 'on' | 'off';
-    'autocomplete'?: 'on' | 'off';
-    'autocorrect'?: 'on' | 'off';
+    'autocapitalize'?: string;
+    'autocomplete'?: string;
+    'autocorrect'?: string;
     'caption'?: string;
     'native'?: HTMLInputElement;
     'spellcheck'?: boolean;
