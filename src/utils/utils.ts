@@ -83,31 +83,40 @@ export function injectCustomStyleFor(host: HostElement) {
   host.shadowRoot.prepend(style.cloneNode(true));
 }
 
-export function Inject (opts: {
-  style?: boolean,
-  attrs?: boolean,
-  parse?: boolean,
-  remove?: boolean,
-  after?: boolean,
-  keep?: string[],
-  children?: any[]} = {
-  style: false,
-  attrs: false,
-  remove: false,
-  parse: true,
-  after: false,
-  keep: null,
-  children: []
-}) {
-  opts = Object.assign({
+export function remount(host: HostElement, destSelector: string) {
+  const dest = document.querySelector(destSelector);
+  if (!dest) throw new Error(`Can not find '${destSelector}'`);
+  dest.appendChild(host);
+}
+
+interface IInjectOptions {
+  style?: boolean, // inject custom style for shaow dowm
+  attrs?: boolean, // copy wrapper's attributes to last HTMLElement
+  parse?: boolean, // parse array/object string to JS object
+  remove?: boolean, // remove attributes after copy
+  after?: boolean, // do inject after calling constructor
+  keep?: string[], // array of attributes which will not be remove during removing
+  sync?: string[], // copy private method to HostElement
+  remount?: false | string, // remount component to another
+  children?: any[] // move children to last HTMLElement, see az-select
+}
+
+const makeInjectOpts = (opts: IInjectOptions = {}) => {
+  return Object.assign({
     style: false,
     attrs: false,
     remove: false,
     parse: true,
     after: false,
     keep: null,
+    sync: [],
+    remount: false,
     children: []
   }, opts);
+};
+
+export function Inject (opts: IInjectOptions = makeInjectOpts()) {
+  opts = makeInjectOpts(opts);
   return function inject(target: any, key: string, descriptor: any) {
     let fn = descriptor.value;
 
@@ -127,12 +136,23 @@ export function Inject (opts: {
           return fn;
         }
         const boundFn = function (...args) {
-          if (opts.after) fn.apply(this, args);
+          if (opts.after) fn.apply(this, args); // inject after constructor
+
+          // do injection
           if (opts.style) injectCustomStyleFor(this.el);
           if (opts.parse) parseArrayObjectAttr(this, this.el);
           if (opts.attrs) migrateAttributes(this.el, opts.remove, opts.keep);
           if (opts.children && opts.children.length) moveChildren(this.el, opts.children);
-          if (!opts.after) fn.apply(this, args);
+          if (opts.remount) remount(this.el, opts.remount);
+
+          if (!opts.after) fn.apply(this, args); // inject before constructor
+
+          //
+          if (opts.sync && opts.sync.length > 0) {
+            opts.sync.forEach((name: string) => {
+              this.el[name] = this[name].bind(this);
+            });
+          }
         };
         definingProperty = true;
         Object.defineProperty(this, key, {
