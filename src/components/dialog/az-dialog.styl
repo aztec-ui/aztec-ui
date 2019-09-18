@@ -1,4 +1,21 @@
-az-popover.az-dialog {
+az-dialog {
+  font-family: var(--az-font-family);
+  position: fixed;
+  border-radius: var(--az-border-radius-mini);
+  border: 1px solid #727272;
+  background-color: var(--az-primary-color);
+  box-shadow: 3px 2px 4px 0px rgba(0, 0, 0, 0.2)
+  z-index: 2000;
+  padding: 1em;
+  color: var(--az-caption-color);
+}
+
+az-dialog.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+az-dialog {
   display: flex;
   padding: 1px;
   flex-direction: column;
