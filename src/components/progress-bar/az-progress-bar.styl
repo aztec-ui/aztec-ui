@@ -1,0 +1,21 @@
+az-progress-bar {
+  progress {
+    -webkit-appearance: none;
+    appearance: none;
+    &::-webkit-progress-bar {
+      background-color: #727272;
+      border-radius: 3px;
+      height: 5px;
+    }
+    &::-webkit-progress-value {
+      background-color: #ddd;
+      border-radius: 3px;
+    }
+  }
+  progress {
+    height: 8px;
+  }
+  .az-progress-bar__caption {
+    margin-right: 0.5em;
+  }
+}
