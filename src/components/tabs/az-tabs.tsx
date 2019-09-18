@@ -1,4 +1,4 @@
-import { Component, Prop, Method, Element, Watch, h} from '@stencil/core';
+import { Component, Prop, Element, Watch, h} from '@stencil/core';
 import { Inject } from '../../utils/utils';
 import { HostElement } from '@stencil/core/dist/declarations';
 
@@ -29,25 +29,23 @@ export class AzTabs {
   @Inject({
     style: false,
     attrs: false,
-    parse: true
+    parse: true,
+    sync: ['addItem', 'removeItem', 'removeItemAt']
   })
   componentDidLoad(){
     this.onActiveIndexChanged(this.activeIndex, null);
   }
 
-  @Method()
   addItem(it: any) {
     this.items = [...this.items, it];
     this.el.forceUpdate();
   }
 
-  @Method()
   removeItem(it: any) {
     const pos = this.items.findIndex(item => item === it);
     this.items.splice(pos, 1);
   }
 
-  @Method()
   removeItemAt(index: number) {
     this.items.splice(index, 1);
   }

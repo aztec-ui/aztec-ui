@@ -14,9 +14,9 @@ export class AzInput {
   @Prop() value: string = '';
   @Prop() native: HTMLInputElement;
 
-  @Prop() autocomplete: 'on' | 'off' = 'on';
-  @Prop() autocorrect: 'on' | 'off' = 'on';
-  @Prop() autocapitalize: 'on' | 'off' = 'on';
+  @Prop() autocomplete: string;
+  @Prop() autocorrect: string;
+  @Prop() autocapitalize: string;
   @Prop() spellcheck: boolean = true;
 
   @Inject({
@@ -24,6 +24,7 @@ export class AzInput {
     parse: false
   })
   componentDidLoad() {
+    this.autocapitalize
     this.native.addEventListener('change', () => {
       this.value = this.native.value;
     });

@@ -1,5 +1,6 @@
-import { Component, Method, Prop, Element, h } from '@stencil/core';
+import { Component, Prop, Element, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
+import { Inject } from '../../utils/utils';
 
 @Component({
   tag: 'az-section',
@@ -12,8 +13,19 @@ export class AzSection {
   @Prop() collapsed: boolean = false;
   @Prop() collapsable: boolean = true;
 
+  @Inject({
+    sync: ['collapse', 'expand']
+  })
   componentDidLoad() {
     this.el.querySelector('.bugfix').remove();
+  }
+
+  collapse() {
+    this.collapsed = true;
+  }
+
+  expand() {
+    this.collapsed = false;
   }
 
   render() {
@@ -36,15 +48,5 @@ export class AzSection {
         </div>
       </section>
     );
-  }
-
-  @Method()
-  collapse() {
-    this.collapsed = true;
-  }
-
-  @Method()
-  expand() {
-    this.collapsed = false;
   }
 }
