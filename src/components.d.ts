@@ -55,12 +55,10 @@ export namespace Components {
   interface AzPanel {
     'caption': string;
   }
-  interface AzPopover {
+  interface AzProgressBar {
     'caption': string;
-    'close': (reason?: string) => Promise<void>;
-    'hide': () => Promise<void>;
-    'inline': boolean;
-    'show': () => Promise<void>;
+    'max': number;
+    'value': number;
   }
   interface AzSection {
     'caption': string;
@@ -148,10 +146,10 @@ declare global {
     new (): HTMLAzPanelElement;
   };
 
-  interface HTMLAzPopoverElement extends Components.AzPopover, HTMLStencilElement {}
-  var HTMLAzPopoverElement: {
-    prototype: HTMLAzPopoverElement;
-    new (): HTMLAzPopoverElement;
+  interface HTMLAzProgressBarElement extends Components.AzProgressBar, HTMLStencilElement {}
+  var HTMLAzProgressBarElement: {
+    prototype: HTMLAzProgressBarElement;
+    new (): HTMLAzProgressBarElement;
   };
 
   interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
@@ -203,7 +201,7 @@ declare global {
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-panel': HTMLAzPanelElement;
-    'az-popover': HTMLAzPopoverElement;
+    'az-progress-bar': HTMLAzProgressBarElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
@@ -236,6 +234,7 @@ declare namespace LocalJSX {
   interface AzDialog extends JSXBase.HTMLAttributes<HTMLAzDialogElement> {
     'caption'?: string;
     'fixed'?: boolean;
+    'onClosed'?: (event: CustomEvent<any>) => void;
   }
   interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
     'color'?: string;
@@ -257,10 +256,10 @@ declare namespace LocalJSX {
   interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
     'caption'?: string;
   }
-  interface AzPopover extends JSXBase.HTMLAttributes<HTMLAzPopoverElement> {
+  interface AzProgressBar extends JSXBase.HTMLAttributes<HTMLAzProgressBarElement> {
     'caption'?: string;
-    'inline'?: boolean;
-    'onClosed'?: (event: CustomEvent<any>) => void;
+    'max'?: number;
+    'value'?: number;
   }
   interface AzSection extends JSXBase.HTMLAttributes<HTMLAzSectionElement> {
     'caption'?: string;
@@ -308,7 +307,7 @@ declare namespace LocalJSX {
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-panel': AzPanel;
-    'az-popover': AzPopover;
+    'az-progress-bar': AzProgressBar;
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
