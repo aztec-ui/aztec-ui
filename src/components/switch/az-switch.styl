@@ -1,0 +1,35 @@
+az-switch {
+  cursor: pointer;
+  .az-switch__caption {
+    margin-right: 0.5em;
+  }
+  .button {
+    width: 36px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #727272;
+    border-radius: 8px;
+    transition: all 200ms;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      left: 0;
+      transition: all 200ms;
+      border-radius: 100%;
+      background-color: #ddd;
+      margin: 2px;
+    }
+    &.on {
+      background-color: #727272;
+      &::before {
+        left: 100%;
+        transform: translateX(-100%) translateX(-4px);
+      }
+    }
+  }
+}
