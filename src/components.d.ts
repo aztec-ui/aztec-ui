@@ -74,6 +74,10 @@ export namespace Components {
     'min': string | number;
     'value': string | number;
   }
+  interface AzSwitch {
+    'caption': string;
+    'value': boolean;
+  }
   interface AzTabs {
     'activeIndex': number;
     'addItem': (it: any) => Promise<void>;
@@ -170,6 +174,12 @@ declare global {
     new (): HTMLAzSliderElement;
   };
 
+  interface HTMLAzSwitchElement extends Components.AzSwitch, HTMLStencilElement {}
+  var HTMLAzSwitchElement: {
+    prototype: HTMLAzSwitchElement;
+    new (): HTMLAzSwitchElement;
+  };
+
   interface HTMLAzTabsElement extends Components.AzTabs, HTMLStencilElement {}
   var HTMLAzTabsElement: {
     prototype: HTMLAzTabsElement;
@@ -205,6 +215,7 @@ declare global {
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
+    'az-switch': HTMLAzSwitchElement;
     'az-tabs': HTMLAzTabsElement;
     'az-toolbar-button': HTMLAzToolbarButtonElement;
     'az-tooltip': HTMLAzTooltipElement;
@@ -273,6 +284,11 @@ declare namespace LocalJSX {
     'min'?: string | number;
     'value'?: string | number;
   }
+  interface AzSwitch extends JSXBase.HTMLAttributes<HTMLAzSwitchElement> {
+    'caption'?: string;
+    'onChanged'?: (event: CustomEvent<any>) => void;
+    'value'?: boolean;
+  }
   interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
     'activeIndex'?: number;
     'items'?: any[];
@@ -311,6 +327,7 @@ declare namespace LocalJSX {
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
+    'az-switch': AzSwitch;
     'az-tabs': AzTabs;
     'az-toolbar-button': AzToolbarButton;
     'az-tooltip': AzTooltip;
