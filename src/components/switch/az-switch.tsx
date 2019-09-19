@@ -1,5 +1,6 @@
 import { Component, Prop, Element, h, Event, EventEmitter } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
+import { ComponentStyle, ComponentSize } from '../../global/typing';
 
 @Component({
   tag: 'az-switch',
@@ -9,8 +10,10 @@ import { HostElement } from '@stencil/core/dist/declarations';
 export class AzSwitch {
   @Element() el: HostElement;
 
-  @Prop() caption: string = '';
+  @Prop({reflect: true}) caption: string = '';
+  @Prop({reflect: true}) type: ComponentStyle = 'primary';
   @Prop({reflect: true}) value: boolean = false;
+  @Prop({reflect: true}) size: ComponentSize = 'normal';
 
   @Event() changed: EventEmitter;
 
@@ -28,7 +31,7 @@ export class AzSwitch {
 
   render() {
     const cap = this.caption ? <span class="az-switch__caption az-caption">{this.caption}</span> : null;
-    const vdom = [<span class={{button: true, on: this.value, off: !this.value}}></span>];
+    const vdom = [<span class={{[this.type]: true, [this.size]: true, button: true, on: this.value, off: !this.value}}></span>];
     if (cap) vdom.unshift(cap);
     return vdom;
   }
