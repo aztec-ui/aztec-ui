@@ -39,7 +39,11 @@ export class AzCheckbox {
         {this.indeterminate && <az-icon class="minus" icon="minus"></az-icon>}
         {this.indeterminate || <az-icon class="check" icon="check"></az-icon>}
       </i>,
-      <span class="az-checkbox-caption az-caption" onClick={() => this.toggle()}><slot></slot></span>
+      <slot>
+        <span class="az-checkbox-caption az-caption" onClick={() => this.toggle()}>
+          {this.caption}
+        </span>
+      </slot>
     ];
   }
 }
