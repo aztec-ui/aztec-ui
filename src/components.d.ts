@@ -7,7 +7,8 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  ComponentStyleType,
+  ComponentSize,
+  ComponentStyle,
 } from './global/typing';
 import {
   AzTreeItem,
@@ -16,10 +17,14 @@ import {
 export namespace Components {
   interface AzButton {
     'caption': string;
+    'disabled': boolean;
+    'icon': string;
+    'iconPosition': string;
+    'size': ComponentSize;
     /**
     * Button type
     */
-    'type': ComponentStyleType;
+    'type': ComponentStyle;
   }
   interface AzCheckbox {
     'caption': string;
@@ -73,6 +78,8 @@ export namespace Components {
   }
   interface AzSwitch {
     'caption': string;
+    'size': ComponentSize;
+    'type': ComponentStyle;
     'value': boolean;
   }
   interface AzTabs {
@@ -82,7 +89,7 @@ export namespace Components {
   interface AzToolbarButton {
     'caption': string;
     'icon': string;
-    'type': ComponentStyleType;
+    'type': ComponentStyle;
   }
   interface AzTooltip {
     'caption': string;
@@ -220,10 +227,14 @@ declare global {
 declare namespace LocalJSX {
   interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
     'caption'?: string;
+    'disabled'?: boolean;
+    'icon'?: string;
+    'iconPosition'?: string;
+    'size'?: ComponentSize;
     /**
     * Button type
     */
-    'type'?: ComponentStyleType;
+    'type'?: ComponentStyle;
   }
   interface AzCheckbox extends JSXBase.HTMLAttributes<HTMLAzCheckboxElement> {
     'caption'?: string;
@@ -281,6 +292,8 @@ declare namespace LocalJSX {
   interface AzSwitch extends JSXBase.HTMLAttributes<HTMLAzSwitchElement> {
     'caption'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
+    'size'?: ComponentSize;
+    'type'?: ComponentStyle;
     'value'?: boolean;
   }
   interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
@@ -290,7 +303,7 @@ declare namespace LocalJSX {
   interface AzToolbarButton extends JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement> {
     'caption'?: string;
     'icon'?: string;
-    'type'?: ComponentStyleType;
+    'type'?: ComponentStyle;
   }
   interface AzTooltip extends JSXBase.HTMLAttributes<HTMLAzTooltipElement> {
     'caption'?: string;
