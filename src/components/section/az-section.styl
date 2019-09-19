@@ -2,7 +2,7 @@ az-section {
   display: block;
 }
 az-section section {
-  font-size: var(--az-section-font-size);
+  font-size: var(--az-font-size-normal);
   font-family: var(--az-font-family);
   background-color: var(--az-primary-color);
   &.collapsable .header .caption:before {
@@ -11,7 +11,7 @@ az-section section {
     display: inline-block;
   }
   .header {
-    color: var(--az-section-caption-color);
+    color: var(--az-caption-color);
     margin-bottom: 0.5em;
     padding-bottom: 0.2em;
     border-bottom: 1px solid #666;
@@ -22,7 +22,7 @@ az-section section {
         text-align: center;
         display: inline-block;
         margin-right: 0.5em;
-        transition: transform var(--az-transform-animation-duration);
+        transition: transform var(--az-transform-animation-duration-normal);
       }
     }
     .right {
@@ -31,8 +31,8 @@ az-section section {
   }
   .content {
     tansform-origin: top;
-    transition: transform var(--az-transform-animation-duration);
-    padding: var(--az-section-content-padding, 0.5em);
+    transition: transform var(--az-transform-animation-duration-normal);
+    padding: var(--az-font-size-normal);
   }
   &.collapsed {
     .header .az-section-caption az-icon {

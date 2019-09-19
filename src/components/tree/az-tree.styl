@@ -5,13 +5,13 @@ az-tree {
     &.expanded .az-tree-item-children{
       height: auto;
       transform: scaleY(1);
-      transition: transform var(--az-transform-animation-duration);
+      transition: transform var(--az-transform-animation-duration-normal);
     }
     &.collapsed .az-tree-item-children{
       overflow: hidden;
       height: 0;
       transform: scaleY(0);
-      transition: transform var(--az-transform-animation-duration);
+      transition: transform var(--az-transform-animation-duration-normal);
     }
   }
   .collapsed .joint {
@@ -31,7 +31,7 @@ az-tree {
     }
     .joint {
       width: 24px;
-      transition: transform var(--az-transform-animation-duration);
+      transition: transform var(--az-transform-animation-duration-normal);
     }
     &:hover {
       background-color: #4e4e4e;
