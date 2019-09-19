@@ -1,0 +1,69 @@
+:root {
+  /* font */
+  --az-font-family: Roboto,-apple-system,BlinkMacSystemFont,'Helvetica Neue','Segoe UI',Oxygen,Ubuntu,Cantarell,'Open Sans',SourceHanSansCN-Normal,sans-serif;
+  --az-font-size-extra-small: 9px;
+  --az-font-size-small: 10px;
+  --az-font-size-normal: 12px;
+  --az-font-size-medium: 14px;
+  --az-font-size-large: 16px;
+  --az-font-size-extra-large: 16px;
+
+  /* border */
+  --az-border-radius-mini: 3px;
+  --az-border-radius-normal: 5px;
+
+  /* padding */
+  --az-padding-normal: 0.5em;
+  --az-padding-normal2: 1em;
+
+  /* margin */
+
+  /* colors */
+  --az-caption-color: #ddd;
+  --az-border-color: #727272;
+  --az-primary-color: #494949;
+  --az-disabled-color: #828282;
+
+  --az-success-color: #5fb534;
+  --az-warning-color: #d89736;
+  --az-danger-color: #e05f5f;
+  --az-info-color: #409eff;
+
+  --az-success-color-light: lighten(#5fb534, 20%);
+  --az-warning-color-light: lighten(#d89736, 20%);
+  --az-danger-color-light: lighten(#e05f5f, 20%);
+  --az-info-color-light: lighten(#409eff, 20%);
+
+  --az-success-color-dark: darken(#5fb534, 20%);
+  --az-warning-color-dark: darken(#d89736, 20%);
+  --az-danger-color-dark: darken(#e05f5f, 20%);
+  --az-info-color-dark: darken(#409eff, 20%);
+
+  --az-success-color-disabled: desaturate(#5fb534, 80%);
+  --az-warning-color-disabled: desaturate(#d89736, 80%);
+  --az-danger-color-disabled: desaturate(#e05f5f, 80%);
+  --az-info-color-disabled: desaturate(#409eff, 80%);
+
+  /* animation */
+  --az-transition-duration-default: 200ms;
+  --az-transform-animation-duration-normal: 100ms;
+}
+.aztec-app {
+  font-size: var(--az-font-size-normal);
+  background-color: var(--az-primary-color);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.az-spin {
+  animation: az-anim-spin 1s infinite linear;
+}
+
+@keyframes az-anim-spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
