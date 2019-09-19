@@ -1,22 +1,25 @@
 az-button {
   display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
 }
 az-button button {
-  font-size: 1rem;
+  font-size: var(--az-font-size-normal);
   font-family: var(--az-font-family);
   cursor: pointer;
   box-sizing: border-box;
-  display: flex;
   justify-content: center;
   align-items: center;
-
+  display: inline-flex;
   height: 100%;
   padding: 0 0.5em;
   min-width: 20px;s
   line-height: 1em;
   outline: 0;
+  transition: var(--az-transition-duration-default);
 
-  border: var(--az-border-color);
+  border: 1px solid var(--az-border-color);
   border-radius: var(--az-border-radius-mini);
 
   color: var(--az-caption-color);
@@ -24,47 +27,130 @@ az-button button {
   &:hover {
     border-color: var(--az-caption-color);
   }
-}
-
-az-button .plain {
-  border: none;
+  az-icon.left {
+    margin-right: var(--az-padding-normal);
+  }
+  az-icon.right {
+    margin-left: var(--az-padding-normal);
+  }
+  slot-fb {
+    display: inline-flex;
+  }
 }
 
 az-button .icon {
   font-style: normal;
 }
+az-button[disabled] button{
+  cursor: not-allowed;
+}
 
-az-button.mini button{
-  font-size: .66666667rem;
+/* size */
+
+az-button button.extra-small {
+  font-size: var(--az-font-size-extra-small);
   height: 18px
+  line-height: 18px;
 }
 
-az-button.tiny button{
-  font-size: .91666667rem;
-  height: 21px
+az-button button.small {
+  font-size: var(--az-font-size-small);
+  height: 20px;
+  line-height: 20px
 }
 
-az-button.small button{
-  font-size: .91666667rem;
-  height: 24px
+az-button button.normal {
+  font-size: var(--az-font-size-normal);
+  height: 24px;
+  line-height: 24px
 }
 
-az-button.large button{
-  font-size: 1.16666667rem;
-  height: 29px
+az-button button.medium {
+  font-size: var(--az-font-size-medium);
+  height: 28px;
+  line-height: 28px
 }
 
-az-button.big button{
-  font-size: 1.33333333rem;
-  height: 33px
+az-button button.large {
+  font-size: var(--az-font-size-large);
+  height: 32px;
+  line-height: 32px
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
 }
 
-az-button.huge button{
-  font-size: 1.5rem;
-  height: 36px
+az-button button.extra-large {
+  font-size: var(--az-font-size-extra-large);
+  height: 34px
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-az-button.massive button{
-  font-size: 1.83333333rem;
-  height: 44px
+/* type */
+az-button  button.plain {
+  border: none;
+  background: none;
+}
+az-button button.success {
+  color: #fff;
+  border-color: var(--az-success-color);
+  background-color: var(--az-success-color);
+  &:hover {
+    border-color: var(--az-success-color-light);
+    background-color:var(--az-success-color-light);
+  }
+}
+az-button button.warning {
+  color: #fff;
+  border-color: var(--az-warning-color);
+  background-color: var(--az-warning-color);
+  &:hover {
+    border-color: var(--az-warning-color-light);
+    background-color:var(--az-warning-color-light);
+  }
+}
+az-button button.danger {
+  color: #fff;
+  border-color: var(--az-danger-color);
+  background-color: var(--az-danger-color);
+  &:hover {
+    border-color: var(--az-danger-color-light);
+    background-color:var(--az-danger-color-light);
+  }
+}
+az-button button.info {
+  color: #fff;
+  border-color: var(--az-info-color);
+  background-color: var(--az-info-color);
+  &:hover {
+    border-color: var(--az-info-color-light);
+    background-color:var(--az-info-color-light);
+  }
+}
+
+/* disalbed */
+az-button[disabled] button.primary {
+  border-color: var(--az-disabled-color);
+  background: var(--az-disabled-color);
+}
+
+az-button[disabled] button.success {
+  border-color: var(--az-success-color-disabled);
+  background-color: var(--az-success-color-disabled);
+}
+az-button[disabled] button.warning {
+  border-color: var(--az-warning-color-disabled);
+  background-color: var(--az-warning-color-disabled);
+}
+az-button[disabled] button.danger {
+  border-color: var(--az-danger-color-disabled);
+  background-color: var(--az-danger-color-disabled);
+}
+az-button[disabled] button.info {
+  border-color: var(--az-info-color-disabled);
+  background-color: var(--az-info-color-disabled);
 }
