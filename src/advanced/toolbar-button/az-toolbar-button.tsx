@@ -1,5 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
-import { ComponentStyleType } from '../../global/typing';
+import { ComponentStyle } from '../../global/typing';
 
 @Component({
   tag: 'az-toolbar-button',
@@ -7,7 +7,7 @@ import { ComponentStyleType } from '../../global/typing';
 })
 export class AzToolbarButton {
   @Prop() caption: string = '';
-  @Prop() type: ComponentStyleType = '';
+  @Prop() type: ComponentStyle = 'primary';
   @Prop() icon: string = '';
   render() {
     return (
