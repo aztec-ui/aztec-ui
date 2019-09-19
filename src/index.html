@@ -7,11 +7,32 @@
   <link rel="stylesheet" href="/build/aztec-ui.css" />
   <script type="module" src="/build/aztec-ui.esm.js"></script>
   <script nomodule src="/build/aztec-ui.js"></script>
+  <script>
+    function $(selector) {
+      const eles = Array.from(document.querySelectorAll(selector));
+      const proxy = new Proxy(eles, {
+        get (target, name) {
+          if (typeof target[0][name] === 'function') {
+            return function () {
+              return target.map(n => n[name].apply(n, arguments));
+            };
+          } else {
+            return target.map(n => n[name]);
+          }
+        },
+        set (target, name, value, receiver) {
+          target.map(n => n[name] = value)
+          return value;
+        }
+      });
+      return proxy;
+    };
+
+  </script>
 </head>
-<body>
+<body class="aztec-app">
   <style>
     #demo {
-      font-size: 12px;
       background-color: var(--az-primary-color);
       padding: .5em;
     }
@@ -31,12 +52,18 @@
   </az-icon>
   <az-panel caption="Demo" id="demo">
     <az-section caption="Buttons">
-      <az-button class="mini right" type="plain" slot="header" onclick="alert(1)">Collapse</az-button>
-      <az-tabs items="['Normal', 'Disabled']" active-index="1">
-        <az-panel>
-          <az-button class="small" caption="OK">
-            <az-icon icon="check" slot="before"></az-icon>
-          </az-button>
+      <az-button class="small right" type="plain" size="extra-small" slot="header" onclick="alert(1)">Collapse</az-button>
+      <az-tabs items="['Normal', 'Disabled']" active-index="0">
+        <az-panel id="buttons">
+          <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
+          <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
+          <az-button type="success" size="normal" caption="Normal" icon="loading"></az-button>
+          <az-button type="warning" size="medium" caption="Medium" icon="download" icon-position="right"></az-button>
+          <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
+          <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
+          <br/>
+          <br/>
+          <az-checkbox caption="Disable all buttons" id="disableAllButtons"></az-checkbox>
         </az-panel>
         <az-panel>
           <az-button class="small" caption="Canecel">
@@ -57,8 +84,11 @@
       <az-checkbox>Shanghai</az-checkbox>
       <br/>
       <br/>
-      <az-switch caption="switch" value="true" style="margin-right: 1em;"></az-switch>
-      <az-switch caption="flag" value="false"></az-switch>
+      <az-switch caption="Plain" type="plain" value="true" style="margin-right: 1em;"></az-switch>
+      <az-switch caption="Success" type="success" value="true" style="margin-right: 1em;"></az-switch>
+      <az-switch caption="Warning" type="warning" value="true" style="margin-right: 1em;"></az-switch>
+      <az-switch caption="Danger" type="danger" value="true" style="margin-right: 1em;"></az-switch>
+      <az-switch caption="Info" type="info" value="true" style="margin-right: 1em;"></az-switch>
     </az-section>
     <az-section caption="Input">
       <az-input type="text" caption="Name" value="with caption"></az-input>
@@ -81,6 +111,7 @@
       <az-icon icon="fast-backward" title="fast-backward"></az-icon>
       <az-icon icon="fast-forward" title="fast-forward"></az-icon>
       <az-icon icon="forward" title="forward"></az-icon>
+      <az-icon icon="loading" title="loading"></az-icon>
       <az-icon icon="list" title="list"></az-icon>
       <az-icon icon="minus" title="minus"></az-icon>
       <az-icon icon="mouse-pointer" title="mouse-pointer"></az-icon>
@@ -118,24 +149,24 @@
           <br/>
           <br/>
           <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
-          <az-button slot="footer" caption="OK" class="mini" onclick="dialog1.hide()"></az-button>
+          <az-button slot="footer" caption="OK" onclick="dialog1.hide()"></az-button>
         </az-dialog>
-      <az-button class="mini" onclick="document.getElementById('dialog1').style.display = ''">
+      <az-button onclick="document.getElementById('dialog1').style.display = ''">
         Open Dialog
       </az-button>
     </az-section>
     <az-section caption="Tooltip">
       <div style="margin: 6em 10em">
-        <az-button class="mini" caption="show='true'">
+        <az-button caption="show='true'">
           <az-tooltip placement="left" is-show="true" caption="show='true'"></az-tooltip>
         </az-button>
-        <az-button class="mini" caption="trigger='hover' delay='1000'">
+        <az-button caption="trigger='hover' delay='1000'">
           <az-tooltip placement="top" is-show="true" caption="trigger='hover' delay='1000'" trigger="hover" delay="1000"></az-tooltip>
         </az-button>
-        <az-button class="mini" caption="trigger='click'">
+        <az-button caption="trigger='click'">
           <az-tooltip placement="bottom" is-show="true" caption="trigger='click'" trigger="click"></az-tooltip>
         </az-button>
-        <az-button class="mini" caption="trigger='manual'">
+        <az-button caption="trigger='manual'">
           <az-tooltip placement="right" is-show="true" caption="trigger='manual'" trigger="manual"></az-tooltip>
         </az-button>
       </div>
@@ -157,6 +188,14 @@
       await tree.addItem('Blue', 0);
       await tree.addItem('Purple', 0);
       await red.addItem('Ruby');
+      setTimeout(() => {
+        Array.from(document.querySelectorAll('az-switch')).forEach(s => s.value = !s.value);
+      }, 1500);
+      let buttonDisabled = false;
+      disableAllButtons.addEventListener('changed', () => {
+        buttonDisabled = !buttonDisabled;
+        $('#buttons az-button').disabled = buttonDisabled;
+      });
     });
   </script>
 </body>
