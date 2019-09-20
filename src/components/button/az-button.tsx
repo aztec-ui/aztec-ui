@@ -16,6 +16,8 @@ export class AzButton {
   @Prop({reflect: true}) type: ComponentStyle = 'primary';
   @Prop({reflect: true}) icon: string = '';
   @Prop({reflect: true}) size: ComponentSize = 'normal';
+  @Prop({reflect: true}) round: boolean = false;
+  @Prop({reflect: true}) circle: boolean = false;
   @Prop({reflect: true}) caption: string = '';
   @Prop({reflect: true}) iconPosition: string = 'left';
   @Prop({reflect: true}) disabled: boolean = false;
@@ -23,7 +25,7 @@ export class AzButton {
   @Inject({
     attrs: true,
     remove: true,
-    keep: ['caption', 'type', 'size', 'icon', 'icon-position']
+    keep: ['caption', 'type', 'size', 'icon', 'icon-position', 'round']
   })
   componentDidLoad() {
     if (!this.type) this.type = 'primary';
@@ -39,18 +41,38 @@ export class AzButton {
       iconLeft = iconRight = null;
       console.warn(`<az-button size="extra-small" /> can not have icon`);
     }
-    return (
-      <Host>
-        <button class={{
-          [this.type]: true,
-          [this.size]: true
-        }}>
+    if (!this.caption && !this.icon) {
+      console.warn(`<az-button> requires a caption or an icon`);
+    }
+    if (this.circle && !this.icon) {
+      console.warn(`<az-button circle="true" icon="..."/> requires an icon`);
+    }
+    if (this.circle && this.size.indexOf('small') >= 0) {
+      console.warn(`<az-button> can not be circle if size is small or extra-small`);
+    }
+
+    const cls = {
+      circle: this.circle,
+      round: this.round,
+      [this.type]: true,
+      [this.size]: true
+    };
+
+    if (!this.caption && this.icon) {
+      return (
+        <button class={cls}>
+          <az-icon icon={this.icon}></az-icon>
+        </button>
+      );
+    } else {
+      return (
+        <button class={cls}>
           <slot name="before">{iconLeft}</slot>
-          {this.caption && <span class="az-button-caption az-caption">{this.caption}</span>}
+            {this.caption && <span class="az-button-caption az-caption">{this.caption}</span>}
           <slot></slot>
           <slot name="after">{iconRight}</slot>
         </button>
-      </Host>
-    );
+      )
+    }
   }
 }
