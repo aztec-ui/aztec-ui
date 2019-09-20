@@ -57,8 +57,8 @@
         <az-panel id="buttons">
           <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
           <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
-          <az-button type="success" size="normal" caption="Normal" icon="loading"></az-button>
-          <az-button type="warning" size="medium" caption="Medium" icon="download" icon-position="right"></az-button>
+          <az-button type="success" size="normal" caption="Normal" icon="loading" id="loadingBtn"></az-button>
+          <az-button type="warning" size="medium" caption="Medium" icon="download" id="downloadBtn" icon-position="right"></az-button>
           <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
           <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
           <br/>
@@ -189,6 +189,10 @@
       await tree.addItem('Purple', 0);
       await red.addItem('Ruby');
       setTimeout(() => {
+        loadingBtn.icon = 'check';
+        loadingBtn.round = true;
+        downloadBtn.caption = '';
+        downloadBtn.circle = true;
         Array.from(document.querySelectorAll('az-switch')).forEach(s => s.value = !s.value);
       }, 1500);
       let buttonDisabled = false;
