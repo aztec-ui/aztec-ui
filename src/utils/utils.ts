@@ -18,7 +18,7 @@ export function copyAttributes(src: HTMLElement, dest: HTMLElement, excludes?: s
   }
 }
 
-const IgnoredAttrsWhenMigrateAttributes = ['class', 'slot'];
+const IgnoredAttrsWhenMigrateAttributes = ['id', 'class', 'slot'];
 exportToGlobal('IgnoredAttrsWhenMigrateAttributes', {
   get() {
     return IgnoredAttrsWhenMigrateAttributes;
