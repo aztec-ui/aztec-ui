@@ -1,4 +1,4 @@
-import { Component, Prop, Element, h} from '@stencil/core';
+import { Component, Prop, Element, Host, h} from '@stencil/core';
 import builtinIcons from './builtin';
 import { exportToGlobal } from '../../utils/utils';
 
@@ -32,7 +32,11 @@ export class AzIcon {
     if (typeof icon === 'undefined') {
       throw new Error(`Can not find icon "${this.icon}"`);
     }
-    return icon(this.width, this.height, this.color);
+    return (
+      <Host class={{[`az-anim-${this.icon}`]: true}}>
+        {icon(this.width, this.height, this.color)}
+      </Host>
+    );
   }
 }
 
