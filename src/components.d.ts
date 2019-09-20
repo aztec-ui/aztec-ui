@@ -17,9 +17,11 @@ import {
 export namespace Components {
   interface AzButton {
     'caption': string;
+    'circle': boolean;
     'disabled': boolean;
     'icon': string;
     'iconPosition': string;
+    'round': boolean;
     'size': ComponentSize;
     /**
     * Button type
@@ -227,9 +229,11 @@ declare global {
 declare namespace LocalJSX {
   interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
     'caption'?: string;
+    'circle'?: boolean;
     'disabled'?: boolean;
     'icon'?: string;
     'iconPosition'?: string;
+    'round'?: boolean;
     'size'?: ComponentSize;
     /**
     * Button type

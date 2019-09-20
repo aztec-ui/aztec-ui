@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Host, h } from '@stencil/core';
+import { Component, Prop, Element, h } from '@stencil/core';
 import { ComponentStyle, ComponentSize} from '../../global/typing';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
