@@ -17,7 +17,6 @@ export class AzSection {
     sync: ['collapse', 'expand']
   })
   componentDidLoad() {
-    this.el.querySelector('.bugfix').remove();
   }
 
   collapse() {
@@ -44,7 +43,6 @@ export class AzSection {
         </div>
         <div class="content">
           <slot></slot>
-          <svg class="bugfix" width="0" height="0"></svg>
         </div>
       </section>
     );
