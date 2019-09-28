@@ -11,23 +11,33 @@ import Cog from './cog';
 import Cogs from './cogs';
 import Copy from './copy';
 import Download from './download';
+import Edit from './edit';
 import EllipsisH from './ellipsis-h';
 import EllipsisV from './ellipsis-v';
 import Exchange from './exchange';
+import Eye from './eye';
+import EyeClose from './eye-close';
 import FastBackward from './fast-backward';
 import FastForward from './fast-forward';
+import File from './file';
 import Forward from './forward';
 import List from './list';
 import Loading from './loading';
+import Logout from './logout';
 import Minus from './minus';
 import MousePointer from './mouse-pointer';
 import Move from './move';
+import Paste from './paste';
 import Pause from './pause';
 import Plus from './plus';
 import Redo from './redo';
 import Refresh from './refresh';
 import Search from './search';
+import Share from './share';
+import Share2 from './share2';
+import ShopCart from './shop-cart';
 import Square from './square';
+import Trash from './trash';
 import Triangle from './triangle';
 import Undo from './undo';
 import ZoomIn from './zoom-in';
@@ -43,23 +53,33 @@ const builtinIcons: Record<string, string> = {
   "cogs": Cogs,
   "copy": Copy,
   "download": Download,
+  "edit": Edit,
   "ellipsis-h": EllipsisH,
   "ellipsis-v": EllipsisV,
   "exchange": Exchange,
+  "eye": Eye,
+  "eye-close": EyeClose,
   "fast-backward": FastBackward,
   "fast-forward": FastForward,
+  "file": File,
   "forward": Forward,
   "list": List,
   "loading": Loading,
+  "logout": Logout,
   "minus": Minus,
   "mouse-pointer": MousePointer,
   "move": Move,
+  "paste": Paste,
   "pause": Pause,
   "plus": Plus,
   "redo": Redo,
   "refresh": Refresh,
   "search": Search,
+  "share": Share,
+  "share2": Share2,
+  "shop-cart": ShopCart,
   "square": Square,
+  "trash": Trash,
   "triangle": Triangle,
   "undo": Undo,
   "zoom-in": ZoomIn,
@@ -68,7 +88,7 @@ const builtinIcons: Record<string, string> = {
 export default builtinIcons;
 exportToGlobal('icons', {
   get() {
-    return ["arrow-right","backward","bars","book","check","close","cog","cogs","copy","download","ellipsis-h","ellipsis-v","exchange","fast-backward","fast-forward","forward","list","loading","minus","mouse-pointer","move","pause","plus","redo","refresh","search","square","triangle","undo","zoom-in","zoom-out"]
+    return ["arrow-right","backward","bars","book","check","close","cog","cogs","copy","download","edit","ellipsis-h","ellipsis-v","exchange","eye","eye-close","fast-backward","fast-forward","file","forward","list","loading","logout","minus","mouse-pointer","move","paste","pause","plus","redo","refresh","search","share","share2","shop-cart","square","trash","triangle","undo","zoom-in","zoom-out"]
   }
 })
 // for Demo
@@ -83,23 +103,33 @@ exportToGlobal('icons', {
   <az-icon icon="cogs" title="cogs"></az-icon>
   <az-icon icon="copy" title="copy"></az-icon>
   <az-icon icon="download" title="download"></az-icon>
+  <az-icon icon="edit" title="edit"></az-icon>
   <az-icon icon="ellipsis-h" title="ellipsis-h"></az-icon>
   <az-icon icon="ellipsis-v" title="ellipsis-v"></az-icon>
   <az-icon icon="exchange" title="exchange"></az-icon>
+  <az-icon icon="eye" title="eye"></az-icon>
+  <az-icon icon="eye-close" title="eye-close"></az-icon>
   <az-icon icon="fast-backward" title="fast-backward"></az-icon>
   <az-icon icon="fast-forward" title="fast-forward"></az-icon>
+  <az-icon icon="file" title="file"></az-icon>
   <az-icon icon="forward" title="forward"></az-icon>
   <az-icon icon="list" title="list"></az-icon>
   <az-icon icon="loading" title="loading"></az-icon>
+  <az-icon icon="logout" title="logout"></az-icon>
   <az-icon icon="minus" title="minus"></az-icon>
   <az-icon icon="mouse-pointer" title="mouse-pointer"></az-icon>
   <az-icon icon="move" title="move"></az-icon>
+  <az-icon icon="paste" title="paste"></az-icon>
   <az-icon icon="pause" title="pause"></az-icon>
   <az-icon icon="plus" title="plus"></az-icon>
   <az-icon icon="redo" title="redo"></az-icon>
   <az-icon icon="refresh" title="refresh"></az-icon>
   <az-icon icon="search" title="search"></az-icon>
+  <az-icon icon="share" title="share"></az-icon>
+  <az-icon icon="share2" title="share2"></az-icon>
+  <az-icon icon="shop-cart" title="shop-cart"></az-icon>
   <az-icon icon="square" title="square"></az-icon>
+  <az-icon icon="trash" title="trash"></az-icon>
   <az-icon icon="triangle" title="triangle"></az-icon>
   <az-icon icon="undo" title="undo"></az-icon>
   <az-icon icon="zoom-in" title="zoom-in"></az-icon>
