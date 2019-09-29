@@ -78,6 +78,11 @@ export namespace Components {
     'min': string | number;
     'value': string | number;
   }
+  interface AzSpliter {
+    'direction': 'horizontal' | 'vertical';
+    'disabled': boolean;
+    'gap': number;
+  }
   interface AzSwitch {
     'caption': string;
     'size': ComponentSize;
@@ -177,6 +182,12 @@ declare global {
     new (): HTMLAzSliderElement;
   };
 
+  interface HTMLAzSpliterElement extends Components.AzSpliter, HTMLStencilElement {}
+  var HTMLAzSpliterElement: {
+    prototype: HTMLAzSpliterElement;
+    new (): HTMLAzSpliterElement;
+  };
+
   interface HTMLAzSwitchElement extends Components.AzSwitch, HTMLStencilElement {}
   var HTMLAzSwitchElement: {
     prototype: HTMLAzSwitchElement;
@@ -218,6 +229,7 @@ declare global {
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
+    'az-spliter': HTMLAzSpliterElement;
     'az-switch': HTMLAzSwitchElement;
     'az-tabs': HTMLAzTabsElement;
     'az-toolbar-button': HTMLAzToolbarButtonElement;
@@ -227,7 +239,7 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface AzButton extends JSXBase.HTMLAttributes<HTMLAzButtonElement> {
+  interface AzButton {
     'caption'?: string;
     'circle'?: boolean;
     'disabled'?: boolean;
@@ -240,30 +252,30 @@ declare namespace LocalJSX {
     */
     'type'?: ComponentStyle;
   }
-  interface AzCheckbox extends JSXBase.HTMLAttributes<HTMLAzCheckboxElement> {
+  interface AzCheckbox {
     'caption'?: string;
     'checked'?: boolean;
     'indeterminate'?: boolean;
     'onChanged'?: (event: CustomEvent<any>) => void;
   }
-  interface AzColorPicker extends JSXBase.HTMLAttributes<HTMLAzColorPickerElement> {
+  interface AzColorPicker {
     'caption'?: string;
     'color'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
   }
-  interface AzDialog extends JSXBase.HTMLAttributes<HTMLAzDialogElement> {
+  interface AzDialog {
     'caption'?: string;
     'fixed'?: boolean;
     'onClosed'?: (event: CustomEvent<any>) => void;
   }
-  interface AzIcon extends JSXBase.HTMLAttributes<HTMLAzIconElement> {
+  interface AzIcon {
     'color'?: string;
     'height'?: number | string;
     'icon'?: string;
     'register'?: boolean;
     'width'?: number | string;
   }
-  interface AzInput extends JSXBase.HTMLAttributes<HTMLAzInputElement> {
+  interface AzInput {
     'autocapitalize'?: string;
     'autocomplete'?: string;
     'autocorrect'?: string;
@@ -273,50 +285,55 @@ declare namespace LocalJSX {
     'type'?: string;
     'value'?: string;
   }
-  interface AzPanel extends JSXBase.HTMLAttributes<HTMLAzPanelElement> {
+  interface AzPanel {
     'caption'?: string;
   }
-  interface AzProgressBar extends JSXBase.HTMLAttributes<HTMLAzProgressBarElement> {
+  interface AzProgressBar {
     'caption'?: string;
     'max'?: number;
     'value'?: number;
   }
-  interface AzSection extends JSXBase.HTMLAttributes<HTMLAzSectionElement> {
+  interface AzSection {
     'caption'?: string;
     'collapsable'?: boolean;
     'collapsed'?: boolean;
   }
-  interface AzSelect extends JSXBase.HTMLAttributes<HTMLAzSelectElement> {}
-  interface AzSlider extends JSXBase.HTMLAttributes<HTMLAzSliderElement> {
+  interface AzSelect {}
+  interface AzSlider {
     'caption'?: string;
     'max'?: string | number;
     'min'?: string | number;
     'value'?: string | number;
   }
-  interface AzSwitch extends JSXBase.HTMLAttributes<HTMLAzSwitchElement> {
+  interface AzSpliter {
+    'direction'?: 'horizontal' | 'vertical';
+    'disabled'?: boolean;
+    'gap'?: number;
+  }
+  interface AzSwitch {
     'caption'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
     'size'?: ComponentSize;
     'type'?: ComponentStyle;
     'value'?: boolean;
   }
-  interface AzTabs extends JSXBase.HTMLAttributes<HTMLAzTabsElement> {
+  interface AzTabs {
     'activeIndex'?: number;
     'items'?: any[];
   }
-  interface AzToolbarButton extends JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement> {
+  interface AzToolbarButton {
     'caption'?: string;
     'icon'?: string;
     'type'?: ComponentStyle;
   }
-  interface AzTooltip extends JSXBase.HTMLAttributes<HTMLAzTooltipElement> {
+  interface AzTooltip {
     'caption'?: string;
     'delay'?: number;
     'isShow'?: boolean;
     'placement'?: 'top' | 'bottom' | 'left' | 'right';
     'trigger'?: 'hover' | 'click' | 'manual';
   }
-  interface AzTree extends JSXBase.HTMLAttributes<HTMLAzTreeElement> {
+  interface AzTree {
     'caption'?: string;
     'onCollapsed'?: (event: CustomEvent<any>) => void;
     'onExpanded'?: (event: CustomEvent<any>) => void;
@@ -338,6 +355,7 @@ declare namespace LocalJSX {
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
+    'az-spliter': AzSpliter;
     'az-switch': AzSwitch;
     'az-tabs': AzTabs;
     'az-toolbar-button': AzToolbarButton;
@@ -351,7 +369,25 @@ export { LocalJSX as JSX };
 
 declare module "@stencil/core" {
   export namespace JSX {
-    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
+    interface IntrinsicElements {
+      'az-button': LocalJSX.AzButton & JSXBase.HTMLAttributes<HTMLAzButtonElement>;
+      'az-checkbox': LocalJSX.AzCheckbox & JSXBase.HTMLAttributes<HTMLAzCheckboxElement>;
+      'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
+      'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
+      'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
+      'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
+      'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
+      'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
+      'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
+      'az-select': LocalJSX.AzSelect & JSXBase.HTMLAttributes<HTMLAzSelectElement>;
+      'az-slider': LocalJSX.AzSlider & JSXBase.HTMLAttributes<HTMLAzSliderElement>;
+      'az-spliter': LocalJSX.AzSpliter & JSXBase.HTMLAttributes<HTMLAzSpliterElement>;
+      'az-switch': LocalJSX.AzSwitch & JSXBase.HTMLAttributes<HTMLAzSwitchElement>;
+      'az-tabs': LocalJSX.AzTabs & JSXBase.HTMLAttributes<HTMLAzTabsElement>;
+      'az-toolbar-button': LocalJSX.AzToolbarButton & JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement>;
+      'az-tooltip': LocalJSX.AzTooltip & JSXBase.HTMLAttributes<HTMLAzTooltipElement>;
+      'az-tree': LocalJSX.AzTree & JSXBase.HTMLAttributes<HTMLAzTreeElement>;
+    }
   }
 }
 

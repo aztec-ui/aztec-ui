@@ -1,0 +1,32 @@
+az-spliter {
+  display: flex;
+  position: relative;
+  padding: 0 !important;
+  .handle {
+    position: absolute;
+    box-sizing: border-box;
+    &.active {
+      background-color: var(--az-primary-color);
+    }
+    &:hover {
+      background-color: var(--az-primary-color);
+      opacity: 0.8;
+    }
+  }
+  &.horizontal{
+    flex-direction: row;
+    .handle {
+      cursor: col-resize;
+      top: 0;
+      bottom: 0;
+    }
+  }
+  &.vertical {
+    flex-direction: column;
+    .handle {
+      cursor: row-resize;
+      left: 0;
+      right: 0;
+    }
+  }
+}

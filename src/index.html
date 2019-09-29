@@ -186,6 +186,31 @@
       <az-icon class="az-button" icon="minus" onclick="progressbar1.value-=10"></az-icon>
       <az-icon icon="plus" onclick="progressbar1.value+=10"></az-icon>
     </az-section>
+    <az-section caption="Spliter">
+      <az-spliter direction="vertical">
+        <az-panel style="background-color:var(--az-success-color)">
+          Panel1
+        </az-panel>
+        <az-panel style="background-color:var(--az-warning-color)">
+          Panel2
+        </az-panel>
+        <az-panel style="background-color:var(--az-danger-color)">
+          Panel3
+        </az-panel>
+      </az-spliter>
+      <br/>
+      <az-spliter direction="horizontal">
+        <az-panel style="background-color:var(--az-success-color)">
+          Panel4
+        </az-panel>
+        <az-panel style="background-color:var(--az-warning-color)">
+          Panel5
+        </az-panel>
+        <az-panel style="background-color:var(--az-danger-color)">
+          Panel6
+        </az-panel>
+      </az-spliter>
+    </az-section>
   </az-panel>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
