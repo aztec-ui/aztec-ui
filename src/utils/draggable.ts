@@ -2,8 +2,14 @@ function addListener(element: Element | Document, type: string, callback: any, c
   element.addEventListener(type, callback, capture);
 }
 
+export interface IDraggableOptions {
+  direction?: 'vertical' | 'horizontal' | 'both';
+  initFromStyle?: boolean,
+  onRelease?: (e: MouseEvent) => void;
+}
+
 // @ts-ignore
-export function draggable(element: Element, handle: Element) {
+export function draggable(element: Element, handle: Element, opts: IDraggableOptions = {direction: 'both', initFromStyle: true}) {
   let dragging: any = null;
 
   // @ts-ignore
@@ -11,9 +17,9 @@ export function draggable(element: Element, handle: Element) {
     // @ts-ignore
     e = window.event || e;
     // @ts-ignore
-    const left = element.style.left || element.offsetLeft || 0;
+    const left = opts.initFromStyle ? element.style.left || element.offsetLeft || 0 : element.offsetLeft;
     // @ts-ignore
-    const top = element.style.top || element.offsetTop || 0;
+    const top = opts.initFromStyle ? element.style.top || element.offsetTop || 0 : element.offsetTop;
     dragging = {
       mouseX: e.clientX,
       mouseY: e.clientY,
@@ -26,14 +32,17 @@ export function draggable(element: Element, handle: Element) {
     if (handle.setCapture) handle.setCapture();
   });
 
-  addListener(handle, 'losecapture', function() {
+  addListener(handle, 'losecapture', function () {
     dragging = null;
   });
 
-  addListener(document, 'mouseup', function() {
+  addListener(document, 'mouseup', function (e: MouseEvent) {
     dragging = null;
     // @ts-ignore
     if (document.releaseCapture) document.releaseCapture();
+    if (opts.onRelease) {
+      opts.onRelease(e)
+    }
   }, true);
 
   // @ts-ignore
@@ -46,8 +55,8 @@ export function draggable(element: Element, handle: Element) {
     const top = dragging.startY + (e.clientY - dragging.mouseY);
     const left = dragging.startX + (e.clientX - dragging.mouseX);
     // @ts-ignore
-    element.style.top = (Math.max(0, top)) + 'px';
+    if (opts.direction == 'both' || opts.direction === 'vertical') element.style.top = (Math.max(0, top)) + 'px';
     // @ts-ignore
-    element.style.left = (Math.max(0, left)) + 'px';
+    if (opts.direction == 'both' || opts.direction === 'horizontal') element.style.left = (Math.max(0, left)) + 'px';
   }, true);
 }
