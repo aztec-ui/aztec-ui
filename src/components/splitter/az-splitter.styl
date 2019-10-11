@@ -2,9 +2,13 @@ az-spliter {
   display: flex;
   position: relative;
   padding: 0 !important;
+  & > :not(.handle) {
+    padding: 0 !important;
+    margin: 0 !important;;
+    overflow: hidden !important;;
+  }
   .handle {
     position: absolute;
-    box-sizing: border-box;
     &.active {
       background-color: var(--az-primary-color);
     }

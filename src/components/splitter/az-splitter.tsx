@@ -24,9 +24,9 @@ export class AzSpliter {
     this.onMouseDownHandle = this.onMouseDownHandle.bind(this);
 
     this.childrenEles = Array.from(this.el.children);
-    const r = (1 / this.childrenEles.length).toFixed(6);
+    const r = (100 / this.childrenEles.length).toFixed(6);
     this.childrenEles.forEach((child: HTMLElement, index: number) => {
-      child.style.flex = `${r} ${r} 0`;
+      child.style.flex = `0 0 ${r}%`;
       if (index === this.childrenEles.length - 1) return;
       const handle = document.createElement('div');
       handle.classList.add('handle');
@@ -40,10 +40,9 @@ export class AzSpliter {
       }});
     });
 
-    // this.childrenEles.forEach((child: HTMLElement) => {
-    //   child.addEventListener('mousemove', this.onMouseMove);
-    //   child.style.flex = `${r} ${r} 0`;
-    // });
+    if (this.direction === 'vertical' && this.el.style.height === '') {
+      this.el.style.height = `${this.el.getBoundingClientRect().height}px`;
+    }
   }
 
   calculateHandlePosition(handle: HTMLElement, usePx = false) {
@@ -64,52 +63,24 @@ export class AzSpliter {
         styl.left = `${percent.toFixed(6)}%`;
       }
     });
+    window.setTimeout(() => {
+      const prop = this.direction === 'vertical' ? 'top' : 'left';
+      const pos = Array.from(this.el.querySelectorAll('.handle')).map((h: HTMLDivElement) => parseFloat(h.style[prop]));
+      if (pos.some(isNaN)) return;
+      const lastIndex = this.childrenEles.length - 1;
+      this.childrenEles.forEach((child: HTMLElement, index: number) => {
+        let r;
+        if (index === 0) r = pos[0];
+        else if (index === lastIndex) r = 100 - pos[lastIndex - 1];
+        else r = pos[index] - pos[index - 1];
+        child.style.flex = `0 0 ${r}%`;
+      });
+    }, 0);
   }
 
   onMouseDownHandle(e: MouseEvent) {
     (e.target as HTMLElement).classList.add('active');
     this.dragging = true;
-  }
-
-  onMouseMove1(e: MouseEvent) {
-    if (this.disabled) return;
-    const child = e.target as HTMLElement;
-    const sty = this.handle.style;
-    const isFirstEle = child.previousElementSibling === this.handle;
-    const isLastEle = child.nextElementSibling === null;
-
-    if (this.dragging) {
-
-    } else {
-      let isPassHalf;
-      sty.display = 'none';
-      if (this.direction === 'vertical') {
-        isPassHalf = e.offsetY > (child.offsetHeight / 2);
-        if ((isFirstEle && !isPassHalf) || (isLastEle && isPassHalf)) return;
-        sty.cursor = 'row-resize';
-        sty.display = '';
-        sty.left = sty.right = '0';
-        sty.width = `${child.offsetWidth}px`;
-        sty.height = `${this.gap}px`;
-        sty.top = `${child.offsetTop + (isPassHalf ? child.offsetHeight : 0) - this.gap / 2}px`;
-      } else {
-        isPassHalf = e.offsetX > (child.offsetWidth / 2);
-        if ((isFirstEle && !isPassHalf) || (isLastEle && isPassHalf)) return;
-        sty.cursor = 'col-resize';
-        sty.display = '';
-        sty.top = sty.bottom = '0';
-        sty.height = `${child.offsetHeight}px`;
-        sty.width = `${this.gap}px`;
-        sty.left = `${child.offsetLeft + (isPassHalf ? child.offsetWidth : 0) - this.gap / 2}px`;
-      }
-      if (isPassHalf) {
-        this.childBefore = e.target as HTMLElement;
-        this.childAfter = (e.target as HTMLElement).nextElementSibling as HTMLElement;
-      } else {
-        this.childBefore = (e.target as HTMLElement).previousElementSibling as HTMLElement;
-        this.childAfter = e.target as HTMLElement;
-      }
-    }
   }
 
   render() {
