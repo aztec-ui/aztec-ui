@@ -13,7 +13,6 @@ export class AzSpliter {
   @Prop() disabled: boolean = false;
   @Prop() gap: number = 4;
 
-  handle: HTMLDivElement;
   childrenEles: Element[] = [];
   dragging: boolean = false;
   childBefore: HTMLElement;
