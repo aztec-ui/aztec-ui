@@ -24,8 +24,9 @@ export class AzSpliter {
 
     this.childrenEles = Array.from(this.el.children);
     const r = (100 / this.childrenEles.length).toFixed(6) + '%';
+    const prop = this.direction === 'vertical' ? 'height' : 'width';
     this.childrenEles.forEach((child: HTMLElement, index: number) => {
-      const w = child.style.width || child.style.flexBasis;
+      const w = child.style[prop] || child.style.flexBasis;
       child.style.flex = `0 0 ${w || r}`;
       if (index === this.childrenEles.length - 1) return;
       const handle = document.createElement('div');
