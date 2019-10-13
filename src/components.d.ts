@@ -78,7 +78,7 @@ export namespace Components {
     'min': string | number;
     'value': string | number;
   }
-  interface AzSpliter {
+  interface AzSplitter {
     'direction': 'horizontal' | 'vertical';
     'disabled': boolean;
     'gap': number;
@@ -182,10 +182,10 @@ declare global {
     new (): HTMLAzSliderElement;
   };
 
-  interface HTMLAzSpliterElement extends Components.AzSpliter, HTMLStencilElement {}
-  var HTMLAzSpliterElement: {
-    prototype: HTMLAzSpliterElement;
-    new (): HTMLAzSpliterElement;
+  interface HTMLAzSplitterElement extends Components.AzSplitter, HTMLStencilElement {}
+  var HTMLAzSplitterElement: {
+    prototype: HTMLAzSplitterElement;
+    new (): HTMLAzSplitterElement;
   };
 
   interface HTMLAzSwitchElement extends Components.AzSwitch, HTMLStencilElement {}
@@ -229,7 +229,7 @@ declare global {
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
-    'az-spliter': HTMLAzSpliterElement;
+    'az-splitter': HTMLAzSplitterElement;
     'az-switch': HTMLAzSwitchElement;
     'az-tabs': HTMLAzTabsElement;
     'az-toolbar-button': HTMLAzToolbarButtonElement;
@@ -305,7 +305,7 @@ declare namespace LocalJSX {
     'min'?: string | number;
     'value'?: string | number;
   }
-  interface AzSpliter {
+  interface AzSplitter {
     'direction'?: 'horizontal' | 'vertical';
     'disabled'?: boolean;
     'gap'?: number;
@@ -355,7 +355,7 @@ declare namespace LocalJSX {
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
-    'az-spliter': AzSpliter;
+    'az-splitter': AzSplitter;
     'az-switch': AzSwitch;
     'az-tabs': AzTabs;
     'az-toolbar-button': AzToolbarButton;
@@ -381,7 +381,7 @@ declare module "@stencil/core" {
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
       'az-select': LocalJSX.AzSelect & JSXBase.HTMLAttributes<HTMLAzSelectElement>;
       'az-slider': LocalJSX.AzSlider & JSXBase.HTMLAttributes<HTMLAzSliderElement>;
-      'az-spliter': LocalJSX.AzSpliter & JSXBase.HTMLAttributes<HTMLAzSpliterElement>;
+      'az-splitter': LocalJSX.AzSplitter & JSXBase.HTMLAttributes<HTMLAzSplitterElement>;
       'az-switch': LocalJSX.AzSwitch & JSXBase.HTMLAttributes<HTMLAzSwitchElement>;
       'az-tabs': LocalJSX.AzTabs & JSXBase.HTMLAttributes<HTMLAzTabsElement>;
       'az-toolbar-button': LocalJSX.AzToolbarButton & JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement>;

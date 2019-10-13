@@ -2,7 +2,7 @@ import { Component, Prop, Element, Host, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { draggable } from '../../utils/draggable';
 @Component({
-  tag: 'az-spliter',
+  tag: 'az-splitter',
   styleUrl: 'az-splitter.styl',
   shadow: false
 })

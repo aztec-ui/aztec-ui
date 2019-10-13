@@ -187,7 +187,7 @@
       <az-icon icon="plus" onclick="progressbar1.value+=10"></az-icon>
     </az-section>
     <az-section caption="Spliter">
-      <az-spliter direction="vertical" style="height: 300px;">
+      <az-splitter direction="vertical" style="height: 300px;">
         <div class="panel">
           <az-panel style="background-color:var(--az-success-color)">Panel1</az-panel>
         </div class="panel">
@@ -197,19 +197,19 @@
         <div class="panel">
           <az-panel style="background-color:var(--az-danger-color)">Panel3</az-panel>
         </div class="panel">
-      </az-spliter>
+      </az-splitter>
       <br/>
-      <az-spliter direction="horizontal">
-        <div class="panel">
+      <az-splitter direction="horizontal">
+        <div class="panel" style="flex: 0 0 20%">
           <az-panel style="background-color:var(--az-success-color)">Panel4</az-panel>
         </div class="panel">
-        <div class="panel">
+        <div class="panel" style="flex: 0 0 60%">
           <az-panel style="background-color:var(--az-warning-color)">Panel5</az-panel>
         </div class="panel">
-        <div class="panel">
+        <div class="panel" style="flex: 0 0 20%">
           <az-panel style="background-color:var(--az-danger-color)">Panel6</az-panel>
         </div class="panel">
-      </az-spliter>
+      </az-splitter>
     </az-section>
   </az-panel>
   <script type="text/javascript">
