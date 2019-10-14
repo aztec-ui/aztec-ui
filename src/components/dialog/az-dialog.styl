@@ -23,8 +23,11 @@ az-dialog {
     top: 38.2%;
   }
   .az-dialog__header {
-    background-color: #727272;
     text-align: center;
+    line-height: 2em;
+    &:hover {
+      background-color: var(--az-border-color);
+    }
   }
   .az-dialog__title {
     font-size: var(--az-font-size-normal);
@@ -33,6 +36,7 @@ az-dialog {
     float: right;
     az-icon {
       cursor: pointer;
+      vertical-align: middle;
     }
   }
   .az-dialog__body {
