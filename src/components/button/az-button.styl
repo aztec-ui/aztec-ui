@@ -123,6 +123,9 @@ az-button button.success {
     border-color: var(--az-success-color-light);
     background-color:var(--az-success-color-light);
   }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2em s("rgba(var(%s), %s)", --az-success-color-comps, 0.2);
+  }
 }
 az-button button.warning {
   color: #fff;
@@ -131,6 +134,9 @@ az-button button.warning {
   &:hover {
     border-color: var(--az-warning-color-light);
     background-color:var(--az-warning-color-light);
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2em s("rgba(var(%s), %s)", --az-warning-color-comps, 0.2);
   }
 }
 az-button button.danger {
@@ -141,6 +147,9 @@ az-button button.danger {
     border-color: var(--az-danger-color-light);
     background-color:var(--az-danger-color-light);
   }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2em s("rgba(var(%s), %s)", --az-danger-color-comps, 0.2);
+  }
 }
 az-button button.info {
   color: #fff;
@@ -149,6 +158,9 @@ az-button button.info {
   &:hover {
     border-color: var(--az-info-color-light);
     background-color:var(--az-info-color-light);
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2em s("rgba(var(%s), %s)", --az-info-color-comps, 0.2);
   }
 }
 
