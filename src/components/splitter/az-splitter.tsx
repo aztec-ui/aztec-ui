@@ -86,7 +86,7 @@ export class AzSpliter {
 
   render() {
     return (
-      <Host class={{"az-spliter": true, [this.direction]: true}}>
+      <Host class={{"az-splitter": true, [this.direction]: true}}>
         <slot></slot>
       </Host>
     );
