@@ -21,7 +21,7 @@ import { exportToGlobal } from '../../../utils/utils';
 __._(name => {
   _(`import ${camelize(name)} from './${name}';`)
 });
-_(`const builtinIcons: Record<string, string> = {`)
+_(`const builtinIcons: Record<string, string | string[]> = {`)
 __._(name => {
 _(`  "${name}": ${camelize(name)},`);
 });

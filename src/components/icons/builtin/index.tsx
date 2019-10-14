@@ -47,7 +47,7 @@ import Triangle from './triangle';
 import Undo from './undo';
 import ZoomIn from './zoom-in';
 import ZoomOut from './zoom-out';
-const builtinIcons: Record<string, string> = {
+const builtinIcons: Record<string, string | string[]> = {
   "arrow-right": ArrowRight,
   "backward": Backward,
   "bars": Bars,
