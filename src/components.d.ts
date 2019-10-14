@@ -37,6 +37,9 @@ export namespace Components {
     'caption': string;
     'color': string;
   }
+  interface AzContextMenu {
+    'caption': string;
+  }
   interface AzDialog {
     'caption': string;
     'fixed': boolean;
@@ -57,6 +60,11 @@ export namespace Components {
     'spellcheck': boolean;
     'type': string;
     'value': string;
+  }
+  interface AzMenuItem {
+    'action': string;
+    'caption': string;
+    'icon': string;
   }
   interface AzPanel {
     'caption': string;
@@ -134,6 +142,12 @@ declare global {
     new (): HTMLAzColorPickerElement;
   };
 
+  interface HTMLAzContextMenuElement extends Components.AzContextMenu, HTMLStencilElement {}
+  var HTMLAzContextMenuElement: {
+    prototype: HTMLAzContextMenuElement;
+    new (): HTMLAzContextMenuElement;
+  };
+
   interface HTMLAzDialogElement extends Components.AzDialog, HTMLStencilElement {}
   var HTMLAzDialogElement: {
     prototype: HTMLAzDialogElement;
@@ -150,6 +164,12 @@ declare global {
   var HTMLAzInputElement: {
     prototype: HTMLAzInputElement;
     new (): HTMLAzInputElement;
+  };
+
+  interface HTMLAzMenuItemElement extends Components.AzMenuItem, HTMLStencilElement {}
+  var HTMLAzMenuItemElement: {
+    prototype: HTMLAzMenuItemElement;
+    new (): HTMLAzMenuItemElement;
   };
 
   interface HTMLAzPanelElement extends Components.AzPanel, HTMLStencilElement {}
@@ -221,9 +241,11 @@ declare global {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
     'az-color-picker': HTMLAzColorPickerElement;
+    'az-context-menu': HTMLAzContextMenuElement;
     'az-dialog': HTMLAzDialogElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
+    'az-menu-item': HTMLAzMenuItemElement;
     'az-panel': HTMLAzPanelElement;
     'az-progress-bar': HTMLAzProgressBarElement;
     'az-section': HTMLAzSectionElement;
@@ -263,6 +285,9 @@ declare namespace LocalJSX {
     'color'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
   }
+  interface AzContextMenu {
+    'caption'?: string;
+  }
   interface AzDialog {
     'caption'?: string;
     'fixed'?: boolean;
@@ -284,6 +309,12 @@ declare namespace LocalJSX {
     'spellcheck'?: boolean;
     'type'?: string;
     'value'?: string;
+  }
+  interface AzMenuItem {
+    'action'?: string;
+    'caption'?: string;
+    'icon'?: string;
+    'onSelected'?: (event: CustomEvent<any>) => void;
   }
   interface AzPanel {
     'caption'?: string;
@@ -347,9 +378,11 @@ declare namespace LocalJSX {
     'az-button': AzButton;
     'az-checkbox': AzCheckbox;
     'az-color-picker': AzColorPicker;
+    'az-context-menu': AzContextMenu;
     'az-dialog': AzDialog;
     'az-icon': AzIcon;
     'az-input': AzInput;
+    'az-menu-item': AzMenuItem;
     'az-panel': AzPanel;
     'az-progress-bar': AzProgressBar;
     'az-section': AzSection;
@@ -373,9 +406,11 @@ declare module "@stencil/core" {
       'az-button': LocalJSX.AzButton & JSXBase.HTMLAttributes<HTMLAzButtonElement>;
       'az-checkbox': LocalJSX.AzCheckbox & JSXBase.HTMLAttributes<HTMLAzCheckboxElement>;
       'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
+      'az-context-menu': LocalJSX.AzContextMenu & JSXBase.HTMLAttributes<HTMLAzContextMenuElement>;
       'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
+      'az-menu-item': LocalJSX.AzMenuItem & JSXBase.HTMLAttributes<HTMLAzMenuItemElement>;
       'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
       'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
