@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="/build/aztec-ui.css" />
   <script type="module" src="/build/aztec-ui.esm.js"></script>
   <script nomodule src="/build/aztec-ui.js"></script>
+  <style>
+    .app {display: none;}
+  </style>
   <script>
     function $(selector) {
       const eles = Array.from(document.querySelectorAll(selector));
@@ -32,17 +35,44 @@
 </head>
 <body class="aztec-app">
   <style>
+    html,body{margin: 0; padding: 0;height: 100%;}
+  </style>
+  <div class="app" id="ide">
+    <style>
+      #ide {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #ide > az-splitter {
+        height: 100%;
+      }
+    </style>
+    <az-splitter direction="horizontal">
+      <div class="panel" style="flex: 0 0 20%">
+        <az-panel style="background-color:var(--az-success-color)">Panel4</az-panel>
+      </div class="panel">
+      <div class="panel" style="flex: 0 0 60%">
+        <az-panel style="background-color:var(--az-warning-color)">Panel5</az-panel>
+      </div class="panel">
+      <div class="panel" style="flex: 0 0 20%">
+        <az-panel style="background-color:var(--az-danger-color)">Panel6</az-panel>
+      </div class="panel">
+    </az-splitter>
+  </div>
+  <div class="app" id="demo">
+  <style>
     #demo {
       background-color: var(--az-primary-color);
       padding: .5em;
     }
-    .icons .content az-icon {
+    #demo .icons .content az-icon {
       margin-bottom: 4px;
     }
-    az-section .content {
+    #demo az-section .content {
       padding-bottom: 1em !important;
     }
-    az-section[caption="Progress Bar"] .content az-icon {
+    #demo az-section[caption="Progress Bar"] .content az-icon {
       cursor: pointer;
       border: var(--az-button-border);
     }
@@ -188,13 +218,22 @@
     </az-section>
     <az-section caption="Spliter">
       <az-splitter direction="vertical" style="height: 300px;">
-        <div class="panel">
+        <div class="panel" style="flex: 0 0 20%">
           <az-panel style="background-color:var(--az-success-color)">Panel1</az-panel>
         </div class="panel">
-        <div class="panel">
-          <az-panel style="background-color:var(--az-warning-color)">Panel2</az-panel>
+        <div class="panel" style="flex: 0 0 60%">
+          <az-panel style="background-color:var(--az-warning-color)">
+            Panel2
+            <h1>Right click here</h1>
+          </az-panel>
+          <az-context-menu id="ctxmenu1">
+            <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
+            <az-menu-item caption="-"></az-menu-item>
+            <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
+            <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
+          </az-context-menu>
         </div class="panel">
-        <div class="panel">
+        <div class="panel" style="flex: 0 0 20%">
           <az-panel style="background-color:var(--az-danger-color)">Panel3</az-panel>
         </div class="panel">
       </az-splitter>
@@ -235,7 +274,13 @@
         buttonDisabled = !buttonDisabled;
         $('#buttons az-button').disabled = buttonDisabled;
       });
+      ctxmenu1.addEventListener('selected', e => alert(e.detail));
     });
+  </script>
+  </div>
+  <script type="module">
+    const id = location.search.replace('?app=', '') || 'demo';
+    document.querySelector('#' + id).style.display = 'block';
   </script>
 </body>
 </html>
