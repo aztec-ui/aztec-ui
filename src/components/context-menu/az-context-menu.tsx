@@ -11,29 +11,34 @@ export class AzContextMenu {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
+  container: HTMLElement;
 
   @Inject({
     sync: ['show', 'hide', 'items',  'insertItem', 'removeItem']
   })
   componentDidLoad() {
+    this.container = this.el.parentElement;
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     const parent = this.el.parentElement;
-    parent.style.position = 'relative';
     parent.addEventListener('contextmenu', this.show);
     document.addEventListener('mouseup', (e: MouseEvent) => {
-      const parent = (e.target as HTMLElement).closest('az-context-menu');
-    if (parent == null) this.el.style.display = 'none';
+      if (e.which !== 3) this.hide()
     });
     this.el.addEventListener('selected', this.hide);
+
+    // move menu to body
+    document.body.appendChild(this.el);
   }
 
   show(e: MouseEvent) {
     const styl = this.el.style;
     styl.display = 'flex';
-    styl.left = e.offsetX + 'px';
-    styl.top = e.offsetY + 'px';
-    e.preventDefault();
+    if (e) {
+      styl.left = e.pageX + 'px';
+      styl.top = e.pageY + 'px';
+      e.preventDefault();
+    }
   }
 
   hide() {
