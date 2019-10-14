@@ -54,12 +54,16 @@
   --az-transform-animation-duration-normal: 100ms;
 }
 .aztec-app {
+  font-family: var(--az-font-family);
   font-size: var(--az-font-size-normal);
   background-color: var(--az-primary-color);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   & * {
     box-sizing: border-box;
+  }
+  .az-caption {
+    color: var(--az-caption-color);
   }
 }
 
