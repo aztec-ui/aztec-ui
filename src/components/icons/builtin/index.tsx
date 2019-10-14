@@ -15,11 +15,14 @@ import Edit from './edit';
 import EllipsisH from './ellipsis-h';
 import EllipsisV from './ellipsis-v';
 import Exchange from './exchange';
+import Exclamation from './exclamation';
 import Eye from './eye';
 import EyeClose from './eye-close';
 import FastBackward from './fast-backward';
 import FastForward from './fast-forward';
 import File from './file';
+import FloppyDisk from './floppy-disk';
+import Folder from './folder';
 import Forward from './forward';
 import List from './list';
 import Loading from './loading';
@@ -27,9 +30,11 @@ import Logout from './logout';
 import Minus from './minus';
 import MousePointer from './mouse-pointer';
 import Move from './move';
+import OpenFolder from './open-folder';
 import Paste from './paste';
 import Pause from './pause';
 import Plus from './plus';
+import Question from './question';
 import Redo from './redo';
 import Refresh from './refresh';
 import Search from './search';
@@ -42,7 +47,7 @@ import Triangle from './triangle';
 import Undo from './undo';
 import ZoomIn from './zoom-in';
 import ZoomOut from './zoom-out';
-const builtinIcons: Record<string, string | string[]> = {
+const builtinIcons: Record<string, string> = {
   "arrow-right": ArrowRight,
   "backward": Backward,
   "bars": Bars,
@@ -57,11 +62,14 @@ const builtinIcons: Record<string, string | string[]> = {
   "ellipsis-h": EllipsisH,
   "ellipsis-v": EllipsisV,
   "exchange": Exchange,
+  "exclamation": Exclamation,
   "eye": Eye,
   "eye-close": EyeClose,
   "fast-backward": FastBackward,
   "fast-forward": FastForward,
   "file": File,
+  "floppy-disk": FloppyDisk,
+  "folder": Folder,
   "forward": Forward,
   "list": List,
   "loading": Loading,
@@ -69,9 +77,11 @@ const builtinIcons: Record<string, string | string[]> = {
   "minus": Minus,
   "mouse-pointer": MousePointer,
   "move": Move,
+  "open-folder": OpenFolder,
   "paste": Paste,
   "pause": Pause,
   "plus": Plus,
+  "question": Question,
   "redo": Redo,
   "refresh": Refresh,
   "search": Search,
@@ -88,7 +98,7 @@ const builtinIcons: Record<string, string | string[]> = {
 export default builtinIcons;
 exportToGlobal('icons', {
   get() {
-    return ["arrow-right","backward","bars","book","check","close","cog","cogs","copy","download","edit","ellipsis-h","ellipsis-v","exchange","eye","eye-close","fast-backward","fast-forward","file","forward","list","loading","logout","minus","mouse-pointer","move","paste","pause","plus","redo","refresh","search","share","share2","shop-cart","square","trash","triangle","undo","zoom-in","zoom-out"]
+    return ["arrow-right","backward","bars","book","check","close","cog","cogs","copy","download","edit","ellipsis-h","ellipsis-v","exchange","exclamation","eye","eye-close","fast-backward","fast-forward","file","floppy-disk","folder","forward","list","loading","logout","minus","mouse-pointer","move","open-folder","paste","pause","plus","question","redo","refresh","search","share","share2","shop-cart","square","trash","triangle","undo","zoom-in","zoom-out"]
   }
 })
 // for Demo
@@ -107,11 +117,14 @@ exportToGlobal('icons', {
   <az-icon icon="ellipsis-h" title="ellipsis-h"></az-icon>
   <az-icon icon="ellipsis-v" title="ellipsis-v"></az-icon>
   <az-icon icon="exchange" title="exchange"></az-icon>
+  <az-icon icon="exclamation" title="exclamation"></az-icon>
   <az-icon icon="eye" title="eye"></az-icon>
   <az-icon icon="eye-close" title="eye-close"></az-icon>
   <az-icon icon="fast-backward" title="fast-backward"></az-icon>
   <az-icon icon="fast-forward" title="fast-forward"></az-icon>
   <az-icon icon="file" title="file"></az-icon>
+  <az-icon icon="floppy-disk" title="floppy-disk"></az-icon>
+  <az-icon icon="folder" title="folder"></az-icon>
   <az-icon icon="forward" title="forward"></az-icon>
   <az-icon icon="list" title="list"></az-icon>
   <az-icon icon="loading" title="loading"></az-icon>
@@ -119,9 +132,11 @@ exportToGlobal('icons', {
   <az-icon icon="minus" title="minus"></az-icon>
   <az-icon icon="mouse-pointer" title="mouse-pointer"></az-icon>
   <az-icon icon="move" title="move"></az-icon>
+  <az-icon icon="open-folder" title="open-folder"></az-icon>
   <az-icon icon="paste" title="paste"></az-icon>
   <az-icon icon="pause" title="pause"></az-icon>
   <az-icon icon="plus" title="plus"></az-icon>
+  <az-icon icon="question" title="question"></az-icon>
   <az-icon icon="redo" title="redo"></az-icon>
   <az-icon icon="refresh" title="refresh"></az-icon>
   <az-icon icon="search" title="search"></az-icon>
