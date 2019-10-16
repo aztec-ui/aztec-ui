@@ -12,6 +12,7 @@ import {
 } from './global/typing';
 import {
   AzTreeItem,
+  IAzTreeItem,
 } from './components/tree/az-tree-item';
 
 export namespace Components {
@@ -114,8 +115,12 @@ export namespace Components {
     'trigger': 'hover' | 'click' | 'manual';
   }
   interface AzTree {
+    'activeItem': AzTreeItem;
     'addItem': (itemOrCaption: string | AzTreeItem, parent?: number | AzTreeItem, attrs?: any) => Promise<AzTreeItem>;
     'caption': string;
+    'checkedItems': Set<AzTreeItem>;
+    'fromJson': (items: IAzTreeItem[]) => Promise<void>;
+    'removeItem': (index: number) => Promise<void>;
     'roots': AzTreeItem[];
     'selecting': boolean;
   }
@@ -365,7 +370,9 @@ declare namespace LocalJSX {
     'trigger'?: 'hover' | 'click' | 'manual';
   }
   interface AzTree {
+    'activeItem'?: AzTreeItem;
     'caption'?: string;
+    'checkedItems'?: Set<AzTreeItem>;
     'onCollapsed'?: (event: CustomEvent<any>) => void;
     'onExpanded'?: (event: CustomEvent<any>) => void;
     'onInserted'?: (event: CustomEvent<any>) => void;
