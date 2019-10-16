@@ -33,7 +33,7 @@ export class AzCheckbox {
   render () {
     return <Host onClick={() => this.toggle()}>
       <i class={{
-        'az-checkbox-box': true,
+        'az-checkbox__box': true,
         'checked': this.checked
       }}>
         {this.indeterminate && <az-icon class="minus" icon="minus"></az-icon>}
