@@ -173,7 +173,9 @@
       <az-icon icon="zoom-out" title="zoom-out"></az-icon>
     </az-section>
     <az-section caption="Tree">
-      <az-tree />
+      <az-tree id="tree1" caption="Tree Demo" selecting="true"></az-tree>
+      <br/>
+      <az-tree id="tree2" caption="Files"></az-tree>
     </az-section>
     <az-section caption="Toolbar">
       <az-toolbar-button icon="triangle"></az-toolbar-button>
@@ -258,22 +260,47 @@
   </az-panel>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
-      const tree = document.querySelector('az-tree');
-      await tree.addItem('Colors', null, {icon: 'fort'});
-      const red = await tree.addItem('Red', 0);
-      await tree.addItem('Orange', 0);
-      await tree.addItem('Yellow', 0);
-      await tree.addItem('Green', 0);
-      await tree.addItem('Blue', 0);
-      await tree.addItem('Purple', 0);
-      await red.addItem('Ruby');
+      // colors
+      tree1.addItem('Colors', null, {icon: 'check', expanded: false});
+      tree1.addItem('Red', 0);
+      tree1.addItem('Orange', 0);
+      tree1.addItem('Yellow', 0);
+      tree1.addItem('Green', 0);
+      tree1.addItem('Blue', 0);
+      tree1.addItem('Purple', 0);
+      // shapes
+      tree1.addItem('Shapes', null, {icon: 'book', expanded: false});
+      tree1.addItem('Triangle', 1);
+      tree1.addItem('Rectange', 1);
+      // contries
+      tree1.addItem('Countries', null, {icon: 'fort', expanded: true});
+      const china = await tree1.addItem('🇨🇳China', 2);
+      tree1.addItem('Beijing', china);
+      const korea = await tree1.addItem('🇰🇷Korea', 2);
+      tree1.addItem('Soul', korea);
+      const japan = await tree1.addItem('🇯🇵Japan', 2);
+      tree1.addItem('Tokyo', japan);
+
+      tree2.fromJson([{
+        caption: 'node_modules',
+        items: [
+          {caption: '@stencil', icon: 'cogs', items: [
+            {caption: 'core', icon: 'folder'},
+            {caption: 'stylus', icon: 'folder'}
+          ]},
+          {caption: '@vue', icon: 'cogs', items: [
+            {caption: 'cli-service', icon: 'folder'},
+            {caption: 'cli-shared-util', icon: 'folder'}
+          ]}
+        ]
+      }])
       setTimeout(() => {
         loadingBtn.icon = 'check';
         loadingBtn.round = true;
         downloadBtn.caption = '';
         downloadBtn.circle = true;
         Array.from(document.querySelectorAll('az-switch')).forEach(s => s.value = !s.value);
-      }, 1500);
+      }, 3000);
       let buttonDisabled = false;
       disableAllButtons.addEventListener('changed', () => {
         buttonDisabled = !buttonDisabled;
