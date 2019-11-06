@@ -57,7 +57,7 @@ export namespace Components {
     'autocomplete': string;
     'autocorrect': string;
     'caption': string;
-    'native': HTMLInputElement;
+    'clearable': boolean;
     'spellcheck': boolean;
     'type': string;
     'value': string;
@@ -310,7 +310,7 @@ declare namespace LocalJSX {
     'autocomplete'?: string;
     'autocorrect'?: string;
     'caption'?: string;
-    'native'?: HTMLInputElement;
+    'clearable'?: boolean;
     'spellcheck'?: boolean;
     'type'?: string;
     'value'?: string;
