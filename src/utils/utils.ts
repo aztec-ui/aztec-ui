@@ -145,12 +145,19 @@ export function Inject (opts: IInjectOptions = makeInjectOpts()) {
           if (opts.children && opts.children.length) moveChildren(this.el, opts.children);
           if (opts.remount) remount(this.el, opts.remount);
 
+          // for debugging
+          this.el.__$stencil = this;
+
           if (!opts.after) fn.apply(this, args); // inject before constructor
 
           //
           if (opts.sync && opts.sync.length > 0) {
             opts.sync.forEach((name: string) => {
-              this.el[name] = this[name].bind(this);
+              if (typeof this[name] === 'function') {
+                this.el[name] = this[name].bind(this);
+              } else {
+                this.el[name] = this[name];
+              }
             });
           }
         };
