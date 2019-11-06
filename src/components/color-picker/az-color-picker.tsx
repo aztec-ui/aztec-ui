@@ -5,18 +5,24 @@ import parseColor from 'parse-color';
 import colorConvert from 'color-convert';
 import { Inject } from '../../utils/utils';
 
+const ColorFormat = ['hex', 'hsl', 'rgb'];
+
 @Component({
   tag: 'az-color-picker',
   styleUrl: 'az-color-picker.styl',
   shadow: false
 })
 export class AzColorPicker {
-  static defaultColor: string = 'hsla(0,100%,50%,1)';
+  static defaultColor: string = '#ff0000';
   @Element() el: HostElement;
+
+  colorfmtIndex: number = 0;
 
   @Prop() caption: string = '';
   @Prop({reflect: true}) color: string = AzColorPicker.defaultColor;
   @Prop({reflect: true}) showinput: boolean = true;
+  @Prop({reflect: true}) colorfmt: string = ColorFormat[this.colorfmtIndex];
+  @Prop({reflect: true}) readonly: boolean = false;
 
   @State() curColor: string = AzColorPicker.defaultColor;
   @State() strawLeft: number = 0;
@@ -34,7 +40,6 @@ export class AzColorPicker {
   panel: HTMLDivElement;
   input: HTMLInputElement;
 
-
   constructor() {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -47,8 +52,7 @@ export class AzColorPicker {
     document.addEventListener('mouseup', this.onMouseUp);
 
     this.parseCssString(this.color || AzColorPicker.defaultColor);
-    this._color = this.format(this.color);
-    this.changed.emit(this._color);
+    this.format(true, true);
   }
 
   @Watch('color')
@@ -56,14 +60,15 @@ export class AzColorPicker {
     if (oldValue !== newValue) {
       console.log(newValue, oldValue);
       this.parseCssString(newValue);
-      this.format(this._color, '', true);
+      this.format(true);
     }
   }
 
   onMouseDown(e: MouseEvent) {
     this.dragging = true;
     if (e.metaKey || e.ctrlKey) {
-      this.format(this._color, '', true);
+      this.nextFormat();
+      this.format(true, true);
     }
   }
 
@@ -78,6 +83,7 @@ export class AzColorPicker {
     this.update(e);
     this.dragging = false;
   }
+
   update(e: MouseEvent) {
     const rect = this.panel.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -91,6 +97,7 @@ export class AzColorPicker {
     this.calcColorString();
     this.changed.emit(this._color);
   }
+
   calcColorString() {
     const str = this._color;
     if (str.indexOf('rgb') === 0) {
@@ -121,7 +128,7 @@ export class AzColorPicker {
   onCssStringChange(e: Event): void {
     const str = (e.target as HTMLInputElement).value.trim();
     this.parseCssString(str);
-    this.format(this._color, '', true, true);
+    this.format(true, true);
   }
 
   getColorHex(withTransparentcy = false, hue = this.hue, sat = this.saturation, val = this.value) {
@@ -158,21 +165,30 @@ export class AzColorPicker {
    * @param {boolean} emit if true will emit 'changed' event
    * @return {string} next color
    */
-  format(str: string, format: 'hsl' | 'hex' | 'rgb' | '' = 'hex', set: boolean = false, emit: boolean = false) {
+  format(set: boolean = false, emit: boolean = false) {
     let result: string;
-    if (str.indexOf('rgb') === 0 || format === 'hsl') {
+    if (this.colorfmt === 'hsl') {
       const c = colorConvert.hsv.hsl(this.hue, this.saturation, this.value);
       const aa = this.transparency / 100;
       result = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
-    } else if (str.indexOf('hsl') === 0 || format === 'hex') {
+    } else if (this.colorfmt === 'hex') {
       result = this.getColorHex(true);
-    } else if (str.indexOf('#') === 0 || format === 'rgb') {
+    } else if (this.colorfmt === 'rgb') {
       const c = colorConvert.hsv.rgb(this.hue, this.saturation, this.value);
       result = `rgba(${c[0]},${c[1]},${c[2]},${this.transparency / 100})`;
     }
     if (set) this._color = result;
     if (emit) this.changed.emit(this._color);
     return result;
+  }
+
+  nextFormat() {
+    this.colorfmtIndex++;
+    if (this.colorfmtIndex >= ColorFormat.length) {
+      this.colorfmtIndex = 0;
+    }
+    this.colorfmt = ColorFormat[this.colorfmtIndex];
+    this.format(true, true);
   }
 
   selectAll(e: MouseEvent) {
@@ -197,11 +213,11 @@ export class AzColorPicker {
           <az-slider class="checkerboard" min="0" max="100" value={this.transparency} onInput={(e) => this.onTransparentcyChange(e)}></az-slider>
           <div class="az-color-picker_value" style={{display: this.showinput ? '' : 'none'}}>
             <span class="az-color-picker_current-color"
-              onClick={() => this.format(this._color, '', true, true)}>
+              onClick={() => this.nextFormat()}>
               <i style={{backgroundColor: this._color, opacity: `${this.transparency / 100}`}}></i>
             </span>
             <az-input class="az-color-picker_color-value"
-              readonly={true}
+              readonly={this.readonly}
               spellcheck={false}
               ref={(el: any) => this.input = el}
               type="text"
