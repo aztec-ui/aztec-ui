@@ -37,6 +37,7 @@ export namespace Components {
   interface AzColorPicker {
     'caption': string;
     'color': string;
+    'showinput': boolean;
   }
   interface AzContextMenu {
     'caption': string;
@@ -58,6 +59,7 @@ export namespace Components {
     'autocorrect': string;
     'caption': string;
     'clearable': boolean;
+    'readonly': boolean;
     'spellcheck': boolean;
     'type': string;
     'value': string;
@@ -289,6 +291,7 @@ declare namespace LocalJSX {
     'caption'?: string;
     'color'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
+    'showinput'?: boolean;
   }
   interface AzContextMenu {
     'caption'?: string;
@@ -311,6 +314,7 @@ declare namespace LocalJSX {
     'autocorrect'?: string;
     'caption'?: string;
     'clearable'?: boolean;
+    'readonly'?: boolean;
     'spellcheck'?: boolean;
     'type'?: string;
     'value'?: string;
