@@ -1,8 +1,9 @@
 
-import { Component, Prop, Element, Host, h, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Element, Host, h, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import parseColor from 'parse-color';
 import colorConvert from 'color-convert';
+import { Inject } from '../../utils/utils';
 
 @Component({
   tag: 'az-color-picker',
@@ -10,11 +11,14 @@ import colorConvert from 'color-convert';
   shadow: false
 })
 export class AzColorPicker {
+  static defaultColor: string = 'hsla(0,100%,50%,1)';
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
-  @Prop() color: string = '#f00';
-  @State() curColor: string = '#ff0000';
+  @Prop({reflect: true}) color: string = AzColorPicker.defaultColor;
+  @Prop({reflect: true}) showinput: boolean = true;
+
+  @State() curColor: string = AzColorPicker.defaultColor;
   @State() strawLeft: number = 0;
   @State() strawTop: number = 0;
   @State() dragging: boolean = false;
@@ -23,27 +27,44 @@ export class AzColorPicker {
   @State() hue: number = 0;
   @State() saturation: number = 1
   @State() value: number = 1;
+  @State()_color: string = this.color;
 
   @Event() changed: EventEmitter;
 
   panel: HTMLDivElement;
   input: HTMLInputElement;
 
+
   constructor() {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
   }
+
+  @Inject({})
   componentDidLoad() {
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
-    // @ts-ignore
-    this.el.format = this.format.bind(this);
-    this.parseCssString(this.color);
+
+    this.parseCssString(this.color || AzColorPicker.defaultColor);
+    this._color = this.format(this.color);
+    this.changed.emit(this._color);
   }
 
-  onMouseDown() {
+  @Watch('color')
+  onValueChange(newValue, oldValue) {
+    if (oldValue !== newValue) {
+      console.log(newValue, oldValue);
+      this.parseCssString(newValue);
+      this.format(this._color, '', true);
+    }
+  }
+
+  onMouseDown(e: MouseEvent) {
     this.dragging = true;
+    if (e.metaKey || e.ctrlKey) {
+      this.format(this._color, '', true);
+    }
   }
 
   onMouseMove(e: MouseEvent) {
@@ -68,36 +89,39 @@ export class AzColorPicker {
     this.strawTop = confine(y, 0, rect.height);
     this.el.forceUpdate();
     this.calcColorString();
+    this.changed.emit(this._color);
   }
   calcColorString() {
-    const str = this.color;
+    const str = this._color;
     if (str.indexOf('rgb') === 0) {
       const c = colorConvert.hsv.rgb(this.hue, this.saturation, this.value);
-      this.color = `rgba(${c[0]},${c[1]},${c[2]},${this.transparency / 100})`;
+      this._color = `rgba(${c[0]},${c[1]},${c[2]},${this.transparency / 100})`;
     } else if (str.indexOf('hsl') === 0) {
       const c = colorConvert.hsv.hsl(this.hue, this.saturation, this.value);
       const aa = this.transparency / 100;
-      this.color = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
+      this._color = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
     } else {
-      this.color = this.getColorHex(true);
+      this._color = this.getColorHex(true);
     }
-    this.changed.emit(this.color);
   }
 
   onHueChange(e: Event) {
     this.hue = parseInt((e.target as HTMLInputElement).value, 10);
     this.curColor = this.getColorHex(false, this.hue, 100, 100);
     this.calcColorString();
+    this.changed.emit(this._color);
   }
 
   onTransparentcyChange(e: Event) {
     this.transparency = parseInt((e.target as HTMLInputElement).value, 10);
     this.calcColorString();
+    this.changed.emit(this._color);
   }
 
   onCssStringChange(e: Event): void {
     const str = (e.target as HTMLInputElement).value.trim();
     this.parseCssString(str);
+    this.format(this._color, '', true, true);
   }
 
   getColorHex(withTransparentcy = false, hue = this.hue, sat = this.saturation, val = this.value) {
@@ -110,41 +134,45 @@ export class AzColorPicker {
     const result = parseColor(str);
     if (!result.hsv) {
       // @ts-ignore
-      this.input.native.value = this.color;
+      this.input.native.value = this._color;
       return;
     }
+    // basic color information
     this.hue = result.hsv[0];
     this.saturation = result.hsv[1];
     this.value = result.hsv[2];
     this.transparency = Math.floor(result.rgba[3] * 100);
+
+    // update UI
     this.curColor = result.hex;
     const rect = this.panel.getBoundingClientRect();
     this.strawLeft = Math.floor((this.saturation / 100) * rect.width);
     this.strawTop = Math.floor((1 - this.value / 100) * rect.height);
-    this.color = this.format(this.input.value);
-    this.changed.emit(this.color);
   }
 
-  format(e: MouseEvent | string) {
+  /**
+   * Format color circlely in formats hsl->hex->rgba->hsl...
+   * @param {string} str
+   * @param {'hsl' | 'hex' | 'rgb' | ''} format color format
+   * @param {boolean} set set result to _color
+   * @param {boolean} emit if true will emit 'changed' event
+   * @return {string} next color
+   */
+  format(str: string, format: 'hsl' | 'hex' | 'rgb' | '' = 'hex', set: boolean = false, emit: boolean = false) {
     let result: string;
-    if (typeof e === 'string' || (e instanceof MouseEvent && e.shiftKey)) {
-      const str = this.color;
-      if (typeof e === 'string' && e.indexOf('hsl') === 0 || str.indexOf('rgb') === 0) {
-        const c = colorConvert.hsv.hsl(this.hue, this.saturation, this.value);
-        const aa = this.transparency / 100;
-        result = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
-      } else if (typeof e === 'string' && e.indexOf('#') === 0 || str.indexOf('hsl') === 0) {
-        result = this.getColorHex(true);
-      } else {
-        const c = colorConvert.hsv.rgb(this.hue, this.saturation, this.value);
-        result = `rgba(${c[0]},${c[1]},${c[2]},${this.transparency / 100})`;
-      }
-      if (typeof e === 'string') {
-        return result;
-      } else {
-        this.color = result;
-      }
+    if (str.indexOf('rgb') === 0 || format === 'hsl') {
+      const c = colorConvert.hsv.hsl(this.hue, this.saturation, this.value);
+      const aa = this.transparency / 100;
+      result = `hsla(${c[0]},${c[1]}%,${c[2]}%,${aa})`
+    } else if (str.indexOf('hsl') === 0 || format === 'hex') {
+      result = this.getColorHex(true);
+    } else if (str.indexOf('#') === 0 || format === 'rgb') {
+      const c = colorConvert.hsv.rgb(this.hue, this.saturation, this.value);
+      result = `rgba(${c[0]},${c[1]},${c[2]},${this.transparency / 100})`;
     }
+    if (set) this._color = result;
+    if (emit) this.changed.emit(this._color);
+    return result;
   }
 
   selectAll(e: MouseEvent) {
@@ -167,17 +195,18 @@ export class AzColorPicker {
         <div>
           <az-slider class="spectrum-h" min="0" max="360" value={this.hue} onInput={(e) => this.onHueChange(e)}></az-slider>
           <az-slider class="checkerboard" min="0" max="100" value={this.transparency} onInput={(e) => this.onTransparentcyChange(e)}></az-slider>
-          <div class="az-color-picker_value">
+          <div class="az-color-picker_value" style={{display: this.showinput ? '' : 'none'}}>
             <span class="az-color-picker_current-color"
-              onClick={() => this.format(new MouseEvent('click',{shiftKey: true}))}>
-              <i style={{backgroundColor: this.color, opacity: `${this.transparency / 100}`}}></i>
+              onClick={() => this.format(this._color, '', true, true)}>
+              <i style={{backgroundColor: this._color, opacity: `${this.transparency / 100}`}}></i>
             </span>
-            <az-input class="az-color-picker_color-value" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck={false}
+            <az-input class="az-color-picker_color-value"
+              readonly={true}
+              spellcheck={false}
               ref={(el: any) => this.input = el}
               type="text"
-              value={this.color}
-              onDblClick={(e) => this.selectAll(e)}
-              onClick={(e) => this.format(e)}
+              value={this._color}
+              onClick={(e) => this.selectAll(e)}
               onChange={(e) => this.onCssStringChange(e)}></az-input>
           </div>
         </div>
