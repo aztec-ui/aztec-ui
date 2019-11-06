@@ -1,4 +1,5 @@
 az-input {
+  position: relative;
   input {
     background: #252525;
     border: none;
@@ -7,11 +8,27 @@ az-input {
     border: 1px solid #888;
     border-radius: var(--az-border-radius-mini);
     outline: 0;
-    &:hover {
-      border-color: var(--az-caption-color);
-    }
+  }
+  &:hover input {
+    border-color: var(--az-caption-color);
   }
   .az-input-caption {
     margin-right: 0.5em;
+  }
+  az-icon.clear {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    .icon path {
+      fill: var(--az-primary-color);
+    }
+    &:hover .icon path{
+      fill: var(--az-caption-color);
+    }
+  }
+  &.empty az-icon {
+    display: none;
   }
 }
