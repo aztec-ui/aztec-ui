@@ -18,23 +18,42 @@ export class AzInput {
   @Prop() autocorrect: string = 'off';
   @Prop() autocapitalize: string = 'off';
   @Prop() spellcheck: boolean = true;
+  @Prop() readonly: boolean = false;
 
   native: HTMLInputElement;
   clearButton: HTMLAzIconElement;
+  nativeType: string;
+  colorPicker: HTMLAzColorPickerElement;
 
   @Inject({
     attrs: true,
     parse: false,
-    sync: ['clear']
+    sync: ['clear', 'native']
   })
   componentDidLoad() {
-    this.autocapitalize
     this.native.addEventListener('change', () => {
       this.value = this.native.value;
     });
     this.native.addEventListener('keyup', () => {
       if (this.clearable) this.setClearButtonDisplay();
     });
+    this.native.addEventListener('mousedown', () => {
+      if (this.type !== 'color-picker' || !this.colorPicker) return;
+      if (this.colorPicker.color != this.value) {
+        this.colorPicker.color = this.value;
+      }
+      this.colorPicker.style.display = 'inline-block';
+    });
+    document.addEventListener('click', (e: MouseEvent) => {
+      if (this.type !== 'color-picker' || !this.colorPicker) return;
+      if ((e.target as HTMLElement).closest('az-input')) return;
+      this.colorPicker.style.display = 'none';
+    });
+    if (this.colorPicker) {
+      this.colorPicker.addEventListener('changed', (e: any) => {
+        this.value = e.detail;
+      });
+    }
   }
 
   @Watch('value')
@@ -51,12 +70,19 @@ export class AzInput {
 
   setClearButtonDisplay () {
     this.clearButton.style.display = this.native.value && this.native.value.length > 0 ? '' : 'none';
+    if (this.type === 'color-picker' && this.colorPicker) {
+      this.colorPicker.style.display = 'none';
+    }
   }
 
   render() {
+    this.nativeType = this.type === 'color-picker' ? 'text' : this.type;
+    const colorPicker = this.type === 'color-picker'
+      && <az-color-picker showinput={false} ref={el => this.colorPicker = el} class="color-picker"></az-color-picker>
     return (<Host>
+      {colorPicker}
       {this.caption && <span class="az-input-caption az-caption">{this.caption}</span>}
-      <input ref={el => this.native = el} type={this.type} value={this.value}
+      <input ref={el => this.native = el} type={this.nativeType} value={this.value}
         autocomplete={this.autocomplete}
         autocorrect={this.autocorrect}
         autocapitalize={this.autocapitalize}

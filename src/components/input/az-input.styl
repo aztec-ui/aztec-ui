@@ -9,7 +9,7 @@ az-input {
     border-radius: var(--az-border-radius-mini);
     outline: 0;
   }
-  &:hover input {
+  &:hover input[type=text] {
     border-color: var(--az-caption-color);
   }
   .az-input-caption {
@@ -30,5 +30,12 @@ az-input {
   }
   &.empty az-icon {
     display: none;
+  }
+  .color-picker {
+    display: none;
+    position: absolute;
+    top: 0;
+    transform: translateY(-100%) translateY(-4px)
+    background-color: var(--az-primary-color);
   }
 }
