@@ -22,7 +22,7 @@ rl.question('Component name:', name => {
 });
 
 const ts = `
-import { Component, Prop, Element, h } from '@stencil/core';
+import { Component, Prop, Element, Host, Watch, State, Event, EventEmitter, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 
 @Component({
@@ -39,8 +39,8 @@ export class {{camelizedName}} {
 
   render() {
     return (
-      <div>
-      </div>
+      <Host class="{{name}}">
+      </Host>
     );
   }
 }`.trim();
