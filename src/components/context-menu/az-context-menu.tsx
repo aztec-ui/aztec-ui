@@ -12,6 +12,8 @@ export class AzContextMenu {
 
   @Prop() caption: string = '';
   @Prop() triggerevent: string = 'contextmenu';
+  @Prop() parent: string = 'body';
+  @Prop() popupalign: string = '';
   container: HTMLElement;
 
   @Inject({
@@ -28,14 +30,19 @@ export class AzContextMenu {
     });
     this.el.addEventListener('selected', this.hide);
 
-    // move menu to body
-    document.body.appendChild(this.el);
+    if (this.parent != 'parent') {
+      let parent = document.querySelector(this.parent);
+      parent.appendChild(this.el);
+    } else {
+      parent.style.position = 'relative';
+      this.popupalign = 'bottom left';
+    }
   }
 
   show(e: MouseEvent) {
     const styl = this.el.style;
     styl.display = 'flex';
-    if (e) {
+    if (e && !this.popupalign) {
       styl.left = e.pageX + 'px';
       styl.top = e.pageY + 'px';
       e.preventDefault();
@@ -72,7 +79,7 @@ export class AzContextMenu {
 
   render() {
     return (
-      <Host class="az-context-menu">
+      <Host class={`az-context-menu ${this.popupalign}`}>
         <slot></slot>
       </Host>
     );

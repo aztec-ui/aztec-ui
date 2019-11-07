@@ -5,5 +5,20 @@ az-context-menu {
   background-color: var(--az-primary-color);
   // border: 1px solid var(--az-border-color);
   box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.5);
+  z-index: var(--az-zindex-menu);
   display: none;
+  &.left {
+    left: 0;
+  }
+  &.bottom {
+    bottom: 0;
+    transform: translateY(100%) translateY(4px);
+  }
+  &.right {
+    right: 0;
+  }
+  &.top {
+    top: 0;
+    transform: translateY(-100%) translateY(-4px)
+  }
 }
