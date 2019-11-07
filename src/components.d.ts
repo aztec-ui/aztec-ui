@@ -37,10 +37,15 @@ export namespace Components {
   interface AzColorPicker {
     'caption': string;
     'color': string;
+    'colorfmt': string;
+    'readonly': boolean;
     'showinput': boolean;
   }
   interface AzContextMenu {
     'caption': string;
+    'parent': string;
+    'popupalign': string;
+    'triggerevent': string;
   }
   interface AzDialog {
     'caption': string;
@@ -59,6 +64,7 @@ export namespace Components {
     'autocorrect': string;
     'caption': string;
     'clearable': boolean;
+    'popupalign': string;
     'readonly': boolean;
     'spellcheck': boolean;
     'type': string;
@@ -104,10 +110,9 @@ export namespace Components {
     'activeIndex': number;
     'items': any[];
   }
-  interface AzToolbarButton {
+  interface AzToolbar {
     'caption': string;
-    'icon': string;
-    'type': ComponentStyle;
+    'direction': string;
   }
   interface AzTooltip {
     'caption': string;
@@ -227,10 +232,10 @@ declare global {
     new (): HTMLAzTabsElement;
   };
 
-  interface HTMLAzToolbarButtonElement extends Components.AzToolbarButton, HTMLStencilElement {}
-  var HTMLAzToolbarButtonElement: {
-    prototype: HTMLAzToolbarButtonElement;
-    new (): HTMLAzToolbarButtonElement;
+  interface HTMLAzToolbarElement extends Components.AzToolbar, HTMLStencilElement {}
+  var HTMLAzToolbarElement: {
+    prototype: HTMLAzToolbarElement;
+    new (): HTMLAzToolbarElement;
   };
 
   interface HTMLAzTooltipElement extends Components.AzTooltip, HTMLStencilElement {}
@@ -261,7 +266,7 @@ declare global {
     'az-splitter': HTMLAzSplitterElement;
     'az-switch': HTMLAzSwitchElement;
     'az-tabs': HTMLAzTabsElement;
-    'az-toolbar-button': HTMLAzToolbarButtonElement;
+    'az-toolbar': HTMLAzToolbarElement;
     'az-tooltip': HTMLAzTooltipElement;
     'az-tree': HTMLAzTreeElement;
   }
@@ -290,11 +295,16 @@ declare namespace LocalJSX {
   interface AzColorPicker {
     'caption'?: string;
     'color'?: string;
+    'colorfmt'?: string;
     'onChanged'?: (event: CustomEvent<any>) => void;
+    'readonly'?: boolean;
     'showinput'?: boolean;
   }
   interface AzContextMenu {
     'caption'?: string;
+    'parent'?: string;
+    'popupalign'?: string;
+    'triggerevent'?: string;
   }
   interface AzDialog {
     'caption'?: string;
@@ -314,6 +324,7 @@ declare namespace LocalJSX {
     'autocorrect'?: string;
     'caption'?: string;
     'clearable'?: boolean;
+    'popupalign'?: string;
     'readonly'?: boolean;
     'spellcheck'?: boolean;
     'type'?: string;
@@ -361,10 +372,9 @@ declare namespace LocalJSX {
     'activeIndex'?: number;
     'items'?: any[];
   }
-  interface AzToolbarButton {
+  interface AzToolbar {
     'caption'?: string;
-    'icon'?: string;
-    'type'?: ComponentStyle;
+    'direction'?: string;
   }
   interface AzTooltip {
     'caption'?: string;
@@ -402,7 +412,7 @@ declare namespace LocalJSX {
     'az-splitter': AzSplitter;
     'az-switch': AzSwitch;
     'az-tabs': AzTabs;
-    'az-toolbar-button': AzToolbarButton;
+    'az-toolbar': AzToolbar;
     'az-tooltip': AzTooltip;
     'az-tree': AzTree;
   }
@@ -430,7 +440,7 @@ declare module "@stencil/core" {
       'az-splitter': LocalJSX.AzSplitter & JSXBase.HTMLAttributes<HTMLAzSplitterElement>;
       'az-switch': LocalJSX.AzSwitch & JSXBase.HTMLAttributes<HTMLAzSwitchElement>;
       'az-tabs': LocalJSX.AzTabs & JSXBase.HTMLAttributes<HTMLAzTabsElement>;
-      'az-toolbar-button': LocalJSX.AzToolbarButton & JSXBase.HTMLAttributes<HTMLAzToolbarButtonElement>;
+      'az-toolbar': LocalJSX.AzToolbar & JSXBase.HTMLAttributes<HTMLAzToolbarElement>;
       'az-tooltip': LocalJSX.AzTooltip & JSXBase.HTMLAttributes<HTMLAzTooltipElement>;
       'az-tree': LocalJSX.AzTree & JSXBase.HTMLAttributes<HTMLAzTreeElement>;
     }
