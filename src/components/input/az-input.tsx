@@ -13,6 +13,7 @@ export class AzInput {
   @Prop() type: string = '';
   @Prop() value: string = '';
   @Prop({reflect: true}) clearable = false;
+  @Prop({reflect: true}) popupalign = 'left top';
 
   @Prop() autocomplete: string = 'off';
   @Prop() autocorrect: string = 'off';
@@ -78,7 +79,7 @@ export class AzInput {
   render() {
     this.nativeType = this.type === 'color-picker' ? 'text' : this.type;
     const colorPicker = this.type === 'color-picker'
-      && <az-color-picker showinput={false} ref={el => this.colorPicker = el} class="color-picker"></az-color-picker>
+      && <az-color-picker showinput={false} ref={el => this.colorPicker = el} class={`color-picker ${this.popupalign}`}></az-color-picker>
     return (<Host>
       {colorPicker}
       {this.caption && <span class="az-input-caption az-caption">{this.caption}</span>}

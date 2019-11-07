@@ -34,8 +34,20 @@ az-input {
   .color-picker {
     display: none;
     position: absolute;
-    top: 0;
-    transform: translateY(-100%) translateY(-4px)
     background-color: var(--az-primary-color);
+    &.left {
+      left: 0;
+    }
+    &.bottom {
+      bottom: 0;
+      transform: translateY(100%) translateY(4px);
+    }
+    &.right {
+      right: 0;
+    }
+    &.top {
+      top: 0;
+      transform: translateY(-100%) translateY(-4px)
+    }
   }
 }
