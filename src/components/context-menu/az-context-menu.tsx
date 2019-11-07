@@ -11,6 +11,7 @@ export class AzContextMenu {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
+  @Prop() triggerevent: string = 'contextmenu';
   container: HTMLElement;
 
   @Inject({
@@ -21,7 +22,7 @@ export class AzContextMenu {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     const parent = this.el.parentElement;
-    parent.addEventListener('contextmenu', this.show);
+    if (this.triggerevent) parent.addEventListener(this.triggerevent, this.show);
     document.addEventListener('mouseup', (e: MouseEvent) => {
       if (e.which !== 3) this.hide()
     });
