@@ -200,9 +200,14 @@
             <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
             <az-menu-item caption="-"></az-menu-item>
             <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
-            <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
+            <az-menu-item caption="Export" action="export" icon="download">
+              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
+                <az-menu-item caption="Copy title" action="title"></az-menu-item>
+                <az-menu-item caption="Abc" action="abc"></az-menu-item>
+              </az-context-menu>
+            </az-menu-item>
             <az-menu-item caption="More..." action="more" icon="arrow-right">
-              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave">
+              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
                 <az-menu-item caption="Copy title" action="title"></az-menu-item>
                 <az-menu-item caption="Abc" action="abc"></az-menu-item>
               </az-context-menu>
