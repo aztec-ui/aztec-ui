@@ -43,6 +43,7 @@ export namespace Components {
   }
   interface AzContextMenu {
     'caption': string;
+    'closeevent': string;
     'parent': string;
     'popupalign': string;
     'triggerevent': string;
@@ -302,6 +303,8 @@ declare namespace LocalJSX {
   }
   interface AzContextMenu {
     'caption'?: string;
+    'closeevent'?: string;
+    'onShowed'?: (event: CustomEvent<any>) => void;
     'parent'?: string;
     'popupalign'?: string;
     'triggerevent'?: string;
