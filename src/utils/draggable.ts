@@ -6,6 +6,7 @@ export interface IDraggableOptions {
   direction?: 'vertical' | 'horizontal' | 'both';
   initFromStyle?: boolean,
   onRelease?: (e: MouseEvent) => void;
+  onMove?: (e: MouseEvent, x: number, y: number) => void;
 }
 
 // @ts-ignore
@@ -58,5 +59,9 @@ export function draggable(element: Element, handle: Element, opts: IDraggableOpt
     if (opts.direction == 'both' || opts.direction === 'vertical') element.style.top = (Math.max(0, top)) + 'px';
     // @ts-ignore
     if (opts.direction == 'both' || opts.direction === 'horizontal') element.style.left = (Math.max(0, left)) + 'px';
+
+    if (opts.onMove) {
+      this.onMove(e, left, top);
+    }
   }, true);
 }
