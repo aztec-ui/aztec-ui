@@ -40,7 +40,7 @@ export class AzContextMenu {
     }
     if (this.closeevent) {
       parent.addEventListener(this.closeevent, () => {
-        hideTimer = window.setTimeout(this.hide, 200);
+        hideTimer = window.setTimeout(this.hide, 100);
       });
     }
     document.addEventListener('mouseup', (e: MouseEvent) => {
@@ -53,7 +53,7 @@ export class AzContextMenu {
       parent.appendChild(this.el);
     } else {
       parent.style.position = 'relative';
-      this.popupalign = 'bottom left';
+      if (!this.popupalign) this.popupalign = 'bottom left';
     }
   }
 
