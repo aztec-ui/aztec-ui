@@ -181,6 +181,13 @@
       <az-tree id="tree1" caption="Tree Demo" selecting="true"></az-tree>
       <br/>
       <az-tree id="tree2" caption="Files"></az-tree>
+      <az-context-menu parent="#tree2">
+        <az-menu-item caption="Add" action="add" icon="plus"></az-menu-item>
+        <az-menu-item caption="-"></az-menu-item>
+        <az-menu-item caption="Delete" action="delete" icon="close"></az-menu-item>
+        <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
+        <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
+      </az-context-menu>
     </az-section>
     <az-section caption="Toolbar">
       <az-toolbar>
@@ -189,11 +196,17 @@
         <az-button icon="forward"></az-button>
         <az-button icon="backward"></az-button>
         <az-button caption="more" icon="arrow-right" icon-position="right">
-          <az-context-menu triggerevent="click" parent="parent">
+          <az-context-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
             <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
             <az-menu-item caption="-"></az-menu-item>
             <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
             <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
+            <az-menu-item caption="More..." action="more" icon="arrow-right">
+              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave">
+                <az-menu-item caption="Copy title" action="title"></az-menu-item>
+                <az-menu-item caption="Abc" action="abc"></az-menu-item>
+              </az-context-menu>
+            </az-menu-item>
           </az-context-menu>
         </az-button>
       </az-toolbar>
