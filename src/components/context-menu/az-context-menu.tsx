@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Host, h } from '@stencil/core';
+import { Component, Prop, Element, Host, Event, EventEmitter, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
@@ -12,8 +12,11 @@ export class AzContextMenu {
 
   @Prop() caption: string = '';
   @Prop() triggerevent: string = 'contextmenu';
+  @Prop() closeevent: string = '';
   @Prop() parent: string = 'body';
   @Prop() popupalign: string = '';
+
+  @Event() showed: EventEmitter;
   container: HTMLElement;
 
   @Inject({
@@ -24,7 +27,22 @@ export class AzContextMenu {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     const parent = this.el.parentElement;
-    if (this.triggerevent) parent.addEventListener(this.triggerevent, this.show);
+
+    let hideTimer = -1;
+    if (this.triggerevent) {
+      parent.addEventListener(this.triggerevent, (e: MouseEvent) => {
+        if (hideTimer !== -1) {
+          window.clearTimeout(hideTimer)
+          hideTimer = -1;
+        }
+        this.show(e);
+      });
+    }
+    if (this.closeevent) {
+      parent.addEventListener(this.closeevent, () => {
+        hideTimer = window.setTimeout(this.hide, 200);
+      });
+    }
     document.addEventListener('mouseup', (e: MouseEvent) => {
       if (e.which !== 3) this.hide()
     });
@@ -47,6 +65,7 @@ export class AzContextMenu {
       styl.top = e.pageY + 'px';
       e.preventDefault();
     }
+    this.showed.emit(e);
   }
 
   hide() {
