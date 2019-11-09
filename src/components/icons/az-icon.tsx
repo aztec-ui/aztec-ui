@@ -33,7 +33,7 @@ export class AzIcon {
       throw new Error(`Can not find icon "${this.icon}"`);
     }
     return (
-      <Host class={{[`az-anim-${this.icon}`]: true}}>
+      <Host class={`az-icon az-icon-${this.icon} az-anim-${this.icon}`}>
         {icon(this.width, this.height, this.color)}
       </Host>
     );
