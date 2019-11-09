@@ -191,11 +191,12 @@
     </az-section>
     <az-section caption="Toolbar">
       <az-toolbar>
-        <az-button icon="triangle"></az-button>
-        <az-button icon="square"></az-button>
-        <az-button icon="forward"></az-button>
-        <az-button icon="backward"></az-button>
-        <az-button caption="" icon="three-dots">
+        <az-button caption="Play" icon="triangle" type="plain"></az-button>
+        <az-button caption="Stop" icon="square" type="plain"></az-button>
+        <az-button caption="Forward" icon="forward" type="plain"></az-button>
+        <az-button caption="Backward" icon="backward" type="plain"></az-button>
+        <az-toolbar-separator></az-toolbar-separator>
+        <az-button caption="" type="plain" icon="three-dots">
           <az-context-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
             <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
             <az-menu-item caption="-"></az-menu-item>
