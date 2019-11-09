@@ -3,6 +3,7 @@ az-button {
   line-height: 1;
   vertical-align: middle;
   vertical-align: -webkit-baseline-middle;
+  border-radius: var(--az-border-radius-mini);
 }
 az-button button {
   font-size: var(--az-font-size-normal);
@@ -108,9 +109,14 @@ az-button button.extra-large {
 }
 
 /* type */
-az-button button.plain {
-  border: none;
-  background: none;
+az-button {
+  button.plain {
+    border: none;
+    background: none;
+  }
+  &:hover {
+    background-color: var(--az-highlight-color);
+  }
 }
 az-button button.circle {
   border-radius: 50%;

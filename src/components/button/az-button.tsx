@@ -1,5 +1,5 @@
 import { Component, Prop, Element, h } from '@stencil/core';
-import { ComponentStyle, ComponentSize} from '../../global/typing';
+import { ComponentStyle, ComponentSize, PositionHorizontal } from '../../global/typing';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
@@ -19,7 +19,7 @@ export class AzButton {
   @Prop({reflect: true}) round: boolean = false;
   @Prop({reflect: true}) circle: boolean = false;
   @Prop({reflect: true}) caption: string = '';
-  @Prop({reflect: true}) iconPosition: string = 'left';
+  @Prop({reflect: true}) iconPosition: PositionHorizontal = 'left';
   @Prop({reflect: true}) disabled: boolean = false;
 
   @Inject({
@@ -36,8 +36,16 @@ export class AzButton {
   }
 
   render() {
-    let iconLeft = this.icon && this.iconPosition === 'left' ? <az-icon class="left" icon={this.icon}></az-icon> : null;
-    let iconRight = this.icon && this.iconPosition === 'right' ? <az-icon class="right" icon={this.icon}></az-icon> : null;
+    let iconLeft = null;
+    let iconRight = null;
+    let pos = this.iconPosition;
+    if (!this.caption) pos = '';
+    const icon = this.icon ? <az-icon class={pos} icon={this.icon}></az-icon> : null;
+    if (pos === 'left') {
+      iconLeft = icon;
+    } else {
+      iconRight = icon;
+    }
     if (this.size === 'extra-small') {
       iconLeft = iconRight = null;
       console.warn(`<az-button size="extra-small" /> can not have icon`);
