@@ -6,8 +6,8 @@ import Backward from './backward';
 import Bars from './bars';
 import Book from './book';
 import Check from './check';
-import CircleCross from './circle-cross';
 import CircleCheck from './circle-check';
+import CircleCross from './circle-cross';
 import CircleExclamation from './circle-exclamation';
 import Close from './close';
 import Cog from './cog';
@@ -45,6 +45,7 @@ import Share from './share';
 import Share2 from './share2';
 import ShopCart from './shop-cart';
 import Square from './square';
+import ThreeDots from './three-dots';
 import Trash from './trash';
 import Triangle from './triangle';
 import Undo from './undo';
@@ -56,8 +57,8 @@ const builtinIcons: Record<string, string | string[]> = {
   "bars": Bars,
   "book": Book,
   "check": Check,
-  "circle-cross": CircleCross,
   "circle-check": CircleCheck,
+  "circle-cross": CircleCross,
   "circle-exclamation": CircleExclamation,
   "close": Close,
   "cog": Cog,
@@ -95,6 +96,7 @@ const builtinIcons: Record<string, string | string[]> = {
   "share2": Share2,
   "shop-cart": ShopCart,
   "square": Square,
+  "three-dots": ThreeDots,
   "trash": Trash,
   "triangle": Triangle,
   "undo": Undo,
@@ -104,7 +106,7 @@ const builtinIcons: Record<string, string | string[]> = {
 export default builtinIcons;
 exportToGlobal('icons', {
   get() {
-    return ["arrow-right","backward","bars","book","check","circle-cross","close","cog","cogs","copy","download","edit","ellipsis-h","ellipsis-v","exchange","exclamation","eye","eye-close","fast-backward","fast-forward","file","floppy-disk","folder","forward","list","loading","logout","minus","mouse-pointer","move","open-folder","paste","pause","plus","question","redo","refresh","search","share","share2","shop-cart","square","trash","triangle","undo","zoom-in","zoom-out"]
+    return ["arrow-right","backward","bars","book","check","circle-check","circle-cross","circle-exclamation","close","cog","cogs","copy","download","edit","ellipsis-h","ellipsis-v","exchange","exclamation","eye","eye-close","fast-backward","fast-forward","file","floppy-disk","folder","forward","list","loading","logout","minus","mouse-pointer","move","open-folder","paste","pause","plus","question","redo","refresh","search","share","share2","shop-cart","square","three-dots","trash","triangle","undo","zoom-in","zoom-out"]
   }
 })
 // for Demo
@@ -114,7 +116,9 @@ exportToGlobal('icons', {
   <az-icon icon="bars" title="bars"></az-icon>
   <az-icon icon="book" title="book"></az-icon>
   <az-icon icon="check" title="check"></az-icon>
+  <az-icon icon="circle-check" title="circle-check"></az-icon>
   <az-icon icon="circle-cross" title="circle-cross"></az-icon>
+  <az-icon icon="circle-exclamation" title="circle-exclamation"></az-icon>
   <az-icon icon="close" title="close"></az-icon>
   <az-icon icon="cog" title="cog"></az-icon>
   <az-icon icon="cogs" title="cogs"></az-icon>
@@ -151,6 +155,7 @@ exportToGlobal('icons', {
   <az-icon icon="share2" title="share2"></az-icon>
   <az-icon icon="shop-cart" title="shop-cart"></az-icon>
   <az-icon icon="square" title="square"></az-icon>
+  <az-icon icon="three-dots" title="three-dots"></az-icon>
   <az-icon icon="trash" title="trash"></az-icon>
   <az-icon icon="triangle" title="triangle"></az-icon>
   <az-icon icon="undo" title="undo"></az-icon>
