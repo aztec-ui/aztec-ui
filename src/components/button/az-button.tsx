@@ -30,7 +30,8 @@ export class AzButton {
   componentDidLoad() {
     if (!this.type) this.type = 'primary';
     if (!this.size) this.size = 'normal';
-    if (!this.iconPosition) this.iconPosition = 'left';
+    // if no caption specified, iconPosition will remain unset
+    if (!this.iconPosition && this.caption) this.iconPosition = 'left';
     if (this.disabled == null) this.disabled = false;
   }
 
@@ -58,21 +59,13 @@ export class AzButton {
       [this.size]: true
     };
 
-    if (!this.caption && this.icon) {
-      return (
-        <button class={cls}>
-          <az-icon icon={this.icon}></az-icon>
-        </button>
-      );
-    } else {
-      return (
-        <button class={cls}>
-          <slot name="before">{iconLeft}</slot>
-            {this.caption && <span class="az-button-caption az-caption">{this.caption}</span>}
-          <slot></slot>
-          <slot name="after">{iconRight}</slot>
-        </button>
-      )
-    }
+    return (
+      <button class={cls}>
+        <slot name="before">{iconLeft}</slot>
+          {this.caption && <span class="az-button-caption az-caption">{this.caption}</span>}
+        <slot></slot>
+        <slot name="after">{iconRight}</slot>
+      </button>
+    )
   }
 }
