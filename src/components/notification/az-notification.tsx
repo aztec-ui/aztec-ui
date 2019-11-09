@@ -39,12 +39,12 @@ export class AzNotification {
   }
   @Element() el: HostElement;
 
-  @Prop() caption: string = '';
+  @Prop({reflect: true}) caption: string = '';
   @Prop() message: string = '';
-  @Prop() type: ComponentStyle = 'primary';
-  @Prop() icon: string = '';
-  @Prop() placement: CornerPlacement = 'top-right';
-  @Prop() timeout: number = 3000;
+  @Prop({reflect: true}) type: ComponentStyle = 'primary';
+  @Prop({reflect: true}) icon: string = '';
+  @Prop({reflect: true}) placement: CornerPlacement = 'top-right';
+  @Prop({reflect: true}) timeout: number = 3000;
 
   @Event() showed: EventEmitter;
   @Event() closed: EventEmitter;
@@ -54,9 +54,10 @@ export class AzNotification {
   })
   componentDidLoad() {
     this.setIcon();
-    this.show = this.show.bind(this);
     this.close = this.close.bind(this);
-    window.setTimeout(this.close, this.timeout);
+    if (!isNaN(this.timeout) && this.timeout !== Infinity) {
+      window.setTimeout(this.close, this.timeout);
+    }
   }
 
   setIcon() {
@@ -77,19 +78,16 @@ export class AzNotification {
     }
   }
 
-  public show(type: ComponentStyle, caption: string, message: string) {
-    if (type) this.type = type;
-    if (caption) this.caption = caption;
-    if (message) this.message = message;
-    
-  }
-
   public close(reason: string = 'close') {
     this.closed.emit(reason);
     this.el.style.animationName = 'az-up-fade-out';
     this.el.style.animationPlayState = 'running';
     this.el.addEventListener('animationend', () => {
-      this.el.parentNode.removeChild(this.el);
+      const parentNode = this.el.parentNode as HTMLElement;
+      parentNode.removeChild(this.el);
+      if (!parentNode.children.length) {
+        parentNode.remove();
+      }
     });
   }
 
