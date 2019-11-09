@@ -26,7 +26,7 @@ export class AzContextMenu {
     this.container = this.el.parentElement;
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
-    const parent = this.el.parentElement;
+    let parent = this.el.parentElement;
 
     let hideTimer = -1;
     if (this.triggerevent) {
@@ -49,7 +49,7 @@ export class AzContextMenu {
     this.el.addEventListener('selected', this.hide);
 
     if (this.parent != 'parent') {
-      let parent = document.querySelector(this.parent);
+      parent = document.querySelector(this.parent);
       parent.appendChild(this.el);
     } else {
       parent.style.position = 'relative';
