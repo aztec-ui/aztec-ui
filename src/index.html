@@ -298,18 +298,24 @@
       </az-splitter>
     </az-section>
     <az-section caption="Notification">
-      <az-notification caption="Success" type="success">
+      <az-notification caption="Success" type="success" timeout="Infinity">
         <p>Hello <b>World!</b></p>
       </az-notification>
-      <az-notification caption="Info" type="info">
+      <az-notification caption="Info" type="info" timeout="Infinity">
         <p>Hello <b>World!</b></p>
       </az-notification>
-      <az-notification caption="Warning" type="warning">
+      <az-notification caption="Warning" type="warning" timeout="Infinity">
           <p>Hello <b>World!</b></p>
         </az-notification>
-      <az-notification caption="Error" type="danger">
+      <az-notification caption="Error" type="danger" timeout="Infinity">
         <p>Hello <b>World!</b></p>
       </az-notification>
+      <br/>
+      <br/>
+      <az-button caption="top-left"></az-button>
+      <az-button caption="top-right"></az-button>
+      <az-button caption="bottom-left"></az-button>
+      <az-button caption="bottom-right"></az-button>
     </az-section>
   </az-panel>
   <script type="text/javascript">
@@ -362,6 +368,12 @@
       });
       ctxmenu1.addEventListener('selected', e => alert(e.detail));
       ctxmenu2.addEventListener('selected', e => alert(e.detail));
+    });
+    document.querySelectorAll('az-section[caption=Notification] az-button').forEach(btn => {
+      btn.onclick = () => {
+        const type = ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)];
+        aztec.Notification[type](btn.caption, 'Message', btn.caption, 3000);
+      }
     });
   </script>
   </div>
