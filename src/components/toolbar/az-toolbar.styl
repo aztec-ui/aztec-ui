@@ -3,4 +3,26 @@ az-toolbar {
   az-button {
     margin: 0.2em;
   }
+  az-toolbar-separator {
+    display: inline-flex;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--az-highlight-color);
+  }
+  &.horizontal {
+    az-toolbar-separator {
+      border-left-width: 1px;
+      width: 0px;
+      height: auto;
+      margin: 0 0.5em
+    }
+  }
+  &.vertical {
+    az-toolbar-separator {
+      border-top-width: 1px;
+      height: 0px;
+      width: 100%;
+      margin: 0.5em 0;
+    }
+  }
 }
