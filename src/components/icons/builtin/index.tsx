@@ -7,6 +7,8 @@ import Bars from './bars';
 import Book from './book';
 import Check from './check';
 import CircleCross from './circle-cross';
+import CircleCheck from './circle-check';
+import CircleExclamation from './circle-exclamation';
 import Close from './close';
 import Cog from './cog';
 import Cogs from './cogs';
@@ -55,6 +57,8 @@ const builtinIcons: Record<string, string | string[]> = {
   "book": Book,
   "check": Check,
   "circle-cross": CircleCross,
+  "circle-check": CircleCheck,
+  "circle-exclamation": CircleExclamation,
   "close": Close,
   "cog": Cog,
   "cogs": Cogs,
