@@ -86,3 +86,42 @@
     transform:rotate(360deg);
   }
 }
+
+@keyframes az-left-fade-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes az-right-fade-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes az-up-fade-out {
+  0% {
+    max-height: 150px;
+    margin-bottom: auto;
+    padding-top: auto;
+    padding-bottom: auot;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+  }
+}
