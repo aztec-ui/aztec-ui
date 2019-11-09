@@ -82,6 +82,7 @@ export namespace Components {
     'icon': string;
     'message': string;
     'placement': CornerPlacement;
+    'timeout': number;
     'type': ComponentStyle;
   }
   interface AzPanel {
@@ -361,6 +362,7 @@ declare namespace LocalJSX {
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onShowed'?: (event: CustomEvent<any>) => void;
     'placement'?: CornerPlacement;
+    'timeout'?: number;
     'type'?: ComponentStyle;
   }
   interface AzPanel {
