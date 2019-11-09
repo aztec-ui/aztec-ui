@@ -9,6 +9,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ComponentSize,
   ComponentStyle,
+  CornerPlacement,
 } from './global/typing';
 import {
   AzTreeItem,
@@ -75,6 +76,13 @@ export namespace Components {
     'action': string;
     'caption': string;
     'icon': string;
+  }
+  interface AzNotification {
+    'caption': string;
+    'icon': string;
+    'message': string;
+    'placement': CornerPlacement;
+    'type': ComponentStyle;
   }
   interface AzPanel {
     'caption': string;
@@ -185,6 +193,12 @@ declare global {
     new (): HTMLAzMenuItemElement;
   };
 
+  interface HTMLAzNotificationElement extends Components.AzNotification, HTMLStencilElement {}
+  var HTMLAzNotificationElement: {
+    prototype: HTMLAzNotificationElement;
+    new (): HTMLAzNotificationElement;
+  };
+
   interface HTMLAzPanelElement extends Components.AzPanel, HTMLStencilElement {}
   var HTMLAzPanelElement: {
     prototype: HTMLAzPanelElement;
@@ -259,6 +273,7 @@ declare global {
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-menu-item': HTMLAzMenuItemElement;
+    'az-notification': HTMLAzNotificationElement;
     'az-panel': HTMLAzPanelElement;
     'az-progress-bar': HTMLAzProgressBarElement;
     'az-section': HTMLAzSectionElement;
@@ -339,6 +354,15 @@ declare namespace LocalJSX {
     'icon'?: string;
     'onSelected'?: (event: CustomEvent<any>) => void;
   }
+  interface AzNotification {
+    'caption'?: string;
+    'icon'?: string;
+    'message'?: string;
+    'onClosed'?: (event: CustomEvent<any>) => void;
+    'onShowed'?: (event: CustomEvent<any>) => void;
+    'placement'?: CornerPlacement;
+    'type'?: ComponentStyle;
+  }
   interface AzPanel {
     'caption'?: string;
   }
@@ -407,6 +431,7 @@ declare namespace LocalJSX {
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-menu-item': AzMenuItem;
+    'az-notification': AzNotification;
     'az-panel': AzPanel;
     'az-progress-bar': AzProgressBar;
     'az-section': AzSection;
@@ -435,6 +460,7 @@ declare module "@stencil/core" {
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
       'az-menu-item': LocalJSX.AzMenuItem & JSXBase.HTMLAttributes<HTMLAzMenuItemElement>;
+      'az-notification': LocalJSX.AzNotification & JSXBase.HTMLAttributes<HTMLAzNotificationElement>;
       'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
       'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
