@@ -1,7 +1,15 @@
-import { Component, Prop, Element, Host, Watch, State, Event, EventEmitter, h } from '@stencil/core';
+import { Component, Prop, Element, Host, Event, EventEmitter, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
-import { Inject } from '../../utils/utils';
+import { Inject, exportToGlobal } from '../../utils/utils';
 import { ComponentStyle, CornerPlacement } from '../../global/typing';
+
+interface INotificationOptions {
+  type: ComponentStyle;
+  caption: string;
+  message: string;
+  placement: CornerPlacement;
+  timeout: number;
+}
 
 @Component({
   tag: 'az-notification',
@@ -9,6 +17,26 @@ import { ComponentStyle, CornerPlacement } from '../../global/typing';
   shadow: false
 })
 export class AzNotification {
+  static success(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'success', caption, message, placement, timeout});
+  }
+  static info(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'info', caption, message, placement, timeout});
+  }
+  static warning(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'warning', caption, message, placement, timeout});
+  }
+  static danger(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'danger', caption, message, placement, timeout});
+  }
+  static error(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'danger', caption, message, placement, timeout});
+  }
+  static create(opts: INotificationOptions) {
+    const noti = document.createElement(`az-notification`) as HTMLAzNotificationElement;
+    Object.assign(noti, opts);
+    return appendToPlacmentContainer(opts.placement, noti);
+  }
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
@@ -16,16 +44,19 @@ export class AzNotification {
   @Prop() type: ComponentStyle = 'primary';
   @Prop() icon: string = '';
   @Prop() placement: CornerPlacement = 'top-right';
+  @Prop() timeout: number = 3000;
 
   @Event() showed: EventEmitter;
   @Event() closed: EventEmitter;
 
   @Inject({
-    sync: ['close', 'show']
+    sync: ['close']
   })
   componentDidLoad() {
     this.setIcon();
-    // createPlacmentContainer(this.placement);
+    this.show = this.show.bind(this);
+    this.close = this.close.bind(this);
+    window.setTimeout(this.close, this.timeout);
   }
 
   setIcon() {
@@ -47,19 +78,24 @@ export class AzNotification {
   }
 
   public show(type: ComponentStyle, caption: string, message: string) {
-    this.type = type;
-    this.caption = caption;
-    this.message = message;
+    if (type) this.type = type;
+    if (caption) this.caption = caption;
+    if (message) this.message = message;
+    
   }
 
   public close(reason: string = 'close') {
-    this.el.parentNode.removeChild(this.el);
     this.closed.emit(reason);
+    this.el.style.animationName = 'az-up-fade-out';
+    this.el.style.animationPlayState = 'running';
+    this.el.addEventListener('animationend', () => {
+      this.el.parentNode.removeChild(this.el);
+    });
   }
 
   render() {
     return (
-      <Host class={`az-notification ${this.type}`} style1={{display: 'none'}}>
+      <Host class={`az-notification ${this.type}`}>
         <slot name="caption">
           <div class="az-notification__head">
             {this.icon && <az-icon class="icon" icon={this.icon} width={24} height={24}></az-icon>}
@@ -78,11 +114,26 @@ export class AzNotification {
   }
 }
 
-function createPlacmentContainer(where: CornerPlacement = 'top-right') {
-  const selector = `az-notification az-notification__${where}`;
-  if (document.querySelector(selector)) return;
-  const ctn = document.createElement('div');
-  ctn.classList.add('az-notification', `az-notification__${where}`);
-  document.body.appendChild(ctn);
-  return ctn;
+function appendToPlacmentContainer(placement: CornerPlacement = 'top-right', noti: HTMLAzNotificationElement) {
+  const selector = `.az-notification-container.az-notification__${placement}`;
+  let ctn = document.querySelector(selector) as HTMLDivElement;
+  if (!ctn) {
+    ctn = document.createElement('div');
+    ctn.classList.add('az-notification-container', `az-notification__${placement}`);
+    document.body.appendChild(ctn);
+  }
+  let anim = 'left-fade-in';
+  switch (placement) {
+    case 'top-left':
+    case 'bottom-left':
+      anim = 'az-right-fade-in'
+      break;
+    default:
+      anim = 'az-left-fade-in';
+  }
+  noti.style.animationName = anim;
+  ctn.appendChild(noti);
+  return noti;
 }
+
+exportToGlobal('Notification', AzNotification);

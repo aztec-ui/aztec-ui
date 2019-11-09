@@ -8,6 +8,7 @@ az-notification {
   position: relative;
   box-shadow: 3px 2px 4px 0px rgba(0,0,0,0.2);
   border-radius: var(--az-border-radius-mini);
+  animation-duration: 100ms;
   .az-notification__head {
     font-size: var(--az-font-size-medium);
     margin-left: 36px
@@ -41,5 +42,38 @@ az-notification {
   }
   &.danger az-icon.icon path {
     fill: var(--az-danger-color);
+  }
+}
+.az-notification-container {
+  position: fixed;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  .az-notification {
+    margin: .5em 0;
+  }
+  &.az-notification__top-right {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__top-left {
+    top: 0;
+    left: 0;
+    bottom: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__bottom-left {
+    bottom: 0;
+    left: 0;
+    top: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__bottom-right {
+    bottom: 0;
+    right: 0;
+    top: auto;
+    max-width: calc(100vw - 2em);
   }
 }
