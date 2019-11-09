@@ -54,9 +54,11 @@
   --az-transform-animation-duration-normal: 100ms;
 
   /* z-index */
-  --az-zindex-base: 911;
-  --az-zindex-dialog: calc(var(--az-zindex-base) + 1);
-  --az-zindex-menu: calc(var(--az-zindex-base) + 2);
+  --az-zindex-base: 1000;
+  --az-zindex-dialog: calc(var(--az-zindex-base) + 100);
+  --az-zindex-menu: calc(var(--az-zindex-base) + 200);
+  --az-zindex-notification: calc(var(--az-zindex-base) + 300);
+  --az-zindex-tooltip: calc(var(--az-zindex-base) + 400);
 }
 .aztec-app {
   font-family: var(--az-font-family);
