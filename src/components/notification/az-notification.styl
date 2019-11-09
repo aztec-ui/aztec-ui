@@ -1,0 +1,45 @@
+az-notification {
+  padding: 0.5em;
+  min-width: 16em; 
+  display: inline-block;
+  border: 1px solid var(--az-border-color);
+  background-color: var(--az-primary-color);
+  color: var(--az-caption-color);
+  position: relative;
+  box-shadow: 3px 2px 4px 0px rgba(0,0,0,0.2);
+  border-radius: var(--az-border-radius-mini);
+  .az-notification__head {
+    font-size: var(--az-font-size-medium);
+    margin-left: 36px
+    .az-icon.icon {
+      position: absolute;
+      left: 6px;
+      top: 4px;
+    }
+  }
+  .az-icon-close {
+    float: right;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+  .az-notification__message {
+    display: block;
+    margin-left: 36px
+  }
+
+  &.primary az-icon.icon path, &.plain az-icon.icon path {
+    fill: var(--az-primary-color);
+  }
+  &.success az-icon.icon path {
+    fill: var(--az-success-color);
+  }
+  &.info az-icon.icon path {
+    fill: var(--az-info-color);
+  }
+  &.warning az-icon.icon path {
+    fill: var(--az-warning-color);
+  }
+  &.danger az-icon.icon path {
+    fill: var(--az-danger-color);
+  }
+}
