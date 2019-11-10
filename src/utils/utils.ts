@@ -159,6 +159,7 @@ export function Inject (opts: IInjectOptions = makeInjectOpts()) {
                 this.el[name] = this[name];
               }
             });
+            this.el.dispatchEvent(new CustomEvent('synced'));
           }
         };
         definingProperty = true;
