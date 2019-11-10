@@ -226,13 +226,11 @@
       <az-color-picker></az-color-picker>
     </az-section>
     <az-section caption="Dialog">
-        <az-dialog id="dialog1" style="display:none;" caption="AztecUI">
-          <br/>
-          <br/>
+        <az-dialog id="dialog1" style="position:static;" caption="AztecUI">
           <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
           <az-button slot="footer" caption="OK" onclick="dialog1.hide()"></az-button>
         </az-dialog>
-      <az-button onclick="document.getElementById('dialog1').style.display = ''">
+      <az-button>
         Open Dialog
       </az-button>
     </az-section>
@@ -370,6 +368,9 @@
       ctxmenu1.addEventListener('selected', e => alert(e.detail));
       ctxmenu2.addEventListener('selected', e => alert(e.detail));
     });
+    document.querySelector('az-section[caption=Dialog] > az-button').onclick = () => {
+      aztec.Dialog.show({caption: 'This is a dialog caption', content: 'Dialog Content', mask: true});
+    };
     document.querySelectorAll('az-section[caption=Notification] az-button').forEach(btn => {
       btn.onclick = () => {
         const type = ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)];
