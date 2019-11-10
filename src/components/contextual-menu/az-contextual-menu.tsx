@@ -3,8 +3,8 @@ import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
 @Component({
-  tag: 'az-context-menu',
-  styleUrl: 'az-context-menu.styl',
+  tag: 'az-contextual-menu',
+  styleUrl: 'az-contextual-menu.styl',
   shadow: false
 })
 export class AzContextMenu {
