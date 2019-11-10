@@ -10,6 +10,7 @@ import {
   ComponentSize,
   ComponentStyle,
   CornerPlacement,
+  PositionHorizontal,
 } from './global/typing';
 import {
   AzTreeItem,
@@ -22,7 +23,7 @@ export namespace Components {
     'circle': boolean;
     'disabled': boolean;
     'icon': string;
-    'iconPosition': string;
+    'iconPosition': PositionHorizontal;
     'round': boolean;
     'size': ComponentSize;
     /**
@@ -42,7 +43,7 @@ export namespace Components {
     'readonly': boolean;
     'showinput': boolean;
   }
-  interface AzContextMenu {
+  interface AzContextualMenu {
     'caption': string;
     'closeevent': string;
     'parent': string;
@@ -164,10 +165,10 @@ declare global {
     new (): HTMLAzColorPickerElement;
   };
 
-  interface HTMLAzContextMenuElement extends Components.AzContextMenu, HTMLStencilElement {}
-  var HTMLAzContextMenuElement: {
-    prototype: HTMLAzContextMenuElement;
-    new (): HTMLAzContextMenuElement;
+  interface HTMLAzContextualMenuElement extends Components.AzContextualMenu, HTMLStencilElement {}
+  var HTMLAzContextualMenuElement: {
+    prototype: HTMLAzContextualMenuElement;
+    new (): HTMLAzContextualMenuElement;
   };
 
   interface HTMLAzDialogElement extends Components.AzDialog, HTMLStencilElement {}
@@ -269,7 +270,7 @@ declare global {
     'az-button': HTMLAzButtonElement;
     'az-checkbox': HTMLAzCheckboxElement;
     'az-color-picker': HTMLAzColorPickerElement;
-    'az-context-menu': HTMLAzContextMenuElement;
+    'az-contextual-menu': HTMLAzContextualMenuElement;
     'az-dialog': HTMLAzDialogElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
@@ -295,7 +296,7 @@ declare namespace LocalJSX {
     'circle'?: boolean;
     'disabled'?: boolean;
     'icon'?: string;
-    'iconPosition'?: string;
+    'iconPosition'?: PositionHorizontal;
     'round'?: boolean;
     'size'?: ComponentSize;
     /**
@@ -317,7 +318,7 @@ declare namespace LocalJSX {
     'readonly'?: boolean;
     'showinput'?: boolean;
   }
-  interface AzContextMenu {
+  interface AzContextualMenu {
     'caption'?: string;
     'closeevent'?: string;
     'onShowed'?: (event: CustomEvent<any>) => void;
@@ -428,7 +429,7 @@ declare namespace LocalJSX {
     'az-button': AzButton;
     'az-checkbox': AzCheckbox;
     'az-color-picker': AzColorPicker;
-    'az-context-menu': AzContextMenu;
+    'az-contextual-menu': AzContextualMenu;
     'az-dialog': AzDialog;
     'az-icon': AzIcon;
     'az-input': AzInput;
@@ -457,7 +458,7 @@ declare module "@stencil/core" {
       'az-button': LocalJSX.AzButton & JSXBase.HTMLAttributes<HTMLAzButtonElement>;
       'az-checkbox': LocalJSX.AzCheckbox & JSXBase.HTMLAttributes<HTMLAzCheckboxElement>;
       'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
-      'az-context-menu': LocalJSX.AzContextMenu & JSXBase.HTMLAttributes<HTMLAzContextMenuElement>;
+      'az-contextual-menu': LocalJSX.AzContextualMenu & JSXBase.HTMLAttributes<HTMLAzContextualMenuElement>;
       'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
