@@ -38,7 +38,7 @@ export class AzButton {
   render() {
     let iconLeft = null;
     let iconRight = null;
-    let pos = this.iconPosition;
+    let pos = this.iconPosition as string;
     if (!this.caption) pos = '';
     const icon = this.icon ? <az-icon class={pos} icon={this.icon}></az-icon> : null;
     if (pos === 'left') {
