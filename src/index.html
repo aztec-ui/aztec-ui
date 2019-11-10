@@ -181,13 +181,13 @@
       <az-tree id="tree1" caption="Tree Demo" selecting="true"></az-tree>
       <br/>
       <az-tree id="tree2" caption="Files"></az-tree>
-      <az-context-menu parent="#tree2">
+      <az-contextual-menu parent="#tree2">
         <az-menu-item caption="Add" action="add" icon="plus"></az-menu-item>
         <az-menu-item caption="-"></az-menu-item>
         <az-menu-item caption="Delete" action="delete" icon="close"></az-menu-item>
         <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
         <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
-      </az-context-menu>
+      </az-contextual-menu>
     </az-section>
     <az-section caption="Toolbar">
       <az-toolbar>
@@ -197,23 +197,23 @@
         <az-button caption="Backward" icon="backward" type="plain"></az-button>
         <az-toolbar-separator></az-toolbar-separator>
         <az-button caption="" type="plain" icon="three-dots">
-          <az-context-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
+          <az-contextual-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
             <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
             <az-menu-item caption="-"></az-menu-item>
             <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
             <az-menu-item caption="Export" action="export" icon="download">
-              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
+              <az-contextual-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
                 <az-menu-item caption="Copy title" action="title"></az-menu-item>
                 <az-menu-item caption="Abc" action="abc"></az-menu-item>
-              </az-context-menu>
+              </az-contextual-menu>
             </az-menu-item>
             <az-menu-item caption="More..." action="more" icon="arrow-right">
-              <az-context-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
+              <az-contextual-menu parent="parent" triggerevent="mouseenter" closeevent="mouseleave" popupalign="to-right">
                 <az-menu-item caption="Copy title" action="title"></az-menu-item>
                 <az-menu-item caption="Abc" action="abc"></az-menu-item>
-              </az-context-menu>
+              </az-contextual-menu>
             </az-menu-item>
-          </az-context-menu>
+          </az-contextual-menu>
         </az-button>
       </az-toolbar>
     </az-section>
@@ -268,18 +268,18 @@
             <h1 style="float:right;">Double click here</h1>
             <h1>Right click here</h1>
           </az-panel>
-          <az-context-menu id="ctxmenu1">
+          <az-contextual-menu id="ctxmenu1">
             <az-menu-item caption="Open" action="open" icon="open-folder"></az-menu-item>
             <az-menu-item caption="-"></az-menu-item>
             <az-menu-item caption="Save" action="save" icon="floppy-disk"></az-menu-item>
             <az-menu-item caption="Export" action="export" icon="download"></az-menu-item>
-          </az-context-menu>
-          <az-context-menu id="ctxmenu2" triggerevent="dblclick">
+          </az-contextual-menu>
+          <az-contextual-menu id="ctxmenu2" triggerevent="dblclick">
               <az-menu-item caption="打开" action="open" icon="open-folder"></az-menu-item>
               <az-menu-item caption="-"></az-menu-item>
               <az-menu-item caption="保存" action="save" icon="floppy-disk"></az-menu-item>
               <az-menu-item caption="导出" action="export" icon="download"></az-menu-item>
-            </az-context-menu>
+            </az-contextual-menu>
         </div class="panel">
         <div class="panel" style="flex: 0 0 20%">
           <az-panel style="background-color:var(--az-danger-color)">Panel3</az-panel>
