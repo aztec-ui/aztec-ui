@@ -51,7 +51,11 @@ export namespace Components {
     'triggerevent': string;
   }
   interface AzDialog {
+    'buttons': ButtonConfig[];
     'caption': string;
+    'clickmaskclose': boolean;
+    'closable': boolean;
+    'content': string;
     'fixed': boolean;
   }
   interface AzIcon {
@@ -327,7 +331,11 @@ declare namespace LocalJSX {
     'triggerevent'?: string;
   }
   interface AzDialog {
+    'buttons'?: ButtonConfig[];
     'caption'?: string;
+    'clickmaskclose'?: boolean;
+    'closable'?: boolean;
+    'content'?: string;
     'fixed'?: boolean;
     'onClosed'?: (event: CustomEvent<any>) => void;
   }
