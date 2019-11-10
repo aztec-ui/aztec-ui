@@ -17,7 +17,7 @@ export class AzMenuItem {
 
   componentDidLoad() {}
 
-  onClick(e: MouseEvent) {
+  onClick() {
     this.selected.emit(this.action);
   }
 
@@ -26,7 +26,7 @@ export class AzMenuItem {
       return <Host class="az-menu-item az-menu-item__separator separator"></Host>
     } else {
       return (
-        <Host class="az-menu-item" onClick={(e: MouseEvent) => this.onClick(e)}>
+        <Host class="az-menu-item" onClick={() => this.onClick(e)}>
           {this.icon && <az-icon icon={this.icon} />}
           <span class="az-caption">{this.caption}</span>
         </Host>
