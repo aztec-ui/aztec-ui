@@ -1,4 +1,6 @@
 az-dialog {
+  display: flex;
+  flex-direction: column;
   font-family: var(--az-font-family);
   position: fixed;
   border-radius: var(--az-border-radius-mini);
@@ -8,35 +10,22 @@ az-dialog {
   z-index: var(--az-zindex-dialog);
   padding: 1em;
   color: var(--az-caption-color);
-}
-
-az-dialog.center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-az-dialog {
-  display: flex;
-  padding: 1px;
-  flex-direction: column;
-  &.center {
-    top: 38.2%;
+  min-width: 280px;
+  top: 38.2%;
+  &:not(.fixed) .az-dialog__header {
+    cursor: move;
   }
   .az-dialog__header {
-    text-align: center;
+    text-align: left;
     line-height: 2em;
-    &:hover {
-      background-color: var(--az-border-color);
-    }
   }
   .az-dialog__title {
-    font-size: var(--az-font-size-normal);
+    font-size: var(--az-font-size-large);
   }
   .az-dialog__icons {
     float: right;
-    az-icon {
-      cursor: pointer;
-      vertical-align: middle;
+    az-button {
+      vertical-align: baseline;
     }
   }
   .az-dialog__body {
@@ -51,4 +40,23 @@ az-dialog {
       margin-left: 0.5em;
     }
   }
+}
+.az-dialog-container {
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.267s ease 0s;
+}
+
+.az-dialog-container.mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--az-zindex-mask);
 }
