@@ -1,13 +1,13 @@
 import { Component, Prop, Element, Host, Event, EventEmitter, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject, exportToGlobal } from '../../utils/utils';
-import { ComponentStyle, CornerPlacement } from '../../global/typing';
+import { ComponentStyle, Placement } from '../../global/typing';
 
 interface INotificationOptions {
   type: ComponentStyle;
   caption: string;
   message: string;
-  placement: CornerPlacement;
+  placement: Placement;
   timeout: number;
 }
 
@@ -17,19 +17,19 @@ interface INotificationOptions {
   shadow: false
 })
 export class AzNotification {
-  static success(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+  static success(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'success', caption, message, placement, timeout});
   }
-  static info(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+  static info(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'info', caption, message, placement, timeout});
   }
-  static warning(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+  static warning(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'warning', caption, message, placement, timeout});
   }
-  static danger(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+  static danger(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'danger', caption, message, placement, timeout});
   }
-  static error(caption: string, message: string, placement: CornerPlacement = 'top-left', timeout: number = 3000) {
+  static error(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'danger', caption, message, placement, timeout});
   }
   static create(opts: INotificationOptions) {
@@ -43,7 +43,7 @@ export class AzNotification {
   @Prop() message: string = '';
   @Prop({reflect: true}) type: ComponentStyle = 'primary';
   @Prop({reflect: true}) icon: string = '';
-  @Prop({reflect: true}) placement: CornerPlacement = 'top-right';
+  @Prop({reflect: true}) placement: Placement = 'top-right';
   @Prop({reflect: true}) timeout: number = 3000;
 
   @Event() showed: EventEmitter;
@@ -112,7 +112,7 @@ export class AzNotification {
   }
 }
 
-function appendToPlacmentContainer(placement: CornerPlacement = 'top-right', noti: HTMLAzNotificationElement) {
+function appendToPlacmentContainer(placement: Placement = 'top-right', noti: HTMLAzNotificationElement) {
   const selector = `.az-notification-container.az-notification__${placement}`;
   let ctn = document.querySelector(selector) as HTMLDivElement;
   if (!ctn) {
@@ -126,11 +126,27 @@ function appendToPlacmentContainer(placement: CornerPlacement = 'top-right', not
     case 'bottom-left':
       anim = 'az-right-fade-in'
       break;
+    case 'top-center':
+      anim = 'az-bottom-fade-in';
+      break;
+    case 'bottom-center':
+      anim = 'az-top-fade-in';
+      break;
+    case 'left-center':
+      anim = 'az-right-fade-in';
+      break;
+    case 'center':
+      anim = 'az-top-fade-in';
+      break;
     default:
       anim = 'az-left-fade-in';
   }
   noti.style.animationName = anim;
-  ctn.appendChild(noti);
+  if (placement.indexOf('top') >= 0) {
+    ctn.prepend(noti);
+  } else {
+    ctn.append(noti);
+  }
   return noti;
 }
 

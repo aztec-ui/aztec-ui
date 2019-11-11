@@ -1,6 +1,6 @@
 az-notification {
   padding: 0.5em;
-  min-width: 16em; 
+  min-width: 16em;
   display: inline-block;
   border: 1px solid var(--az-border-color);
   background-color: var(--az-primary-color);
@@ -8,7 +8,10 @@ az-notification {
   position: relative;
   box-shadow: 3px 2px 4px 0px rgba(0,0,0,0.2);
   border-radius: var(--az-border-radius-mini);
+  transition: all ease var(--az-transition-duration-default);
   animation-duration: 100ms;
+  animation-timing-function: ease
+  animation-play-state: running;
   .az-notification__head {
     font-size: var(--az-font-size-medium);
     margin-left: 36px
@@ -75,5 +78,43 @@ az-notification {
     right: 0;
     top: auto;
     max-width: calc(100vw - 2em);
+  }
+  &.az-notification__top-center {
+    top: 0;
+    right: 50%;
+    transform: translateX(50%)
+    bottom: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__bottom-center {
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%)
+    top: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__left-center {
+    top: 50%;
+    left: 0%;
+    transform: translateY(-50%)
+    right: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__right-center {
+    top: 50%;
+    right: 0%;
+    transform: translateY(-50%)
+    left: auto;
+    max-width: calc(100vw - 2em);
+  }
+  &.az-notification__center {
+    top: 38.2%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    align-items: center;
+    justify-content: center;
+    max-width: 0;
+    max-height: 0;
   }
 }
