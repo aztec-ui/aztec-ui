@@ -26,7 +26,7 @@ export class AzMenuItem {
       return <Host class="az-menu-item az-menu-item__separator separator"></Host>
     } else {
       return (
-        <Host class="az-menu-item" onClick={() => this.onClick(e)}>
+        <Host class="az-menu-item" onClick={() => this.onClick()}>
           {this.icon && <az-icon icon={this.icon} />}
           <span class="az-caption">{this.caption}</span>
         </Host>
