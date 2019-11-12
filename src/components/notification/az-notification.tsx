@@ -1,14 +1,31 @@
-import { Component, Prop, Element, Host, Event, EventEmitter, h } from '@stencil/core';
+import { Component, Prop, Element, Host, Event, EventEmitter, h, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject, exportToGlobal } from '../../utils/utils';
 import { ComponentStyle, Placement } from '../../global/typing';
 
-interface INotificationOptions {
-  type: ComponentStyle;
+export type NotificationCreateOptions = {
+  type?: ComponentStyle;
   caption: string;
   message: string;
-  placement: Placement;
-  timeout: number;
+  html?: string;
+  placement?: Placement;
+  timeout?: number;
+}
+
+export type ButtonConfig = {
+  caption: string;
+  action ?: string;
+  icon ?: string
+};
+
+function getDefaultNotificationCreateOptions(): NotificationCreateOptions {
+  return {
+    type: 'info',
+    caption: '',
+    message: '',
+    placement: 'top-right',
+    timeout: 3000
+  };
 }
 
 @Component({
@@ -32,10 +49,10 @@ export class AzNotification {
   static error(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'danger', caption, message, placement, timeout});
   }
-  static create(opts: INotificationOptions) {
+  static create(opts: NotificationCreateOptions) {
     const noti = document.createElement(`az-notification`) as HTMLAzNotificationElement;
-    Object.assign(noti, opts);
-    return appendToPlacmentContainer(opts.placement, noti);
+    let mergedOpts = Object.assign(getDefaultNotificationCreateOptions(), opts);
+    return appendToPlacmentContainer(opts.placement, Object.assign(noti, mergedOpts));
   }
   @Element() el: HostElement;
 
@@ -45,18 +62,26 @@ export class AzNotification {
   @Prop({reflect: true}) icon: string = '';
   @Prop({reflect: true}) placement: Placement = 'top-right';
   @Prop({reflect: true}) timeout: number = 3000;
+  @Prop({reflect: true}) indicator: boolean = true;
+  @Prop() buttons: ButtonConfig[] = [];
+  @Prop() html:string = '';
+
+  indicatorEl: HTMLDivElement;
 
   @Event() showed: EventEmitter;
   @Event() closed: EventEmitter;
 
-  @Inject({
-    sync: ['close']
-  })
+  @Inject({})
   componentDidLoad() {
     this.setIcon();
     this.close = this.close.bind(this);
-    if (!isNaN(this.timeout) && this.timeout !== Infinity) {
+    if (!isNaN(this.timeout) && this.timeout !== Infinity && this.timeout >= 0) {
       window.setTimeout(this.close, this.timeout);
+      if (this.indicatorEl) {
+        this.indicatorEl.style.transitionDuration = `${this.timeout}ms`;
+        this.indicatorEl.style.webkitTransitionDuration = `${this.timeout}ms`;
+        this.indicatorEl.style.width = '0';
+      }
     }
   }
 
@@ -78,13 +103,20 @@ export class AzNotification {
     }
   }
 
-  public close(reason: string = 'close') {
+  @Method()
+  async show() {
+    appendToPlacmentContainer(this.placement, this.el as HTMLAzNotificationElement);
+  }
+
+  @Method()
+  async close(reason: string = 'close') {
+    if (!this.el.isConnected) return;
     this.closed.emit(reason);
     this.el.style.animationName = 'az-up-fade-out';
     this.el.style.animationPlayState = 'running';
     this.el.addEventListener('animationend', () => {
       const parentNode = this.el.parentNode as HTMLElement;
-      parentNode.removeChild(this.el);
+      if (parentNode) parentNode.removeChild(this.el);
       if (!parentNode.children.length) {
         parentNode.remove();
       }
@@ -92,21 +124,32 @@ export class AzNotification {
   }
 
   render() {
+    const buttons = this.buttons.map((config: ButtonConfig) => {
+      return (
+        <az-button class="mini"
+          onClick={() => this.close(config.action)}
+          caption={config.caption}
+          icon={config.icon}>
+        </az-button>
+      )
+    });
+    const content = this.html ? <div innerHTML={this.html}></div> : <div>{this.message}</div>;
     return (
       <Host class={`az-notification ${this.type}`}>
         <slot name="caption">
           <div class="az-notification__head">
-            {this.icon && <az-icon class="icon" icon={this.icon} width={24} height={24}></az-icon>}
+            {this.icon && <az-icon class="icon" icon={this.icon} width={32} height={32}></az-icon>}
             <span class="az-caption az-notification__caption">{this.caption}</span>
-            <az-icon icon="close" onClick={() => this.close()}></az-icon>
+            <az-icon icon="close" class="close-icon" onClick={() => this.close()}></az-icon>
           </div>
         </slot>
         <div class="az-notification__message">
-          <slot>
-            <div>{this.message}</div>
-          </slot>
+          <slot>{content}</slot>
         </div>
-        <div class="az-notification__indicator"></div>
+        <div class="az-notification__footer">
+          <slot name="footer">{buttons}</slot>
+        </div>
+        {this.indicator && <div class="az-notification__indicator" ref={el => this.indicatorEl = el}></div>}
       </Host>
     );
   }
