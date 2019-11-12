@@ -16,6 +16,9 @@ import {
   ButtonConfig,
 } from './components/dialog/az-dialog';
 import {
+  ButtonConfig as ButtonConfig1,
+} from './components/notification/az-notification';
+import {
   AzTreeItem,
   IAzTreeItem,
 } from './components/tree/az-tree-item';
@@ -92,10 +95,15 @@ export namespace Components {
     'icon': string;
   }
   interface AzNotification {
+    'buttons': ButtonConfig[];
     'caption': string;
+    'close': (reason?: string) => Promise<void>;
+    'html': string;
     'icon': string;
+    'indicator': boolean;
     'message': string;
     'placement': Placement;
+    'show': () => Promise<void>;
     'timeout': number;
     'type': ComponentStyle;
   }
@@ -378,8 +386,11 @@ declare namespace LocalJSX {
     'onSelected'?: (event: CustomEvent<any>) => void;
   }
   interface AzNotification {
+    'buttons'?: ButtonConfig[];
     'caption'?: string;
+    'html'?: string;
     'icon'?: string;
+    'indicator'?: boolean;
     'message'?: string;
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onShowed'?: (event: CustomEvent<any>) => void;
