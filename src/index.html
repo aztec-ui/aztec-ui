@@ -83,22 +83,23 @@
   <az-panel caption="Demo" id="demo">
     <az-section caption="Buttons">
       <az-button class="small right" type="plain" size="extra-small" slot="header" onclick="alert(1)">Collapse</az-button>
-      <az-tabs items="['Normal', 'Disabled']" active-index="0">
-        <az-panel id="buttons">
-          <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
-          <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
-          <az-button type="success" size="normal" caption="Normal" icon="loading" id="loadingBtn"></az-button>
-          <az-button type="warning" size="medium" caption="Medium" icon="download" id="downloadBtn" icon-position="right"></az-button>
-          <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
-          <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
-          <br/>
-          <br/>
-          <az-checkbox caption="Disable all buttons" id="disableAllButtons"></az-checkbox>
-        </az-panel>
+      <az-tabs items="['Disabled Buttons', 'Normal', 'Empty Tab']" active-index="1">
         <az-panel>
-          <az-button class="small" caption="Canecel">
-            <az-icon icon="close"></az-icon>
-          </az-button>
+          <az-button class="small" icon="close" caption="Cancel" icon-position="left" disabled="disabled"></az-button>
+        </az-panel>
+        <az-panel id="buttons">
+            <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
+            <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
+            <az-button type="success" size="normal" caption="Normal" icon="loading" id="loadingBtn"></az-button>
+            <az-button type="warning" size="medium" caption="Medium" icon="download" id="downloadBtn" icon-position="right"></az-button>
+            <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
+            <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
+            <br/>
+            <br/>
+            <az-checkbox caption="Disable all buttons" id="disableAllButtons"></az-checkbox>
+          </az-panel>
+        <az-panel>
+          This is a empty panel
         </az-panel>
       </az-tabs>
     </az-section>
