@@ -1,7 +1,7 @@
 import { Component, Prop, Element, h, Host, Event, EventEmitter, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { draggable } from '../../utils/draggable';
-import { exportToGlobal } from '../../utils/utils';
+import { exportToGlobal, Inject } from '../../utils/utils';
 
 export type ButtonConfig = {
   caption: string;
@@ -13,11 +13,23 @@ export type DialogCreateOptions = {
   caption?: string;
   content?: string;
   buttons?: ButtonConfig[];
-  fixed: boolean;
-  closable: boolean;
-  clickmaskclose: boolean;
-  mask: boolean;
+  fixed?: boolean;
+  closable?: boolean;
+  clickmaskclose?: boolean;
+  mask?: boolean;
+  modal?: boolean;
 };
+
+function getDefaultDialogCreateOptions(): DialogCreateOptions {
+  return {
+    buttons: getDefaultButtons(),
+    fixed: false,
+    closable: true,
+    clickmaskclose: false,
+    mask: false,
+    modal: true
+  };
+}
 
 function getDefaultButtons(): ButtonConfig[] {
   return [
@@ -32,23 +44,23 @@ function getDefaultButtons(): ButtonConfig[] {
   shadow: false
 })
 export class AzDialog {
-  static create(opts: DialogCreateOptions) {
+  static create(opts: DialogCreateOptions = getDefaultDialogCreateOptions()) {
     const dialog = document.createElement(`az-dialog`) as HTMLAzDialogElement;
     if (!opts.buttons) opts.buttons = getDefaultButtons();
-    Object.assign(dialog, opts);
-    return appendToDialogContainer(dialog);
+    let mergedOpts = Object.assign(getDefaultDialogCreateOptions(), opts)
+    return appendToDialogContainer(Object.assign(dialog, mergedOpts));
   }
   static getDefaultButtonConfig = getDefaultButtons;
   @Element() el: HostElement;
 
   @Prop({reflect: true}) caption: string = '';
   @Prop({reflect: true}) content: string = '';
-  @Prop({reflect: true}) buttons: ButtonConfig[] = getDefaultButtons();
   @Prop({reflect: true}) fixed: boolean = false;
   @Prop({reflect: true}) closable: boolean = true;
   @Prop({reflect: true}) clickmaskclose: boolean = true;
   @Prop({reflect: true}) mask: boolean = false;
   @Prop({reflect: true}) modal: boolean = true;
+  @Prop() buttons: ButtonConfig[] = getDefaultButtons();
   @Prop() canclose: (reason: string) => boolean;
 
   @Event() closed: EventEmitter;
@@ -56,25 +68,26 @@ export class AzDialog {
 
   head: HTMLElement;
 
+  @Inject({})
   componentDidLoad() {
     if (!this.fixed) draggable(this.el, this.head);
   }
 
   @Method()
-  public close(reason: string = 'close') {
+  async close(reason: string = 'close') {
     if (typeof this.canclose === 'function' && this.canclose(reason) === false) return;
     this.el.parentNode.removeChild(this.el);
     this.closed.emit(reason);
   }
 
   @Method()
-  public hide() {
+  async hide() {
     this.el.style.display = 'none';
     this.hid.emit();
   }
 
   @Method()
-  public show() {
+  async show() {
     appendToDialogContainer(this.el as unknown as HTMLAzDialogElement);
   }
 
@@ -91,7 +104,7 @@ export class AzDialog {
           icon={config.icon}>
         </az-button>
       )
-    })
+    });
     return (
       <Host class={cls} style={{display: 'none'}}>
         <div ref={el => this.head = el} class="az-dialog__header">
@@ -138,19 +151,21 @@ function appendToDialogContainer(dialog: HTMLAzDialogElement) {
 
   // bind event handlers
   dialog.addEventListener('click', (e: MouseEvent) => {
-    if (dialog.clickmaskclose && dialog.mask) e.stopPropagation();
+    e.stopPropagation();
   });
-  dialog.addEventListener('synced', () => {
+
+  const closeDiloagFn = dialog.close.bind(dialog)
+  dialog.componentOnReady().then(() => {
     // @ts-ignore
-    if (dialog.clickmaskclose) ctn.addEventListener('click', dialog.close);
-    if (dialog.modal) ctn.style.display = 'none';
+    if (dialog.clickmaskclose) ctn.addEventListener('click', closeDiloagFn);
+    if (dialog.modal) ctn.style.display = '';
   });
 
   const clearup = () => {
     ctn.classList.remove('mask');
     ctn.style.display = 'none';
     // @ts-ignore
-    ctn.removeEventListener('click', dialog.close);
+    ctn.removeEventListener('click', closeDiloagFn);
   };
   dialog.addEventListener('closed', clearup);
   dialog.addEventListener('hid', clearup);

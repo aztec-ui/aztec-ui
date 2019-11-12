@@ -29,7 +29,8 @@ az-dialog {
     }
   }
   .az-dialog__body {
-    flex: 1;
+    flex: 1;p
+    padding: 1em 0;
   }
   .az-dialog__footer {
     display: flex;
@@ -54,6 +55,7 @@ az-dialog {
   width: 100%;
   height: 100%;
   pointer-events: auto;
+  z-index: var(--az-zindex-mask);
 }
 
 .az-dialog-container.mask {
