@@ -1,12 +1,22 @@
-import { Component, Prop, Element, h, Host, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Element, h, Host, Event, EventEmitter, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { draggable } from '../../utils/draggable';
-import { Inject, exportToGlobal } from '../../utils/utils';
+import { exportToGlobal } from '../../utils/utils';
 
-type ButtonConfig = {
+export type ButtonConfig = {
   caption: string;
   action ?: string;
   icon ?: string
+};
+
+export type DialogCreateOptions = {
+  caption?: string;
+  content?: string;
+  buttons?: ButtonConfig[];
+  fixed: boolean;
+  closable: boolean;
+  clickmaskclose: boolean;
+  mask: boolean;
 };
 
 function getDefaultButtons(): ButtonConfig[] {
@@ -15,17 +25,18 @@ function getDefaultButtons(): ButtonConfig[] {
     { caption: 'Cancel', icon: 'close' }
   ];
 }
+
 @Component({
   tag: 'az-dialog',
   styleUrl: 'az-dialog.styl',
   shadow: false
 })
 export class AzDialog {
-  static show(opts, dialog?: HTMLAzDialogElement) {
-    if (!dialog) dialog = document.createElement(`az-dialog`) as HTMLAzDialogElement;
+  static create(opts: DialogCreateOptions) {
+    const dialog = document.createElement(`az-dialog`) as HTMLAzDialogElement;
     if (!opts.buttons) opts.buttons = getDefaultButtons();
     Object.assign(dialog, opts);
-    return appendToDialogContainer(dialog, opts);
+    return appendToDialogContainer(dialog);
   }
   static getDefaultButtonConfig = getDefaultButtons;
   @Element() el: HostElement;
@@ -36,29 +47,35 @@ export class AzDialog {
   @Prop({reflect: true}) fixed: boolean = false;
   @Prop({reflect: true}) closable: boolean = true;
   @Prop({reflect: true}) clickmaskclose: boolean = true;
+  @Prop({reflect: true}) mask: boolean = false;
+  @Prop({reflect: true}) modal: boolean = true;
+  @Prop() canclose: (reason: string) => boolean;
 
   @Event() closed: EventEmitter;
+  @Event() hid: EventEmitter;
 
   head: HTMLElement;
 
-  @Inject({
-    sync: ['close', 'show', 'hide']
-  })
   componentDidLoad() {
     if (!this.fixed) draggable(this.el, this.head);
   }
 
+  @Method()
   public close(reason: string = 'close') {
+    if (typeof this.canclose === 'function' && this.canclose(reason) === false) return;
     this.el.parentNode.removeChild(this.el);
     this.closed.emit(reason);
   }
 
+  @Method()
   public hide() {
     this.el.style.display = 'none';
+    this.hid.emit();
   }
 
+  @Method()
   public show() {
-    this.el.style.display = '';
+    appendToDialogContainer(this.el as unknown as HTMLAzDialogElement);
   }
 
   render() {
@@ -66,7 +83,7 @@ export class AzDialog {
       'az-dialog center': true,
       'fixed': this.fixed
     };
-    const buttons = this.buttons.forEach((config: ButtonConfig) => {
+    const buttons = this.buttons.map((config: ButtonConfig) => {
       return (
         <az-button class="mini"
           onClick={() => this.close(config.action)}
@@ -76,7 +93,7 @@ export class AzDialog {
       )
     })
     return (
-      <Host class={cls}>
+      <Host class={cls} style={{display: 'none'}}>
         <div ref={el => this.head = el} class="az-dialog__header">
           <span class="az-dialog__title">{this.caption}</span>
           <span class="az-dialog__icons">
@@ -96,7 +113,10 @@ export class AzDialog {
   }
 }
 
-function appendToDialogContainer(dialog: HTMLAzDialogElement, opts: any) {
+function appendToDialogContainer(dialog: HTMLAzDialogElement) {
+  dialog.style.display = '';
+
+  // create, show mask
   const selector = `.az-dialog-container`;
   let ctn = document.querySelector(selector) as HTMLDivElement;
   if (!ctn) {
@@ -104,23 +124,36 @@ function appendToDialogContainer(dialog: HTMLAzDialogElement, opts: any) {
     ctn.classList.add('az-dialog-container');
     document.body.appendChild(ctn);
   }
-  ctn.style.display = '';
-  ctn.classList.toggle('mask', !!opts.mask);
 
-  if (opts.clickmaskclose) {
-    dialog.addEventListener('synced', () => {
-      // @ts-ignore
-      ctn.addEventListener('click', dialog.close);
-    });
+  // ensure only append(bind event handlers) once
+  if (dialog.modal) {
+    ctn.style.display = '';
+    ctn.classList.toggle('mask', !!dialog.mask);
+    if (ctn === dialog.parentNode) return;
+    ctn.appendChild(dialog);
+  } else {
+    if (document.body === dialog.parentNode) return;
+    document.body.appendChild(dialog);
   }
 
-  ctn.appendChild(dialog);
-  dialog.addEventListener('closed', () => {
+  // bind event handlers
+  dialog.addEventListener('click', (e: MouseEvent) => {
+    if (dialog.clickmaskclose && dialog.mask) e.stopPropagation();
+  });
+  dialog.addEventListener('synced', () => {
+    // @ts-ignore
+    if (dialog.clickmaskclose) ctn.addEventListener('click', dialog.close);
+    if (dialog.modal) ctn.style.display = 'none';
+  });
+
+  const clearup = () => {
     ctn.classList.remove('mask');
     ctn.style.display = 'none';
     // @ts-ignore
     ctn.removeEventListener('click', dialog.close);
-  });
+  };
+  dialog.addEventListener('closed', clearup);
+  dialog.addEventListener('hid', clearup);
   return dialog;
 }
 
