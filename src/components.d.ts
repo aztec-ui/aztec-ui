@@ -140,6 +140,7 @@ export namespace Components {
   }
   interface AzTabs {
     'activeIndex': number;
+    'indicator': boolean;
     'items': any[];
   }
   interface AzToolbar {
@@ -432,6 +433,7 @@ declare namespace LocalJSX {
   }
   interface AzTabs {
     'activeIndex'?: number;
+    'indicator'?: boolean;
     'items'?: any[];
   }
   interface AzToolbar {
