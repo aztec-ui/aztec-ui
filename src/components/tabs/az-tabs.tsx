@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Watch, h} from '@stencil/core';
+import { Component, Prop, Element, Watch, Host, h} from '@stencil/core';
 import { Inject } from '../../utils/utils';
 import { HostElement } from '@stencil/core/dist/declarations';
 
@@ -16,6 +16,9 @@ export class AzTabs {
     attribute: 'active-index'
   })
   activeIndex: number = -1;
+  @Prop({reflect: true}) indicator: boolean = true;
+
+  indicatorEl: HTMLDivElement;
 
   @Watch('activeIndex')
   onActiveIndexChanged(newIndex: number, oldIndex: number) {
@@ -24,6 +27,14 @@ export class AzTabs {
     if (!children || children.length === 0) return;
     if (children[oldIndex]) children[oldIndex].classList.remove('visible');
     if (children[newIndex]) children[newIndex].classList.add('visible');
+    
+    const activeTab = this.el.querySelectorAll('li')[newIndex] as HTMLLIElement;
+    if (activeTab) {
+      const left = activeTab.offsetLeft;
+      const width = activeTab.getBoundingClientRect().width;
+      this.indicatorEl.style.left = `${left}px`;
+      this.indicatorEl.style.width = `${width}px`;
+    }
   }
 
   @Inject({
@@ -32,8 +43,8 @@ export class AzTabs {
     parse: true,
     sync: ['addItem', 'removeItem', 'removeItemAt']
   })
-  componentDidLoad(){
-    this.onActiveIndexChanged(this.activeIndex, null);
+  connectedCallback(){
+    this.el.componentOnReady().then(() => this.onActiveIndexChanged(this.activeIndex, 0));
   }
 
   addItem(it: any) {
@@ -60,13 +71,16 @@ export class AzTabs {
         </li>
       );
     });
-    return [
-      <div class="tabs">
-        <ul>{tabs}</ul>
-      </div>,
+    return <Host>
+      <div class="az-tabs__tabs">
+        <ul>
+          {tabs}
+          <div ref={el => this.indicatorEl = el} class="az-tabs__indicator"></div>
+        </ul>
+      </div>
       <content>
         <slot></slot>
       </content>
-    ];
+    </Host>;
   }
 }
