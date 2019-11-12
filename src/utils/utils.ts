@@ -152,6 +152,7 @@ export function Inject (opts: IInjectOptions = makeInjectOpts()) {
 
           //
           if (opts.sync && opts.sync.length > 0) {
+            this.el.dispatchEvent(new CustomEvent('beforesync'));
             opts.sync.forEach((name: string) => {
               if (typeof this[name] === 'function') {
                 this.el[name] = this[name].bind(this);
