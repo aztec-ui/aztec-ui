@@ -226,12 +226,22 @@
       <az-color-picker></az-color-picker>
     </az-section>
     <az-section caption="Dialog">
-        <az-dialog id="dialog1" style="position:static;" caption="AztecUI">
+        <az-dialog id="dialog1" caption="Modal Dialog" closable="false">
           <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
           <az-button slot="footer" caption="OK" onclick="dialog1.hide()"></az-button>
         </az-dialog>
-      <az-button>
-        Open Dialog
+        <az-dialog id="dialog2" caption="No-modal Dialog" modal="false" closable="false">
+          <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
+          <az-button slot="footer" caption="OK" onclick="dialog2.hide()"></az-button>
+        </az-dialog>
+      <az-button id="openDialog" onclick="dialog1.show()">
+        Open Modal Dialog
+      </az-button>
+      <az-button id="openDialog" onclick="dialog2.show()">
+        Open Non-modal Dialog
+      </az-button>
+      <az-button id="createDialog">
+        Create A Modal Masked Dialog
       </az-button>
     </az-section>
     <az-section caption="Tooltip">
@@ -368,8 +378,13 @@
       ctxmenu1.addEventListener('selected', e => alert(e.detail));
       ctxmenu2.addEventListener('selected', e => alert(e.detail));
     });
-    document.querySelector('az-section[caption=Dialog] > az-button').onclick = () => {
-      aztec.Dialog.show({caption: 'This is a dialog caption', content: 'Dialog Content', mask: true});
+    createDialog.onclick = () => {
+      aztec.Dialog.create({
+        caption: 'This is a dialog caption',
+        content: 'Click mask to close',
+        clickmaskclose: true,
+        mask: true
+      }).show();
     };
     document.querySelectorAll('az-section[caption=Notification] az-button').forEach(btn => {
       btn.onclick = () => {
