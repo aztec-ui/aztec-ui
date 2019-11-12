@@ -1,5 +1,6 @@
 az-toolbar {
   display: flex;
+  align-items: center;
   az-toolbar-separator {
     display: inline-flex;
     border-width: 0;
@@ -12,6 +13,15 @@ az-toolbar {
       width: 0px;
       height: auto;
       margin: 0 0.5em
+    }
+    & > * {
+      margin: 0 2px;
+    }
+    & > *:first-child {
+      margin-left: 0;
+    }
+    & > *:last-child {
+      margin-right: 0;
     }
   }
   &.vertical {
