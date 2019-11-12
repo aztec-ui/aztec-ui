@@ -191,10 +191,11 @@
     </az-section>
     <az-section caption="Toolbar">
       <az-toolbar>
-        <az-button caption="Play" icon="triangle" type="plain"></az-button>
-        <az-button caption="Stop" icon="square" type="plain"></az-button>
-        <az-button caption="Forward" icon="forward" type="plain"></az-button>
-        <az-button caption="Backward" icon="backward" type="plain"></az-button>
+        <az-checkbox caption="Checkbox"></az-checkbox>
+        <az-button caption="Play" type="success" icon="triangle" type="plain"></az-button>
+        <az-button caption="Stop" type="danger" icon="square" type="plain"></az-button>
+        <az-button caption="Forward" type="warning" icon="forward" type="plain"></az-button>
+        <az-button caption="Backward" type="info" icon="backward" type="plain"></az-button>
         <az-toolbar-separator></az-toolbar-separator>
         <az-button caption="" type="plain" icon="three-dots">
           <az-contextual-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
@@ -227,11 +228,11 @@
     </az-section>
     <az-section caption="Dialog">
         <az-dialog id="dialog1" caption="Modal Dialog" closable="false">
-          <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
+          <center><h2 style="padding: 0 1em">Dialog Content</h2></center>
           <az-button slot="footer" caption="OK" onclick="dialog1.hide()"></az-button>
         </az-dialog>
         <az-dialog id="dialog2" caption="No-modal Dialog" modal="false" closable="false">
-          <center><h2 style="padding: 0 1em">Welcome using AztecUI!</h2></center>
+          <center><h2 style="padding: 0 1em">Dialog Content</h2></center>
           <az-button slot="footer" caption="OK" onclick="dialog2.hide()"></az-button>
         </az-dialog>
       <az-button id="openDialog" onclick="dialog1.show()">
@@ -325,6 +326,11 @@
       <az-button caption="top-right"></az-button>
       <az-button caption="bottom-left"></az-button>
       <az-button caption="bottom-right"></az-button>
+      <az-button caption="top-center"></az-button>
+      <az-button caption="right-center"></az-button>
+      <az-button caption="bottom-center"></az-button>
+      <az-button caption="left-center"></az-button>
+      <az-button caption="center"></az-button>
     </az-section>
   </az-panel>
   <script type="text/javascript">
