@@ -9,9 +9,12 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ComponentSize,
   ComponentStyle,
-  CornerPlacement,
+  Placement,
   PositionHorizontal,
 } from './global/typing';
+import {
+  ButtonConfig,
+} from './components/dialog/az-dialog';
 import {
   AzTreeItem,
   IAzTreeItem,
@@ -52,11 +55,17 @@ export namespace Components {
   }
   interface AzDialog {
     'buttons': ButtonConfig[];
+    'canclose': (reason: string) => boolean;
     'caption': string;
     'clickmaskclose': boolean;
     'closable': boolean;
+    'close': (reason?: string) => Promise<void>;
     'content': string;
     'fixed': boolean;
+    'hide': () => Promise<void>;
+    'mask': boolean;
+    'modal': boolean;
+    'show': () => Promise<void>;
   }
   interface AzIcon {
     'color': string;
@@ -86,7 +95,7 @@ export namespace Components {
     'caption': string;
     'icon': string;
     'message': string;
-    'placement': CornerPlacement;
+    'placement': Placement;
     'timeout': number;
     'type': ComponentStyle;
   }
@@ -332,12 +341,16 @@ declare namespace LocalJSX {
   }
   interface AzDialog {
     'buttons'?: ButtonConfig[];
+    'canclose'?: (reason: string) => boolean;
     'caption'?: string;
     'clickmaskclose'?: boolean;
     'closable'?: boolean;
     'content'?: string;
     'fixed'?: boolean;
+    'mask'?: boolean;
+    'modal'?: boolean;
     'onClosed'?: (event: CustomEvent<any>) => void;
+    'onHid'?: (event: CustomEvent<any>) => void;
   }
   interface AzIcon {
     'color'?: string;
@@ -370,7 +383,7 @@ declare namespace LocalJSX {
     'message'?: string;
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onShowed'?: (event: CustomEvent<any>) => void;
-    'placement'?: CornerPlacement;
+    'placement'?: Placement;
     'timeout'?: number;
     'type'?: ComponentStyle;
   }
