@@ -10,6 +10,7 @@ export type NotificationCreateOptions = {
   html?: string;
   placement?: Placement;
   timeout?: number;
+  closable?: boolean;
 }
 
 export type ButtonConfig = {
@@ -24,7 +25,8 @@ function getDefaultNotificationCreateOptions(): NotificationCreateOptions {
     caption: '',
     message: '',
     placement: 'top-right',
-    timeout: 3000
+    timeout: 3000,
+    closable: true
   };
 }
 
@@ -63,6 +65,7 @@ export class AzNotification {
   @Prop({reflect: true}) placement: Placement = 'top-right';
   @Prop({reflect: true}) timeout: number = 3000;
   @Prop({reflect: true}) indicator: boolean = true;
+  @Prop({reflect: true}) closable: boolean = true;
   @Prop() buttons: ButtonConfig[] = [];
   @Prop() html:string = '';
 
@@ -82,6 +85,8 @@ export class AzNotification {
         this.indicatorEl.style.webkitTransitionDuration = `${this.timeout}ms`;
         this.indicatorEl.style.width = '0';
       }
+    } else {
+      this.indicatorEl.style.display = 'none';
     }
   }
 
@@ -140,7 +145,7 @@ export class AzNotification {
           <div class="az-notification__head">
             {this.icon && <az-icon class="icon" icon={this.icon} width={32} height={32}></az-icon>}
             <span class="az-caption az-notification__caption">{this.caption}</span>
-            <az-icon icon="close" class="close-icon" onClick={() => this.close()}></az-icon>
+            {this.closable && <az-button type="plain" size="small" icon="close" class="close-icon" onClick={() => this.close()}></az-button>}
           </div>
         </slot>
         <div class="az-notification__message">
