@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Host, Watch, State, Event, EventEmitter, h } from '@stencil/core';
+import { Component, Prop, Element, Host, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 
 @Component({
