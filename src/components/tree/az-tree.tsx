@@ -72,7 +72,7 @@ export class AzTree {
     this.roots[index].remove();
   }
 
-  find(predicate: (item: AzTreeItem) => boolean) {
+  find(/*(predicate: (item: AzTreeItem) => boolean*/) {
     throw new Error('Not implemented!');
   }
 
