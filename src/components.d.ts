@@ -97,6 +97,7 @@ export namespace Components {
   interface AzNotification {
     'buttons': ButtonConfig[];
     'caption': string;
+    'closable': boolean;
     'close': (reason?: string) => Promise<void>;
     'html': string;
     'icon': string;
@@ -389,6 +390,7 @@ declare namespace LocalJSX {
   interface AzNotification {
     'buttons'?: ButtonConfig[];
     'caption'?: string;
+    'closable'?: boolean;
     'html'?: string;
     'icon'?: string;
     'indicator'?: boolean;
