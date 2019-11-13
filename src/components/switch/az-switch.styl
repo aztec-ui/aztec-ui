@@ -11,7 +11,7 @@ az-switch {
     height: 16px;
     display: inline-block;
     vertical-align: middle;
-    border: 1px solid #727272;
+    border: 1px solid var(--az-border-color);
     border-radius: 8px;
     transition: all 200ms;
     position: relative;
@@ -28,7 +28,7 @@ az-switch {
       margin: 1px;
     }
     &.on {
-      background-color: #727272;
+      background-color: var(--az-border-color);
       &::before {
         left: 100%;
         transform: translateX(-100%) translateX(-4px);

@@ -1,7 +1,7 @@
 az-slider {
   input[type=range] {
     -webkit-appearance: none;
-    background-color: #727272;
+    background-color: var(--az-border-color);
     outline: none;
     cursor: crosshair;
     &::-webkit-slider-runnable-track {
@@ -47,7 +47,7 @@ az-slider {
   &.triangle {
     input[type=range] {
       background-color: transparent;
-      border-bottom: 1px solid #727272;
+      border-bottom: 1px solid var(--az-border-color);
       &::-webkit-slider-thumb {
         width: 0;
         height: 0;

@@ -1,8 +1,8 @@
 az-tooltip {
   font-size: var(--az-font-size-normal);
-  background: var(--az-primary-color);
+  background-color: var(--az-tooltip-color);
   padding: 1em;
-  border: 1px solid #727272;
+  border: 1px solid var(--az-border-color);
   width: auto;
   height: auto;
   position: absolute;
@@ -16,7 +16,7 @@ az-tooltip {
     height: 0;
     position: absolute;
     border: 6px solid transparent;
-    border-color: transparent #494949 #494949 transparent;
+    border-color: transparent var(--az-primary-color) var(--az-primary-color) transparent;
     box-shadow: 1px 1px 0px 0px rgb(114, 114, 114);
   }
   &.top {
