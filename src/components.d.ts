@@ -19,6 +19,9 @@ import {
   ButtonConfig as ButtonConfig1,
 } from './components/notification/az-notification';
 import {
+  TabItemConfig,
+} from './components/tabs/az-tabs';
+import {
   AzTreeItem,
   IAzTreeItem,
 } from './components/tree/az-tree-item';
@@ -141,8 +144,11 @@ export namespace Components {
   }
   interface AzTabs {
     'activeIndex': number;
+    'addItem': (it: string | TabItemConfig) => Promise<void>;
     'indicator': boolean;
-    'items': any[];
+    'items': TabItemConfig[];
+    'removeItem': (caption: string) => Promise<void>;
+    'removeItemAt': (index: number) => Promise<void>;
   }
   interface AzToolbar {
     'caption': string;
@@ -436,7 +442,8 @@ declare namespace LocalJSX {
   interface AzTabs {
     'activeIndex'?: number;
     'indicator'?: boolean;
-    'items'?: any[];
+    'items'?: TabItemConfig[];
+    'onClosed'?: (event: CustomEvent<any>) => void;
   }
   interface AzToolbar {
     'caption'?: string;
