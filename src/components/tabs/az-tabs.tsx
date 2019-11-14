@@ -1,7 +1,12 @@
-import { Component, Prop, Element, Watch, Host, h} from '@stencil/core';
+import { Component, Prop, Element, Watch, Host, h, Method, Event, EventEmitter} from '@stencil/core';
 import { Inject } from '../../utils/utils';
 import { HostElement } from '@stencil/core/dist/declarations';
 
+export type TabItemConfig  = {
+  caption?: string | '';
+  icon?: string;
+  closable?: boolean;
+}
 @Component({
   tag: 'az-tabs',
   styleUrl: 'az-tabs.styl',
@@ -10,13 +15,11 @@ import { HostElement } from '@stencil/core/dist/declarations';
 export class AzTabs {
   @Element() el: HostElement;
 
-  @Prop() items: any[] = [];
-
-  @Prop({
-    attribute: 'active-index'
-  })
-  activeIndex: number = -1;
+  @Prop() items: TabItemConfig[] = [];
+  @Prop({attribute: 'active-index'}) activeIndex: number = -1;
   @Prop({reflect: true}) indicator: boolean = true;
+
+  @Event() closed: EventEmitter;
 
   indicatorEl: HTMLDivElement;
 
@@ -38,36 +41,56 @@ export class AzTabs {
   }
 
   @Inject({
-    style: false,
+    after: true,
     attrs: false,
-    parse: true,
-    sync: ['addItem', 'removeItem', 'removeItemAt']
+    parse: true
   })
   connectedCallback(){
     this.el.componentOnReady().then(() => this.onActiveIndexChanged(this.activeIndex, 0));
   }
 
-  addItem(it: any) {
-    this.items = [...this.items, it];
+  @Method()
+  async addItem(it: TabItemConfig | string) {
+    let cfg: TabItemConfig = {caption: ''};
+    if (typeof it === 'string') {
+      cfg.caption = it;
+    }
+    this.items = [...this.items, cfg];
     this.el.forceUpdate();
   }
 
-  removeItem(it: any) {
-    const pos = this.items.findIndex(item => item === it);
+  @Method()
+  async removeItem(caption: string) {
+    const pos = this.items.findIndex(item => item.caption === caption);
     this.items.splice(pos, 1);
+    this.el.forceUpdate();
   }
 
-  removeItemAt(index: number) {
+  @Method()
+  async removeItemAt(index: number) {
     this.items.splice(index, 1);
+    this.el.forceUpdate();
+  }
+
+  closeItem(index: number) {
+    const it = this.items[index];
+    this.removeItemAt(index);
+    let newIndex = index - 1;
+    if (newIndex < 0) newIndex = 0;
+    this.onActiveIndexChanged(newIndex, 0);
+    this.closed.emit(it);
   }
 
   render() {
-    const tabs = this.items.map((it: any, i: number) => {
+    const tabs = this.items.map((it: TabItemConfig, i: number) => {
+      const cfg = toTabItemConfig(it);
       return (
         <li
-          class={{active: this.activeIndex === i}}
+          class={{active: this.activeIndex === i, closable: cfg.closable}}
           onClick={() => this.activeIndex = i}>
-          {it}
+          {cfg.icon && <az-icon icon={cfg.icon}></az-icon>}
+          {cfg.caption && <span class="az-caption az-tabs__caption">{cfg.caption}</span>}
+          {cfg.closable && <az-icon icon="close" class="extra-small" width="8" height="8" onClick={() => this.closeItem(i)}></az-icon>}
         </li>
       );
     });
@@ -83,4 +106,13 @@ export class AzTabs {
       </content>
     </Host>;
   }
+}
+
+function toTabItemConfig (it: TabItemConfig | string) {
+  if (typeof it === 'string') {
+    return {caption: it};
+  } if ('caption' in it || 'icon' in it) {
+    return it;
+  }
+  throw new Error(`<az-tab> item requires at lease one of 'caption' or 'icon' must be provide, but got ${JSON.stringify(it)}`);
 }

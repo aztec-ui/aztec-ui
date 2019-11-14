@@ -9,18 +9,36 @@ az-tabs {
       padding: 0;
     }
     li {
+      display: flex;
       flex: 1;
       margin: 0;
       border-top-left-radius: var(--az-border-radius-mini);
       border-top-right-radius: var(--az-border-radius-mini);
-      cursor: pointer;
+      cursor: default;
       padding: 0.5em 0.5em;
       list-style: none;
       white-space: nowrap;
+      & > az-icon {
+        margin-right: 2px;
+      }
+      & > .az-icon-close {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        margin: 0;
+        visibility: hidden;
+        cursor: pointer;
+      }
     }
     li.active {
-      background-color: var(--az-highlight-color);
       border-bottom: none;
+      background-color: var(--az-highlight-color);
+    }
+    li.active.closable > .az-icon-close {
+      visibility: visible;
+    }
+    li.closable {
+      padding-right: 16px;
     }
   }
   .az-tabs__indicator {
