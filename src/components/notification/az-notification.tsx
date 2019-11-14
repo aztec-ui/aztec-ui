@@ -5,7 +5,7 @@ import { ComponentStyle, Placement } from '../../global/typing';
 
 export type NotificationCreateOptions = {
   type?: ComponentStyle;
-  caption: string;
+  caption: string | '';
   message: string;
   html?: string;
   placement?: Placement;
@@ -36,6 +36,9 @@ function getDefaultNotificationCreateOptions(): NotificationCreateOptions {
   shadow: false
 })
 export class AzNotification {
+  static plain(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
+    return AzNotification.create({type: 'plain', caption, message, placement, timeout});
+  }
   static success(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'success', caption, message, placement, timeout});
   }
@@ -50,6 +53,9 @@ export class AzNotification {
   }
   static error(caption: string, message: string, placement: Placement = 'top-left', timeout: number = 3000) {
     return AzNotification.create({type: 'danger', caption, message, placement, timeout});
+  }
+  static toast(message: string, timeout: number = 3000) {
+    return AzNotification.create({type: 'plain', caption: '', message, placement: 'bottom-center', timeout, closable: false});
   }
   static create(opts: NotificationCreateOptions) {
     const noti = document.createElement(`az-notification`) as HTMLAzNotificationElement;
@@ -142,18 +148,18 @@ export class AzNotification {
     return (
       <Host class={`az-notification ${this.type}`}>
         <slot name="caption">
-          <div class="az-notification__head">
+          {(this.caption || this.closable) && <div class="az-notification__head">
             {this.icon && <az-icon class="icon" icon={this.icon} width={32} height={32}></az-icon>}
             <span class="az-caption az-notification__caption">{this.caption}</span>
             {this.closable && <az-button type="plain" size="small" icon="close" class="close-icon" onClick={() => this.close()}></az-button>}
-          </div>
+          </div>}
         </slot>
         <div class="az-notification__message">
           <slot>{content}</slot>
         </div>
-        <div class="az-notification__footer">
+        {buttons.length > 0 && <div class="az-notification__footer">
           <slot name="footer">{buttons}</slot>
-        </div>
+        </div>}
         {this.indicator && <div class="az-notification__indicator" ref={el => this.indicatorEl = el}></div>}
       </Host>
     );
