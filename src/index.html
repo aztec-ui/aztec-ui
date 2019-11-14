@@ -312,7 +312,7 @@
       <az-notification caption="Success" type="success" timeout="Infinity">
         <p>Hello <b>World!</b></p>
       </az-notification>
-      <az-notification caption="Info" type="info" timeout="60000" closable="false">
+      <az-notification caption="Info" type="info" timeout="Infinity" closable="false">
         <p>Hello <b>World!</b></p>
       </az-notification>
       <az-notification caption="Warning" type="warning" timeout="Infinity" closable="false">
@@ -332,6 +332,7 @@
       <az-button caption="bottom-center"></az-button>
       <az-button caption="left-center"></az-button>
       <az-button caption="center"></az-button>
+      <az-button caption="toast" onclick="aztec.Notification.toast('Toast Message')"></az-button>
     </az-section>
   </az-panel>
   <script type="text/javascript">
