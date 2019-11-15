@@ -68,10 +68,10 @@ export namespace Components {
     'close': (reason?: string) => Promise<void>;
     'content': string;
     'fixed': boolean;
-    'hide': () => Promise<void>;
+    'hide': () => Promise<this>;
     'mask': boolean;
     'modal': boolean;
-    'show': () => Promise<void>;
+    'show': () => Promise<this>;
   }
   interface AzIcon {
     'color': string;
