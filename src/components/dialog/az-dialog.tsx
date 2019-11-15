@@ -23,9 +23,11 @@ export type DialogCreateOptions = {
 function getDefaultDialogCreateOptions(): DialogCreateOptions {
   return {
     buttons: getDefaultButtons(),
-    fixed: false,
-    closable: true,
+    caption: '',
     clickmaskclose: false,
+    closable: true,
+    content: '',
+    fixed: false,
     mask: false,
     modal: true
   };
@@ -51,6 +53,7 @@ export class AzDialog {
     return appendToDialogContainer(Object.assign(dialog, mergedOpts));
   }
   static getDefaultButtonConfig = getDefaultButtons;
+  static getDefaultCreateOptions = getDefaultDialogCreateOptions;
   @Element() el: HostElement;
 
   @Prop({reflect: true}) caption: string = '';
@@ -76,19 +79,21 @@ export class AzDialog {
   @Method()
   async close(reason: string = 'close') {
     if (typeof this.canclose === 'function' && this.canclose(reason) === false) return;
-    this.el.parentNode.removeChild(this.el);
     this.closed.emit(reason);
+    this.el.parentNode.removeChild(this.el);
   }
 
   @Method()
   async hide() {
     this.el.style.display = 'none';
     this.hid.emit();
+    return Promise.resolve(this);
   }
 
   @Method()
   async show() {
     appendToDialogContainer(this.el as unknown as HTMLAzDialogElement);
+    return Promise.resolve(this);
   }
 
   render() {
