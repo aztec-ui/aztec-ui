@@ -1,0 +1,59 @@
+az-radio {
+  cursor: pointer;
+  line-height: 18px;
+  & > .az-radio__box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5em;
+    border: 1px solid var(--az-border-color);
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+    &::before {
+      display: inline-block;
+      transition: all ease var(--az-transition-duration-default);
+      border-radius: 50%;
+      background-color: var(--az-border-color);
+      width: 0;
+      height: 0;
+      content: '';
+    }
+    &.checked::before {
+      width: 60%;
+      height: 60%;
+    }
+    &:hover {
+      border-color: var(--az-caption-color);
+    }
+    az-icon {
+      transition: transform var(--az-transform-animation-duration-normal);
+    }
+    az-icon.check {
+      transform: scale(0);
+    }
+    &.checked az-icon.check {
+      transform: scale(1);
+    }
+    az-icon.minus {
+      transform: scale(0.6);
+    }
+  }
+}
+az-radio > .az-radio__box.checked.success::before {
+  border-color: var(--az-success-color);
+  background-color: var(--az-success-color);
+}
+az-radio > .az-radio__box.checked.warning::before {
+  border-color: var(--az-warning-color);
+  background-color: var(--az-warning-color);
+}
+az-radio > .az-radio__box.checked.danger::before {
+  border-color: var(--az-danger-color);
+  background-color: var(--az-danger-color);
+}
+az-radio > .az-radio__box.checked.info::before {
+  border-color: var(--az-info-color);
+  background-color: var(--az-info-color);
+}
