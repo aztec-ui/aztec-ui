@@ -1,4 +1,4 @@
-import { Component, Element, Prop, Host, h, Event, EventEmitter} from '@stencil/core';
+import { Component, Element, Prop, Host, h, Event, EventEmitter, Method} from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
@@ -15,12 +15,11 @@ export class AzCheckbox {
 
   @Event() changed: EventEmitter;
 
-  @Inject({
-    sync: ['toggle']
-  })
+  @Inject({})
   componentDidLoad () {}
 
-  toggle() {
+  @Method()
+  async toggle() {
     if (this.indeterminate) {
       this.checked = false;
       this.indeterminate = false;
