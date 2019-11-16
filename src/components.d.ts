@@ -44,6 +44,7 @@ export namespace Components {
     'caption': string;
     'checked': boolean;
     'indeterminate': boolean;
+    'toggle': () => Promise<void>;
   }
   interface AzColorPicker {
     'caption': string;
@@ -118,6 +119,12 @@ export namespace Components {
     'caption': string;
     'max': number;
     'value': number;
+  }
+  interface AzRadio {
+    'caption': string;
+    'checked': boolean;
+    'toggle': () => Promise<void>;
+    'type': ComponentStyle;
   }
   interface AzSection {
     'caption': string;
@@ -242,6 +249,12 @@ declare global {
     new (): HTMLAzProgressBarElement;
   };
 
+  interface HTMLAzRadioElement extends Components.AzRadio, HTMLStencilElement {}
+  var HTMLAzRadioElement: {
+    prototype: HTMLAzRadioElement;
+    new (): HTMLAzRadioElement;
+  };
+
   interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
   var HTMLAzSectionElement: {
     prototype: HTMLAzSectionElement;
@@ -307,6 +320,7 @@ declare global {
     'az-notification': HTMLAzNotificationElement;
     'az-panel': HTMLAzPanelElement;
     'az-progress-bar': HTMLAzProgressBarElement;
+    'az-radio': HTMLAzRadioElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
@@ -415,6 +429,12 @@ declare namespace LocalJSX {
     'max'?: number;
     'value'?: number;
   }
+  interface AzRadio {
+    'caption'?: string;
+    'checked'?: boolean;
+    'onChanged'?: (event: CustomEvent<any>) => void;
+    'type'?: ComponentStyle;
+  }
   interface AzSection {
     'caption'?: string;
     'collapsable'?: boolean;
@@ -480,6 +500,7 @@ declare namespace LocalJSX {
     'az-notification': AzNotification;
     'az-panel': AzPanel;
     'az-progress-bar': AzProgressBar;
+    'az-radio': AzRadio;
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
@@ -509,6 +530,7 @@ declare module "@stencil/core" {
       'az-notification': LocalJSX.AzNotification & JSXBase.HTMLAttributes<HTMLAzNotificationElement>;
       'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
       'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
+      'az-radio': LocalJSX.AzRadio & JSXBase.HTMLAttributes<HTMLAzRadioElement>;
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
       'az-select': LocalJSX.AzSelect & JSXBase.HTMLAttributes<HTMLAzSelectElement>;
       'az-slider': LocalJSX.AzSlider & JSXBase.HTMLAttributes<HTMLAzSliderElement>;
