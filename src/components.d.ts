@@ -74,6 +74,14 @@ export namespace Components {
     'modal': boolean;
     'show': () => Promise<this>;
   }
+  interface AzExclusiveGroup {
+    'caption': string;
+    'clear': () => Promise<void>;
+    'itemEvent': string;
+    'itemProp': string;
+    'itemSelector': string;
+    'itemValue': any;
+  }
   interface AzIcon {
     'color': string;
     'height': number | string;
@@ -125,14 +133,6 @@ export namespace Components {
     'checked': boolean;
     'toggle': () => Promise<void>;
     'type': ComponentStyle;
-  }
-  interface AzRadioGroup {
-    'caption': string;
-    'clear': () => Promise<void>;
-    'itemEvent': string;
-    'itemProp': string;
-    'itemSelector': string;
-    'itemValue': any;
   }
   interface AzSection {
     'caption': string;
@@ -221,6 +221,12 @@ declare global {
     new (): HTMLAzDialogElement;
   };
 
+  interface HTMLAzExclusiveGroupElement extends Components.AzExclusiveGroup, HTMLStencilElement {}
+  var HTMLAzExclusiveGroupElement: {
+    prototype: HTMLAzExclusiveGroupElement;
+    new (): HTMLAzExclusiveGroupElement;
+  };
+
   interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
   var HTMLAzIconElement: {
     prototype: HTMLAzIconElement;
@@ -261,12 +267,6 @@ declare global {
   var HTMLAzRadioElement: {
     prototype: HTMLAzRadioElement;
     new (): HTMLAzRadioElement;
-  };
-
-  interface HTMLAzRadioGroupElement extends Components.AzRadioGroup, HTMLStencilElement {}
-  var HTMLAzRadioGroupElement: {
-    prototype: HTMLAzRadioGroupElement;
-    new (): HTMLAzRadioGroupElement;
   };
 
   interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
@@ -328,6 +328,7 @@ declare global {
     'az-color-picker': HTMLAzColorPickerElement;
     'az-contextual-menu': HTMLAzContextualMenuElement;
     'az-dialog': HTMLAzDialogElement;
+    'az-exclusive-group': HTMLAzExclusiveGroupElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-menu-item': HTMLAzMenuItemElement;
@@ -335,7 +336,6 @@ declare global {
     'az-panel': HTMLAzPanelElement;
     'az-progress-bar': HTMLAzProgressBarElement;
     'az-radio': HTMLAzRadioElement;
-    'az-radio-group': HTMLAzRadioGroupElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
@@ -397,6 +397,13 @@ declare namespace LocalJSX {
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onHid'?: (event: CustomEvent<any>) => void;
   }
+  interface AzExclusiveGroup {
+    'caption'?: string;
+    'itemEvent'?: string;
+    'itemProp'?: string;
+    'itemSelector'?: string;
+    'itemValue'?: any;
+  }
   interface AzIcon {
     'color'?: string;
     'height'?: number | string;
@@ -449,13 +456,6 @@ declare namespace LocalJSX {
     'checked'?: boolean;
     'onChanged'?: (event: CustomEvent<any>) => void;
     'type'?: ComponentStyle;
-  }
-  interface AzRadioGroup {
-    'caption'?: string;
-    'itemEvent'?: string;
-    'itemProp'?: string;
-    'itemSelector'?: string;
-    'itemValue'?: any;
   }
   interface AzSection {
     'caption'?: string;
@@ -516,6 +516,7 @@ declare namespace LocalJSX {
     'az-color-picker': AzColorPicker;
     'az-contextual-menu': AzContextualMenu;
     'az-dialog': AzDialog;
+    'az-exclusive-group': AzExclusiveGroup;
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-menu-item': AzMenuItem;
@@ -523,7 +524,6 @@ declare namespace LocalJSX {
     'az-panel': AzPanel;
     'az-progress-bar': AzProgressBar;
     'az-radio': AzRadio;
-    'az-radio-group': AzRadioGroup;
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
@@ -547,6 +547,7 @@ declare module "@stencil/core" {
       'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
       'az-contextual-menu': LocalJSX.AzContextualMenu & JSXBase.HTMLAttributes<HTMLAzContextualMenuElement>;
       'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
+      'az-exclusive-group': LocalJSX.AzExclusiveGroup & JSXBase.HTMLAttributes<HTMLAzExclusiveGroupElement>;
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
       'az-menu-item': LocalJSX.AzMenuItem & JSXBase.HTMLAttributes<HTMLAzMenuItemElement>;
@@ -554,7 +555,6 @@ declare module "@stencil/core" {
       'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
       'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
       'az-radio': LocalJSX.AzRadio & JSXBase.HTMLAttributes<HTMLAzRadioElement>;
-      'az-radio-group': LocalJSX.AzRadioGroup & JSXBase.HTMLAttributes<HTMLAzRadioGroupElement>;
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
       'az-select': LocalJSX.AzSelect & JSXBase.HTMLAttributes<HTMLAzSelectElement>;
       'az-slider': LocalJSX.AzSlider & JSXBase.HTMLAttributes<HTMLAzSliderElement>;
