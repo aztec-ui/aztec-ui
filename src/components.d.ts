@@ -126,6 +126,9 @@ export namespace Components {
     'toggle': () => Promise<void>;
     'type': ComponentStyle;
   }
+  interface AzRadioGroup {
+    'caption': string;
+  }
   interface AzSection {
     'caption': string;
     'collapsable': boolean;
@@ -255,6 +258,12 @@ declare global {
     new (): HTMLAzRadioElement;
   };
 
+  interface HTMLAzRadioGroupElement extends Components.AzRadioGroup, HTMLStencilElement {}
+  var HTMLAzRadioGroupElement: {
+    prototype: HTMLAzRadioGroupElement;
+    new (): HTMLAzRadioGroupElement;
+  };
+
   interface HTMLAzSectionElement extends Components.AzSection, HTMLStencilElement {}
   var HTMLAzSectionElement: {
     prototype: HTMLAzSectionElement;
@@ -321,6 +330,7 @@ declare global {
     'az-panel': HTMLAzPanelElement;
     'az-progress-bar': HTMLAzProgressBarElement;
     'az-radio': HTMLAzRadioElement;
+    'az-radio-group': HTMLAzRadioGroupElement;
     'az-section': HTMLAzSectionElement;
     'az-select': HTMLAzSelectElement;
     'az-slider': HTMLAzSliderElement;
@@ -435,6 +445,9 @@ declare namespace LocalJSX {
     'onChanged'?: (event: CustomEvent<any>) => void;
     'type'?: ComponentStyle;
   }
+  interface AzRadioGroup {
+    'caption'?: string;
+  }
   interface AzSection {
     'caption'?: string;
     'collapsable'?: boolean;
@@ -501,6 +514,7 @@ declare namespace LocalJSX {
     'az-panel': AzPanel;
     'az-progress-bar': AzProgressBar;
     'az-radio': AzRadio;
+    'az-radio-group': AzRadioGroup;
     'az-section': AzSection;
     'az-select': AzSelect;
     'az-slider': AzSlider;
@@ -531,6 +545,7 @@ declare module "@stencil/core" {
       'az-panel': LocalJSX.AzPanel & JSXBase.HTMLAttributes<HTMLAzPanelElement>;
       'az-progress-bar': LocalJSX.AzProgressBar & JSXBase.HTMLAttributes<HTMLAzProgressBarElement>;
       'az-radio': LocalJSX.AzRadio & JSXBase.HTMLAttributes<HTMLAzRadioElement>;
+      'az-radio-group': LocalJSX.AzRadioGroup & JSXBase.HTMLAttributes<HTMLAzRadioGroupElement>;
       'az-section': LocalJSX.AzSection & JSXBase.HTMLAttributes<HTMLAzSectionElement>;
       'az-select': LocalJSX.AzSelect & JSXBase.HTMLAttributes<HTMLAzSelectElement>;
       'az-slider': LocalJSX.AzSlider & JSXBase.HTMLAttributes<HTMLAzSliderElement>;
