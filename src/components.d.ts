@@ -128,6 +128,11 @@ export namespace Components {
   }
   interface AzRadioGroup {
     'caption': string;
+    'clear': () => Promise<void>;
+    'itemEvent': string;
+    'itemProp': string;
+    'itemSelector': string;
+    'itemValue': any;
   }
   interface AzSection {
     'caption': string;
@@ -447,6 +452,10 @@ declare namespace LocalJSX {
   }
   interface AzRadioGroup {
     'caption'?: string;
+    'itemEvent'?: string;
+    'itemProp'?: string;
+    'itemSelector'?: string;
+    'itemValue'?: any;
   }
   interface AzSection {
     'caption'?: string;
