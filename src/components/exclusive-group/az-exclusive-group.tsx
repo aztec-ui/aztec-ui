@@ -3,11 +3,11 @@ import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
 @Component({
-  tag: 'az-radio-group',
-  styleUrl: 'az-radio-group.styl',
+  tag: 'az-exclusive-group',
+  styleUrl: 'az-exclusive-group.styl',
   shadow: false
 })
-export class AzRadioGroup {
+export class AzExclusiveGroup {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
@@ -24,8 +24,8 @@ export class AzRadioGroup {
     this.el.addEventListener(this.itemEvent, this.onItemChanged);
   }
 
-  items(): HTMLAzRadioElement[] {
-    return Array.from(this.el.querySelectorAll(this.itemSelector)) as HTMLAzRadioElement[] || [];
+  items(): HTMLElement[] {
+    return Array.from(this.el.querySelectorAll(this.itemSelector)) as HTMLElement[] || [];
   }
 
   @Method()
@@ -43,7 +43,7 @@ export class AzRadioGroup {
 
   render() {
     return (
-      <Host class="radio-group">
+      <Host class="az-exclusive-group">
         <slot></slot>
       </Host>
     );
