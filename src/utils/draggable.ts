@@ -2,11 +2,16 @@ function addListener(element: Element | Document, type: string, callback: any, c
   element.addEventListener(type, callback, capture);
 }
 
+export type OnMoveResult = boolean | {
+  v: boolean,
+  h: boolean
+};
+
 export interface IDraggableOptions {
   direction?: 'vertical' | 'horizontal' | 'both';
   initFromStyle?: boolean,
   onRelease?: (e: MouseEvent) => void;
-  onMove?: (e: MouseEvent, x: number, y: number) => void;
+  onMove?: (e: MouseEvent, x: number, y: number) => OnMoveResult;
 }
 
 // @ts-ignore
@@ -55,13 +60,15 @@ export function draggable(element: Element, handle: Element, opts: IDraggableOpt
     e = window.event || e;
     const top = dragging.startY + (e.clientY - dragging.mouseY);
     const left = dragging.startX + (e.clientX - dragging.mouseX);
-    // @ts-ignore
-    if (opts.direction == 'both' || opts.direction === 'vertical') element.style.top = (Math.max(0, top)) + 'px';
-    // @ts-ignore
-    if (opts.direction == 'both' || opts.direction === 'horizontal') element.style.left = (Math.max(0, left)) + 'px';
-
+    let set: OnMoveResult = {v: true, h: true};
     if (opts.onMove) {
-      this.onMove(e, left, top);
+      set = opts.onMove(e, left, top);
     }
+    // @ts-ignore
+    if (set && (set.v || set === true) && (opts.direction == 'both' || opts.direction === 'vertical')) element.style.top = (Math.max(0, top)) + 'px';
+    // @ts-ignore
+    if (set && (set.h || set === true) && (opts.direction == 'both' || opts.direction === 'horizontal')) element.style.left = (Math.max(0, left)) + 'px';
+
+
   }, true);
 }
