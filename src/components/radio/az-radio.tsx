@@ -11,11 +11,11 @@ import { ComponentStyle } from '../../global/typing';
 export class AzRadio {
   @Element() el: HostElement;
 
-  @Prop() caption: string = '';
-  @Prop() type: ComponentStyle = 'plain';
-  @Prop() checked: boolean = false;
+  @Prop({reflect: true}) caption: string = '';
+  @Prop({reflect: true}) type: ComponentStyle = 'plain';
+  @Prop({reflect: true}) checked: boolean = false;
 
-  @Event() changed: EventEmitter;  
+  @Event() changed: EventEmitter;
 
   @Inject({})
   componentDidLoad () {}
