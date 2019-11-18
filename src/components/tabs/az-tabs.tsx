@@ -16,7 +16,7 @@ export class AzTabs {
   @Element() el: HostElement;
 
   @Prop() items: TabItemConfig[] = [];
-  @Prop({attribute: 'active-index'}) activeIndex: number = -1;
+  @Prop({attribute: 'active-index'}) activeIndex: number = 0;
   @Prop({reflect: true}) indicator: boolean = true;
 
   @Event() closed: EventEmitter;
@@ -30,7 +30,7 @@ export class AzTabs {
     if (!children || children.length === 0) return;
     if (children[oldIndex]) children[oldIndex].classList.remove('visible');
     if (children[newIndex]) children[newIndex].classList.add('visible');
-    
+
     const activeTab = this.el.querySelectorAll('li')[newIndex] as HTMLLIElement;
     if (activeTab) {
       const left = activeTab.offsetLeft;
