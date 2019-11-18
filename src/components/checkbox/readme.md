@@ -21,6 +21,19 @@
 | `changed` |             | `CustomEvent<any>` |
 
 
+## Methods
+
+### `toggle() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Depends on

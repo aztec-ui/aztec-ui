@@ -22,18 +22,22 @@
 
  - [az-button](../button)
  - [az-checkbox](../checkbox)
- - [az-dialog](../dialog)
+ - [az-input](../input)
+ - [az-menu-item](../menu-item)
+ - [az-notification](../notification)
  - [az-section](../section)
- - [az-toolbar-button](../../advanced/toolbar-button)
+ - [az-tabs](../tabs)
 
 ### Graph
 ```mermaid
 graph TD;
   az-button --> az-icon
   az-checkbox --> az-icon
-  az-dialog --> az-icon
+  az-input --> az-icon
+  az-menu-item --> az-icon
+  az-notification --> az-icon
   az-section --> az-icon
-  az-toolbar-button --> az-icon
+  az-tabs --> az-icon
   style az-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

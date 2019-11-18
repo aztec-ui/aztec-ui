@@ -7,11 +7,65 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type     | Default |
-| ------------- | -------------- | ----------- | -------- | ------- |
-| `activeIndex` | `active-index` |             | `number` | `-1`    |
-| `items`       | --             |             | `any[]`  | `[]`    |
+| Property      | Attribute      | Description | Type              | Default |
+| ------------- | -------------- | ----------- | ----------------- | ------- |
+| `activeIndex` | `active-index` |             | `number`          | `-1`    |
+| `indicator`   | `indicator`    |             | `boolean`         | `true`  |
+| `items`       | --             |             | `TabItemConfig[]` | `[]`    |
 
+
+## Events
+
+| Event    | Description | Type               |
+| -------- | ----------- | ------------------ |
+| `closed` |             | `CustomEvent<any>` |
+
+
+## Methods
+
+### `addItem(it: string | TabItemConfig) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `removeItem(caption: string) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `removeItemAt(index: number) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
+## Dependencies
+
+### Depends on
+
+- [az-icon](../icons)
+
+### Graph
+```mermaid
+graph TD;
+  az-tabs --> az-icon
+  style az-tabs fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
