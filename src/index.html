@@ -7,9 +7,6 @@
   <link rel="stylesheet" href="/build/aztec-ui.css" />
   <script type="module" src="/build/aztec-ui.esm.js"></script>
   <script nomodule src="/build/aztec-ui.js"></script>
-  <style>
-    .app {display: none;}
-  </style>
   <script>
     function $(selector) {
       const eles = Array.from(document.querySelectorAll(selector));
@@ -37,30 +34,84 @@
   <style>
     html,body{margin: 0; padding: 0;height: 100%;}
   </style>
-  <div class="app" id="ide">
+  <div class="app" id="ide" style="display:none">
     <style>
+      html, body {
+        height: 100%;
+        --az-border-radius-mini: 0;
+      }
       #ide {
         margin: 0;
         padding: 0;
         height: 100%;
+        display: grid;
+        grid-template-columns: auto ;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+          "toolbar"
+          "main"
+          "status-bar";
       }
       #ide > az-splitter {
         height: 100%;
       }
+      #main-toolbar {
+        height: 4em;
+        grid-area: toolbar;
+        border-bottom: 1px solid var(--az-border-color);
+      }
+      #main-toolbar az-toolbar {
+        height: 100%;
+      }
+      #main-toolbar az-toolbar > az-button {
+        height: 100%;
+      }
+      #main-toolbar az-toolbar > az-button button {
+        height: 100%;
+      }
+      #main {
+        grid-area: main;
+      }
+      #status-bar {
+        border-top: 1px solid var(--az-border-color);
+        grid-area: status-bar;
+      }
     </style>
-    <az-splitter direction="horizontal">
-      <div class="panel" style="flex: 0 0 20%">
-        <az-panel style="background-color:var(--az-success-color)">Panel4</az-panel>
+    <div id="main-toolbar">
+      <az-toolbar style="float:right">
+        <az-button caption="Logout" icon="logout" type="plain"></az-button>
+      </az-toolbar>
+      <az-toolbar>
+        <az-button caption="Redo" icon="redo" type="plain"></az-button>
+        <az-button caption="Undo" icon="undo" type="plain"></az-button>
+      </az-toolbar>
+    </div>
+    <az-splitter id="main" direction="horizontal">
+      <div class="panel" style="flex: 0 0 20%;border-right:1px solid var(--az-border-color);min-width: 15%;max-width: 33%">
+        <az-tabs items="['Project', {caption: 'Layers'}]" active-index="0">
+          <az-panel>
+            <az-tree id="project"></az-tree>
+          </az-panel>
+          <az-panel>
+            Layers
+          </az-panel>
+        </az-tabs>
+      </div>
+      <div class="panel" style="flex: 0 0 60%;border-right:1px solid var(--az-border-color);min-width: 50%;">
+        <az-panel></az-panel>
       </div class="panel">
-      <div class="panel" style="flex: 0 0 60%">
-        <az-panel style="background-color:var(--az-warning-color)">Panel5</az-panel>
-      </div class="panel">
-      <div class="panel" style="flex: 0 0 20%">
-        <az-panel style="background-color:var(--az-danger-color)">Panel6</az-panel>
-      </div class="panel">
+      <div class="panel" style="flex: 0 0 20%;min-width: 15%;">
+        <az-panel></az-panel>
+      </div>
     </az-splitter>
+    <div id="status-bar">
+      <div style="float:right">
+        <az-button caption="LF" type="plain"></az-button>
+        <az-button caption="HTML" type="plain"></az-button>
+      </div>
+    </div>
   </div>
-  <div class="app" id="demo">
+  <div class="app" id="demo" style="display:none">
   <style>
     #demo {
       background-color: var(--az-primary-color);
@@ -88,16 +139,16 @@
           <az-button class="small" icon="close" caption="Cancel" icon-position="left" disabled="disabled"></az-button>
         </az-panel>
         <az-panel id="buttons">
-            <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
-            <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
-            <az-button type="success" size="normal" caption="Normal" icon="loading" id="loadingBtn"></az-button>
-            <az-button type="warning" size="medium" caption="Medium" icon="download" id="downloadBtn" icon-position="right"></az-button>
-            <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
-            <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
-            <br/>
-            <br/>
-            <az-checkbox caption="Disable all buttons" id="disableAllButtons"></az-checkbox>
-          </az-panel>
+          <az-button type="plain" size="extra-small" caption="Extra Small"></az-button>
+          <az-button type="primary" size="small" caption="Small" icon="book"></az-button>
+          <az-button type="success" size="normal" caption="Normal" icon="loading" id="loadingBtn"></az-button>
+          <az-button type="warning" size="medium" caption="Medium" icon="download" id="downloadBtn" icon-position="right"></az-button>
+          <az-button type="danger" size="large" caption="Large" icon="close"></az-button>
+          <az-button type="info" size="extra-large" caption="Extra Large" icon="cog"></az-button>
+          <br/>
+          <br/>
+          <az-checkbox caption="Disable all buttons" id="disableAllButtons"></az-checkbox>
+        </az-panel>
         <az-panel>
           This is a empty panel
         </az-panel>
@@ -205,10 +256,10 @@
     <az-section caption="Toolbar">
       <az-toolbar>
         <az-checkbox caption="Checkbox"></az-checkbox>
-        <az-button caption="Play" type="success" icon="triangle" type="plain"></az-button>
-        <az-button caption="Stop" type="danger" icon="square" type="plain"></az-button>
-        <az-button caption="Forward" type="warning" icon="forward" type="plain"></az-button>
-        <az-button caption="Backward" type="info" icon="backward" type="plain"></az-button>
+        <az-button caption="Play" type="success" icon="triangle"></az-button>
+        <az-button caption="Stop" type="danger" icon="square"></az-button>
+        <az-button caption="Forward" type="warning" icon="forward"></az-button>
+        <az-button caption="Backward" type="info" icon="backward"></az-button>
         <az-toolbar-separator></az-toolbar-separator>
         <az-button caption="" type="plain" icon="three-dots">
           <az-contextual-menu triggerevent="mouseenter" closeevent="mouseleave" parent="parent">
@@ -413,10 +464,27 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      project.fromJson([{
+        caption: 'node_modules',
+        items: [
+          {caption: '@stencil', icon: 'cogs', items: [
+            {caption: 'core', icon: 'folder'},
+            {caption: 'stylus', icon: 'folder'}
+          ]},
+          {caption: '@vue', icon: 'cogs', items: [
+            {caption: 'cli-service', icon: 'folder'},
+            {caption: 'cli-shared-util', icon: 'folder'}
+          ]}
+        ]
+      }]);
+    });
+  </script>
   </div>
   <script type="module">
     const id = location.search.replace('?app=', '') || 'demo';
-    document.querySelector('#' + id).style.display = 'block';
+    document.querySelector('#' + id).style.display = '';
   </script>
 </body>
 </html>
