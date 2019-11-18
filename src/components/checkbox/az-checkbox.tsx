@@ -9,9 +9,9 @@ import { Inject } from '../../utils/utils';
 })
 export class AzCheckbox {
   @Element() el: HostElement;
-  @Prop() caption: string = '';
-  @Prop() checked: boolean = false;
-  @Prop() indeterminate: boolean = false;
+  @Prop({reflect: true}) caption: string = '';
+  @Prop({reflect: true}) checked: boolean = false;
+  @Prop({reflect: true}) indeterminate: boolean = false;
 
   @Event() changed: EventEmitter;
 
