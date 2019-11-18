@@ -1,13 +1,13 @@
-import { Component, Prop, Element, Host, h, Method } from '@stencil/core';
+import { Component, Prop, Element, Host, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
 @Component({
-  tag: 'az-exclusive-group',
-  styleUrl: 'az-exclusive-group.styl',
+  tag: 'az-group',
+  styleUrl: 'az-group.styl',
   shadow: false
 })
-export class AzExclusiveGroup {
+export class AzGroup {
   @Element() el: HostElement;
 
   @Prop() caption: string = '';
@@ -15,6 +15,7 @@ export class AzExclusiveGroup {
   @Prop() itemEvent: string = 'changed';
   @Prop() itemProp: string = 'checked';
   @Prop() itemValue: any = false;
+  @Prop() limit: number = 1;
 
   @Inject({
     sync: ['items']
@@ -28,17 +29,15 @@ export class AzExclusiveGroup {
     return Array.from(this.el.querySelectorAll(this.itemSelector)) as HTMLElement[] || [];
   }
 
-  @Method()
-  async clear() {
-    this.items().forEach((item) => {
-      item.setAttribute(this.itemProp, this.itemValue);
-    });
-  }
-
   onItemChanged(e: UIEvent) {
-    this.items().forEach((item) => {
-      if (e.target !== item) item.setAttribute(this.itemProp, this.itemValue);
-    });
+    const items = this.items();
+    const checked = items.filter(it => it[this.itemProp] !== this.itemValue).length;
+    if (checked < this.limit) return;
+    if (checked > this.limit) {
+      items.forEach((item) => {
+        if (e.target !== item) item[this.itemProp] = this.itemValue;
+      });
+    }
   }
 
   render() {
