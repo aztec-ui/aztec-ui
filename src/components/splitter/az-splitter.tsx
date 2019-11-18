@@ -9,9 +9,9 @@ import { draggable } from '../../utils/draggable';
 export class AzSpliter {
   @Element() el: HostElement;
 
-  @Prop() direction: 'horizontal' | 'vertical' = 'vertical';
-  @Prop() disabled: boolean = false;
-  @Prop() gap: number = 4;
+  @Prop({reflect: true}) direction: 'horizontal' | 'vertical' = 'vertical';
+  @Prop({reflect: true}) disabled: boolean = false;
+  @Prop({reflect: true}) gap: number = 4;
 
   childrenEles: Element[] = [];
   dragging: boolean = false;
@@ -38,6 +38,8 @@ export class AzSpliter {
       this.calculateHandlePosition(handle);
       draggable(handle, handle, {direction: this.direction, initFromStyle: false, onRelease: () => {
         this.calculateHandlePosition(handle, true);
+      }, onMove: (_: MouseEvent, x: number, y: number) => {
+        return this.onHandleMove(index, x, y);
       }});
     });
 
@@ -46,9 +48,60 @@ export class AzSpliter {
     }
   }
 
+  onHandleMove(index: number, left: number, top: number) {
+    const handles = Array.from(this.el.querySelectorAll('.handle'));
+    if (this.direction === 'horizontal') {
+      if(this.childrenEles.slice(index, index + 2).find((el, idx) => {
+        const style = getComputedStyle(el);
+        if (idx === handles.length - 1) {
+          left = this.el.clientWidth - left;
+        } else {
+          left = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
+            return val - handle.offsetLeft;
+          }, left);
+        }
+        return !this.isWithin(style.minWidth, style.maxWidth, left, this.el.clientWidth);
+      })) return false;
+    } else {
+      top = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
+        return val - handle.offsetTop;
+      }, top);
+      if(this.childrenEles.slice(index, index + 2).find((el, idx) => {
+        const style = getComputedStyle(el);
+        if (idx === handles.length - 1) {
+          top = this.el.clientHeight - top;
+        } else {
+          top = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
+            return val - handle.offsetTop;
+          }, top);
+        }
+        return !this.isWithin(style.minHeight, style.maxHeight, top, this.el.clientHeight);
+      })) return false;
+    }
+    return true;
+  }
+
+  isWithin(min: string, max: string, value: number, total: number) {
+    if (min.indexOf('%') > 0) {
+      const r = Math.floor(value / total * 100);
+      if (r <= parseInt(min, 10)) return false;
+    } else if (min.indexOf('px') > 0) {
+      if (value <= parseInt(min, 10)) return false;
+    }
+    if (max.indexOf('%') > 0) {
+      const r = Math.floor(value / total * 100);
+      if (r >= parseInt(max, 10)) return false;
+    } else if (max.indexOf('px') > 0) {
+      if (value >= parseInt(max, 10)) return false;
+    }
+    return true;
+  }
+
   calculateHandlePosition(handle: HTMLElement, usePx = false) {
     const styl = handle.style;
     const prev = handle.previousElementSibling as HTMLElement;
+
+    // set handle position
     Promise.resolve().then(() => {
       if (this.direction === 'vertical') {
         const total = this.el.offsetHeight;
@@ -64,6 +117,8 @@ export class AzSpliter {
         styl.left = `${percent.toFixed(6)}%`;
       }
     });
+
+    // transform px into flex percentage
     window.setTimeout(() => {
       const prop = this.direction === 'vertical' ? 'top' : 'left';
       const pos = Array.from(this.el.querySelectorAll('.handle')).map((h: HTMLDivElement) => parseFloat(h.style[prop]));
