@@ -10,11 +10,12 @@ import { Inject } from '../../utils/utils';
 export class AzContextMenu {
   @Element() el: HostElement;
 
-  @Prop() caption: string = '';
-  @Prop() triggerevent: string = 'contextmenu';
-  @Prop() closeevent: string = '';
-  @Prop() parent: string = 'body';
-  @Prop() popupalign: string = '';
+  @Prop({reflect: true}) caption: string = '';
+  @Prop({reflect: true}) triggerevent: string = 'contextmenu';
+  @Prop({reflect: true}) closeevent: string = '';
+  @Prop({reflect: true}) parent: string = 'body';
+  @Prop({reflect: true}) popupalign: string = '';
+  @Prop({reflect: true}) closedelay: number = 500;
 
   @Event() showed: EventEmitter;
   container: HTMLElement;
@@ -40,7 +41,7 @@ export class AzContextMenu {
     }
     if (this.closeevent) {
       parent.addEventListener(this.closeevent, () => {
-        hideTimer = window.setTimeout(this.hide, 100);
+        hideTimer = window.setTimeout(this.hide, this.closedelay);
       });
     }
     document.addEventListener('mouseup', (e: MouseEvent) => {
