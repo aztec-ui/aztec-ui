@@ -74,13 +74,13 @@ export namespace Components {
     'modal': boolean;
     'show': () => Promise<this>;
   }
-  interface AzExclusiveGroup {
+  interface AzGroup {
     'caption': string;
-    'clear': () => Promise<void>;
     'itemEvent': string;
     'itemProp': string;
     'itemSelector': string;
     'itemValue': any;
+    'limit': number;
   }
   interface AzIcon {
     'color': string;
@@ -221,10 +221,10 @@ declare global {
     new (): HTMLAzDialogElement;
   };
 
-  interface HTMLAzExclusiveGroupElement extends Components.AzExclusiveGroup, HTMLStencilElement {}
-  var HTMLAzExclusiveGroupElement: {
-    prototype: HTMLAzExclusiveGroupElement;
-    new (): HTMLAzExclusiveGroupElement;
+  interface HTMLAzGroupElement extends Components.AzGroup, HTMLStencilElement {}
+  var HTMLAzGroupElement: {
+    prototype: HTMLAzGroupElement;
+    new (): HTMLAzGroupElement;
   };
 
   interface HTMLAzIconElement extends Components.AzIcon, HTMLStencilElement {}
@@ -328,7 +328,7 @@ declare global {
     'az-color-picker': HTMLAzColorPickerElement;
     'az-contextual-menu': HTMLAzContextualMenuElement;
     'az-dialog': HTMLAzDialogElement;
-    'az-exclusive-group': HTMLAzExclusiveGroupElement;
+    'az-group': HTMLAzGroupElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
     'az-menu-item': HTMLAzMenuItemElement;
@@ -397,12 +397,13 @@ declare namespace LocalJSX {
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onHid'?: (event: CustomEvent<any>) => void;
   }
-  interface AzExclusiveGroup {
+  interface AzGroup {
     'caption'?: string;
     'itemEvent'?: string;
     'itemProp'?: string;
     'itemSelector'?: string;
     'itemValue'?: any;
+    'limit'?: number;
   }
   interface AzIcon {
     'color'?: string;
@@ -516,7 +517,7 @@ declare namespace LocalJSX {
     'az-color-picker': AzColorPicker;
     'az-contextual-menu': AzContextualMenu;
     'az-dialog': AzDialog;
-    'az-exclusive-group': AzExclusiveGroup;
+    'az-group': AzGroup;
     'az-icon': AzIcon;
     'az-input': AzInput;
     'az-menu-item': AzMenuItem;
@@ -547,7 +548,7 @@ declare module "@stencil/core" {
       'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
       'az-contextual-menu': LocalJSX.AzContextualMenu & JSXBase.HTMLAttributes<HTMLAzContextualMenuElement>;
       'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
-      'az-exclusive-group': LocalJSX.AzExclusiveGroup & JSXBase.HTMLAttributes<HTMLAzExclusiveGroupElement>;
+      'az-group': LocalJSX.AzGroup & JSXBase.HTMLAttributes<HTMLAzGroupElement>;
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
       'az-menu-item': LocalJSX.AzMenuItem & JSXBase.HTMLAttributes<HTMLAzMenuItemElement>;
