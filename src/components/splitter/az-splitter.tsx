@@ -1,6 +1,8 @@
 import { Component, Prop, Element, Host, h } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { draggable } from '../../utils/draggable';
+
+const minMaxReg = /^([0-9]+%) ([0-9]+px)$|^([0-9]+px) ([0-9]+%)$|^([0-9]+%)$|^([0-9]+px)$/;
 @Component({
   tag: 'az-splitter',
   styleUrl: 'az-splitter.styl',
@@ -13,7 +15,7 @@ export class AzSpliter {
   @Prop({reflect: true}) disabled: boolean = false;
   @Prop({reflect: true}) gap: number = 4;
 
-  childrenEles: Element[] = [];
+  childrenEles: HTMLElement[] = [];
   dragging: boolean = false;
   childBefore: HTMLElement;
   childAfter: HTMLElement;
@@ -22,7 +24,7 @@ export class AzSpliter {
     // this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDownHandle = this.onMouseDownHandle.bind(this);
 
-    this.childrenEles = Array.from(this.el.children);
+    this.childrenEles = Array.from(this.el.children) as HTMLElement[];
     const r = (100 / this.childrenEles.length).toFixed(6) + '%';
     const prop = this.direction === 'vertical' ? 'height' : 'width';
     this.childrenEles.forEach((child: HTMLElement, index: number) => {
@@ -49,50 +51,72 @@ export class AzSpliter {
   }
 
   onHandleMove(index: number, left: number, top: number) {
-    const handles = Array.from(this.el.querySelectorAll('.handle'));
-    if (this.direction === 'horizontal') {
-      if(this.childrenEles.slice(index, index + 2).find((el, idx) => {
-        const style = getComputedStyle(el);
-        if (idx === handles.length - 1) {
-          left = this.el.clientWidth - left;
-        } else {
-          left = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
-            return val - handle.offsetLeft;
-          }, left);
-        }
-        return !this.isWithin(style.minWidth, style.maxWidth, left, this.el.clientWidth);
-      })) return false;
-    } else {
-      top = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
-        return val - handle.offsetTop;
-      }, top);
-      if(this.childrenEles.slice(index, index + 2).find((el, idx) => {
-        const style = getComputedStyle(el);
-        if (idx === handles.length - 1) {
-          top = this.el.clientHeight - top;
-        } else {
-          top = handles.slice(0, index).reduce((val: number, handle: HTMLElement) => {
-            return val - handle.offsetTop;
-          }, top);
-        }
-        return !this.isWithin(style.minHeight, style.maxHeight, top, this.el.clientHeight);
-      })) return false;
-    }
+    const prop = this.direction === 'vertical' ? 'Top' : 'Left';
+    const pos = this.handles((h: HTMLDivElement) => h[`offset${prop}`]) as number[];
+    pos[index] = this.direction === 'vertical' ? top : left;
+    const checkPanel = (panel: HTMLElement, index: number) => {
+      const p = this.direction === 'vertical' ? 'Height' : 'Width';
+      const total = this.el[`client${p}`];
+      const width = widthOf(index, pos, total);
+      return this.isWithin(panel[`min${p}`], panel[`max${p}`], width, total);
+    };
+
+    if (!checkPanel(this.childrenEles[index], index)) return false;
+    if (!checkPanel(this.childrenEles[index + 1], index + 1)) return false;
     return true;
   }
 
-  isWithin(min: string, max: string, value: number, total: number) {
-    if (min.indexOf('%') > 0) {
-      const r = Math.floor(value / total * 100);
-      if (r <= parseInt(min, 10)) return false;
-    } else if (min.indexOf('px') > 0) {
-      if (value <= parseInt(min, 10)) return false;
+  isWithin(min: string = '', max: string = '', value: number, total: number) {
+    let m;
+    min = min.trim();
+    if (min && (m = min.match(minMaxReg))) {
+      if (m[5]) {
+        // a%
+        const r = Math.floor(value / total * 100);
+        if (r <= parseInt(m[5], 10)) return false;
+      } else if (m[6]) {
+        // ?px
+        if (value < parseInt(m[6], 10)) return false
+      } else if (m[1] && m[2]) {
+        // n% ?px
+        const r = parseInt(m[1], 10) / 100;
+        const px = total * r;
+        if (value < px) return false;
+        const n = parseInt(m[2], 10);
+        if (value < n) return false;
+      } else if (m[3] && m[4]) {
+        // npx n%
+        const n = parseInt(m[3], 10);
+        if (value < n) return false;
+        const r = parseInt(m[4], 10) / 100;
+        const px = total * r;
+        if (value < px) return false;
+      }
     }
-    if (max.indexOf('%') > 0) {
-      const r = Math.floor(value / total * 100);
-      if (r >= parseInt(max, 10)) return false;
-    } else if (max.indexOf('px') > 0) {
-      if (value >= parseInt(max, 10)) return false;
+    max = max.trim();
+    if (max && (m = max.match(minMaxReg))) {
+      if (m[5]) {
+        // a%
+        const r = Math.floor(value / total * 100);
+        if (r > parseInt(m[5], 10)) return false;
+      } else if (m[6]) {
+        // ?px
+        if (value > parseInt(m[6], 10)) return false
+      } else if (m[1] && m[2]) {
+        // n% ?px
+        const r = parseInt(m[1], 10) / 100;
+        const px = total * r;
+        if (value > px) return false;
+        const n = parseInt(m[2], 10);
+        if (value < n) return false;
+      } else if (m[3] && m[4]) {
+        // npx n%
+        const n = parseInt(m[3], 10);
+        if (value > n) return false;
+        const r = parseInt(m[4], 10) / 100;
+        const px = total * r;
+        if (value > px) return false;
+      }
     }
     return true;
   }
@@ -121,17 +145,17 @@ export class AzSpliter {
     // transform px into flex percentage
     window.setTimeout(() => {
       const prop = this.direction === 'vertical' ? 'top' : 'left';
-      const pos = Array.from(this.el.querySelectorAll('.handle')).map((h: HTMLDivElement) => parseFloat(h.style[prop]));
+      const pos = this.handles((h: HTMLDivElement) => parseFloat(h.style[prop])) as number[];
       if (pos.some(isNaN)) return;
-      const lastIndex = this.childrenEles.length - 1;
       this.childrenEles.forEach((child: HTMLElement, index: number) => {
-        let r;
-        if (index === 0) r = pos[0];
-        else if (index === lastIndex) r = 100 - pos[lastIndex - 1];
-        else r = pos[index] - pos[index - 1];
-        child.style.flex = `0 0 ${r}%`;
+        child.style.flexBasis = `${widthOf(index, pos)}%`;
       });
     }, 0);
+  }
+
+  handles<T = number>(block?: (it: HTMLElement) => T) {
+    const handles = Array.from(this.el.querySelectorAll('.handle')) as HTMLElement[];
+    return block ? handles.map(block) : handles;
   }
 
   onMouseDownHandle(e: MouseEvent) {
@@ -146,4 +170,11 @@ export class AzSpliter {
       </Host>
     );
   }
+}
+
+function widthOf(index: number, pos: number[], total: number = 100) {
+  const lastIndex = pos.length;
+  if (index === 0) return pos[0];
+  else if (index === lastIndex) return total - pos[lastIndex - 1];
+  else return pos[index] - pos[index - 1];
 }
