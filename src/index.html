@@ -87,22 +87,33 @@
       </az-toolbar>
     </div>
     <az-splitter id="main" direction="horizontal">
-      <div class="panel" style="flex: 0 0 20%;border-right:1px solid var(--az-border-color);min-width: 15%;max-width: 33%">
-        <az-tabs items="['Project', {caption: 'Layers'}]" active-index="0">
-          <az-panel>
-            <az-tree id="project"></az-tree>
+      <az-panel min-width="250px" max-width="30%" basis="250px" style="border-right:1px solid var(--az-border-color);">
+        <az-splitter direction="vertical">
+          <az-panel basis="40%" min-height="10%" max-height="80%">
+            <az-tabs items="['Project', {caption: 'Layers'}]" active-index="0">
+              <az-panel>
+                <az-tree id="project"></az-tree>
+              </az-panel>
+              <az-panel>
+                Layers
+              </az-panel>
+            </az-tabs>
           </az-panel>
-          <az-panel>
-            Layers
+          <az-panel basis="60%" style="border-top: 1px solid var(--az-border-color);">
+            <az-tabs items="['Project', {caption: 'Layers'}]" active-index="0">
+              <az-panel>
+              </az-panel>
+              <az-panel>
+                Layers
+              </az-panel>
+            </az-tabs>
           </az-panel>
-        </az-tabs>
-      </div>
-      <div class="panel" style="flex: 0 0 60%;border-right:1px solid var(--az-border-color);min-width: 50%;">
-        <az-panel></az-panel>
-      </div class="panel">
-      <div class="panel" style="flex: 0 0 20%;min-width: 15%;">
-        <az-panel></az-panel>
-      </div>
+        </az-splitter>
+      </az-panel>
+      <az-panel max-width="70%" basis="60%" style="border-right:1px solid var(--az-border-color);">
+      </az-panel>
+      <az-panel min-width="15%" max-width="30%" basis="15%">
+      </az-panel>
     </az-splitter>
     <div id="status-bar">
       <div style="float:right">
