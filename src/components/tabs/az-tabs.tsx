@@ -22,10 +22,11 @@ export class AzTabs {
   @Event() closed: EventEmitter;
 
   indicatorEl: HTMLDivElement;
+  contentEl: HTMLElement;
 
   @Watch('activeIndex')
   onActiveIndexChanged(newIndex: number, oldIndex: number) {
-    const slot = this.el.querySelector('content') as HTMLElement;
+    const slot = this.contentEl as HTMLElement;
     const children = slot.children;
     if (!children || children.length === 0) return;
     if (children[oldIndex]) children[oldIndex].classList.remove('visible');
@@ -101,9 +102,9 @@ export class AzTabs {
           <div ref={el => this.indicatorEl = el} class="az-tabs__indicator"></div>
         </ul>
       </div>
-      <content>
+      <div class="az-tabs__content" ref={el => this.contentEl = el}>
         <slot></slot>
-      </content>
+      </div>
     </Host>;
   }
 }
