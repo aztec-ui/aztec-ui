@@ -1,5 +1,5 @@
 az-toolbar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   az-toolbar-separator {
     display: inline-flex;
@@ -8,6 +8,7 @@ az-toolbar {
     border-color: var(--az-highlight-color);
   }
   &.horizontal {
+    flex-direction: row;
     az-toolbar-separator {
       border-left-width: 1px;
       width: 0px;
@@ -25,6 +26,7 @@ az-toolbar {
     }
   }
   &.vertical {
+    flex-direction: column;
     az-toolbar-separator {
       border-top-width: 1px;
       height: 0px;
