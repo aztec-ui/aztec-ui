@@ -154,7 +154,7 @@ export class AzSpliter {
   }
 
   handles<T = number>(block?: (it: HTMLElement) => T) {
-    const handles = Array.from(this.el.querySelectorAll('.handle')) as HTMLElement[];
+    const handles = Array.from(this.el.children).filter(e => e.classList.contains('handle')) as HTMLElement[];
     return block ? handles.map(block) : handles;
   }
 
