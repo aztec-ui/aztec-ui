@@ -23,7 +23,9 @@
     "gen-icon-index": "node bin/gen-icon-index.js > ./src/components/icons/builtin/index.tsx",
     "gen-version": "node bin/gen-version.js > ./src/version.tsx",
     "gen-icon": "node bin/gen-icon.js && npm run gen-icon-index",
-    "gen-comp": "node bin/gen-comp.js"
+    "gen-comp": "node bin/gen-comp.js",
+    "preversion": "npm run build",
+    "postversion": "node bin/gen-version.js"
   },
   "devDependencies": {
     "@stencil/core": "^1.5.3",
