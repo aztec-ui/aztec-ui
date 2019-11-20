@@ -25,7 +25,7 @@ export class AzButton {
   @Inject({
     attrs: true,
     remove: true,
-    keep: ['caption', 'type', 'size', 'icon', 'icon-position', 'round', 'disabled', 'circle']
+    keep: ['caption', 'type', 'size', 'icon', 'icon-position', 'round', 'disabled', 'circle', 'style']
   })
   componentDidLoad() {
     if (!this.type) this.type = 'primary';
