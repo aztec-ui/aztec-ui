@@ -55,6 +55,7 @@ export namespace Components {
   }
   interface AzContextualMenu {
     'caption': string;
+    'closedelay': number;
     'closeevent': string;
     'parent': string;
     'popupalign': string;
@@ -121,7 +122,13 @@ export namespace Components {
     'type': ComponentStyle;
   }
   interface AzPanel {
+    'basis': string;
     'caption': string;
+    'direction': 'vertical' | 'horizontal';
+    'maxHeight': string;
+    'maxWidth': string;
+    'minHeight': string;
+    'minWidth': string;
   }
   interface AzProgressBar {
     'caption': string;
@@ -378,6 +385,7 @@ declare namespace LocalJSX {
   }
   interface AzContextualMenu {
     'caption'?: string;
+    'closedelay'?: number;
     'closeevent'?: string;
     'onShowed'?: (event: CustomEvent<any>) => void;
     'parent'?: string;
@@ -445,7 +453,13 @@ declare namespace LocalJSX {
     'type'?: ComponentStyle;
   }
   interface AzPanel {
+    'basis'?: string;
     'caption'?: string;
+    'direction'?: 'vertical' | 'horizontal';
+    'maxHeight'?: string;
+    'maxWidth'?: string;
+    'minHeight'?: string;
+    'minWidth'?: string;
   }
   interface AzProgressBar {
     'caption'?: string;
