@@ -2,27 +2,29 @@ az-section {
   display: block;
 }
 az-section section {
-  font-size: var(--az-font-size-normal);
-  font-family: var(--az-font-family);
   background-color: var(--az-primary-color);
+  font-family: var(--az-font-family);
+  font-size: var(--az-font-size-normal);
   &.collapsable .header .caption:before {
+    display: inline-block;
     width: 1.2em;
     height: 1.2em;
-    display: inline-block;
   }
   .header {
-    color: var(--az-caption-color);
     margin-bottom: 0.5em;
-    padding-bottom: 0.2em;
     border-bottom: 1px solid #666;
+    padding-bottom: 0.2em;
+    height: 2em;
+    line-height: 2em;
+    color: var(--az-caption-color);
     & > .az-section-caption {
       cursor: pointer;
       & az-icon {
-        transform: rotate(90deg);
-        text-align: center;
         display: inline-block;
-        margin-right: 0.5em;
+        transform: rotate(90deg);
         transition: transform var(--az-transform-animation-duration-normal);
+        margin-right: 0.5em;
+        text-align: center;
       }
     }
     .right {
@@ -30,9 +32,9 @@ az-section section {
     }
   }
   .content {
-    tansform-origin: top;
     transition: transform var(--az-transform-animation-duration-normal);
     padding: var(--az-font-size-normal);
+    tansform-origin: top;
   }
   &.collapsed {
     .header .az-section-caption az-icon {
