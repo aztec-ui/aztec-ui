@@ -43,12 +43,12 @@ export function draggable(element: Element, handle: Element, opts: IDraggableOpt
   });
 
   addListener(document, 'mouseup', function (e: MouseEvent) {
-    dragging = null;
     // @ts-ignore
     if (document.releaseCapture) document.releaseCapture();
-    if (opts.onRelease) {
+    if (dragging && opts.onRelease) {
       opts.onRelease(e)
     }
+    dragging = null;
   }, true);
 
   // @ts-ignore
