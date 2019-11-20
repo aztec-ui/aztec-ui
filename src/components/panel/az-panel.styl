@@ -1,14 +1,23 @@
 az-panel {
-  color: var(--az-caption-color);
+  display: flex;
   background-color: var(--az-primary-color)
-  font-size: var(--az-font-size-normal);
-  font-family: var(--az-font-family);
-  display: block;
   padding: var(--az-padding-normal2);
   height: 100%;
+  color: var(--az-caption-color);
+  font-family: var(--az-font-family);
+  font-size: var(--az-font-size-normal);
   legend {
     border-bottom: 1px solid #666;
     padding-bottom: 0.2em;
     margin-bottom: 0.5em;
   }
+}
+
+az-panel.horizontal {
+  flex-direction: row;
+  align-items: flex-end;
+}
+az-panel.vertical {
+  flex-direction: column;
+  align-items: stretch;
 }

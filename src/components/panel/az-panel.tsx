@@ -12,12 +12,18 @@ export class AzPanel {
   @Prop({reflect: true}) minWidth: string = '';
   @Prop({reflect: true}) maxHeight: string = '';
   @Prop({reflect: true}) minHeight: string = '';
+  @Prop({reflect: true}) direction: 'vertical' | 'horizontal' = 'vertical';
 
   render () {
     const styl = {};
     if (this.basis) styl['flex-basis'] = this.basis;
+    if (this.direction) styl['flex-direction'] = this.direction === 'vertical' ? 'column' : 'row';
+    const cls = {
+      'az-panel': true,
+      [this.direction]: true
+    };
     return (
-      <Host class="az-panel" style={styl}>
+      <Host class={cls} style={styl}>
         {this.caption && <legend>{this.caption}</legend>}
         <slot></slot>
       </Host>
