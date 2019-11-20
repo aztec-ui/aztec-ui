@@ -59,20 +59,29 @@
         padding: 0;
         height: 100%;
         display: grid;
-        grid-template-columns: auto ;
+        grid-template-columns: 48px auto ;
         grid-template-rows: auto 1fr auto;
         grid-template-areas:
-          "toolbar"
-          "main"
-          "status-bar";
+          "logo toolbar"
+          "sidebar main"
+          "sidebar status-bar";
       }
       #ide > az-splitter {
         height: 100%;
       }
+      #logo {
+        grid-area: logo;
+        height: 48px;
+      }
       #main-toolbar {
         height: 4em;
         grid-area: toolbar;
-        border-bottom: 1px solid var(--az-border-color);
+      }
+      #side-bar {
+        width: 48px;
+        border-right: 1px solid var(--az-border-color);
+        border-top: 1px solid var(--az-border-color);
+        grid-area: sidebar;
       }
       #main-toolbar az-toolbar {
         height: 100%;
@@ -84,6 +93,7 @@
         height: 100%;
       }
       #main {
+        border-top: 1px solid var(--az-border-color);
         grid-area: main;
       }
       #status-bar {
@@ -91,6 +101,17 @@
         grid-area: status-bar;
       }
     </style>
+    <div id="logo">
+      <a href="https://github.com/aztack/aztec-ui" target="_blank">
+        <img src="https://user-images.githubusercontent.com/782871/68951150-74bc4200-07f8-11ea-80cc-9092bf09393f.png" width="48" height="48">
+      </a>
+    </div>
+    <div id="side-bar" style="background-color: #3c3a3a">
+      <az-toolbar direction="vertical" style="width:48px; margin-top:5px;">
+        <az-button icon="file" type="plain" size="extra-large" style="margin-top: 1em"></az-button>
+        <az-button icon="search" type="plain" size="extra-large" style="margin-top: 1em"></az-button>
+      </az-toolbar>
+    </div>
     <div id="main-toolbar">
       <az-toolbar style="float:right">
         <az-button caption="Logout" icon="logout" type="plain"></az-button>
