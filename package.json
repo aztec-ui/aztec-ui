@@ -10,6 +10,14 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/aztec-ui/aztec-ui.js",
+  "keywords": [
+    "web-components",
+    "electron",
+    "ui-components",
+    "framework-agnostic",
+    "nwjs",
+    "node-webkit"
+  ],
   "files": [
     "dist/",
     "loader/"
