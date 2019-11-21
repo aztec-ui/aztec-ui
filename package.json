@@ -32,7 +32,7 @@
     "gen-version": "node bin/gen-version.js > ./src/version.tsx",
     "gen-icon": "node bin/gen-icon.js && npm run gen-icon-index",
     "gen-comp": "node bin/gen-comp.js",
-    "preversion": "npm run build & node bin/gen-version.js"
+    "postversion": "node bin/gen-version.js && npm run build"
   },
   "devDependencies": {
     "@stencil/core": "^1.5.3",
