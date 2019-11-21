@@ -9,7 +9,7 @@
 
 | Property      | Attribute      | Description | Type              | Default |
 | ------------- | -------------- | ----------- | ----------------- | ------- |
-| `activeIndex` | `active-index` |             | `number`          | `-1`    |
+| `activeIndex` | `active-index` |             | `number`          | `0`     |
 | `indicator`   | `indicator`    |             | `boolean`         | `true`  |
 | `items`       | --             |             | `TabItemConfig[]` | `[]`    |
 

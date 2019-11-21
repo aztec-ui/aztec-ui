@@ -1,6 +1,6 @@
 {
   "name": "aztec-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An UI Framework for Electron/NW.js Desktop Apps",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -32,6 +32,7 @@
     "gen-version": "node bin/gen-version.js > ./src/version.tsx",
     "gen-icon": "node bin/gen-icon.js && npm run gen-icon-index",
     "gen-comp": "node bin/gen-comp.js",
+    "patch": "npm --no-git-tag-version version patch",
     "postversion": "node bin/gen-version.js && npm run build"
   },
   "devDependencies": {

@@ -10,6 +10,7 @@
 | Property       | Attribute      | Description | Type     | Default         |
 | -------------- | -------------- | ----------- | -------- | --------------- |
 | `caption`      | `caption`      |             | `string` | `''`            |
+| `closedelay`   | `closedelay`   |             | `number` | `500`           |
 | `closeevent`   | `closeevent`   |             | `string` | `''`            |
 | `parent`       | `parent`       |             | `string` | `'body'`        |
 | `popupalign`   | `popupalign`   |             | `string` | `''`            |
