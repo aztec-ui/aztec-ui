@@ -29,6 +29,16 @@ export class AzCheckbox {
     this.changed.emit(this.checked);
   }
 
+  @Method()
+  async toJson() {
+    return {
+      tag: 'az-checkbox',
+      caption: this.caption,
+      checked: this.checked,
+      indeterminate: this.indeterminate
+    };
+  }
+
   render () {
     return <Host onClick={() => this.toggle()}>
       <i class={{
