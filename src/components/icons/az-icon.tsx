@@ -57,4 +57,11 @@ function registerIcon(name: string, dOrFn: string | Function) {
   AzIcon.icons[name] = typeof dOrFn === 'string' ? svgIcon(dOrFn) : dOrFn;
 }
 
+function aliasIcon(origin: string, alias: string) {
+  if (!AzIcon.icons[origin]) throw new Error(`No icon named ${origin}`);
+  if (AzIcon.icons[alias]) throw new Error(`Icon ${alias} already defined`);
+  AzIcon.icons[alias] = AzIcon.icons[origin];
+}
+
 exportToGlobal('registerIcon', registerIcon);
+exportToGlobal('aliasIcon', aliasIcon);
