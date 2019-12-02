@@ -25,7 +25,8 @@ export class AzForm {
   @Inject({
     parse: true,
     attrs: true,
-    remove: true
+    remove: true,
+    keep: ['caption', 'label-position']
   })
   componentDidLoad() {}
 
@@ -36,8 +37,8 @@ export class AzForm {
 
   @Method()
   async toJson(detailed: boolean = false) {
-    const form = this.el.children[0];
-    const promises = Array.from(form.children).reduce((all: any[], child: HTMLElement) => {
+    const items = this.el.querySelectorAll('az-form-item');
+    const promises = Array.from(items).reduce((all: any[], child: HTMLElement) => {
       if (child.children.length && typeof child.children[0]['toJson'] === 'function') {
         const realFormItem = child.children[0];
         const json = realFormItem['toJson'](detailed);
@@ -49,21 +50,21 @@ export class AzForm {
   }
 
   render() {
-    const cap = this.caption ? <span class="az-form__caption az-caption">{this.caption}</span> : null;
-    return [
-      cap,
+    const cap = this.caption ? <legend class="az-form__caption az-caption">{this.caption}</legend> : null;
+    return (
       <form class={{
         'az-form': true,
         [`label-${this.labelPosition}`]: true
       }}>
-        <slot name="before"></slot>
-        {this.items.length > 0 ? tagize(this.items) : <slot></slot>}
-        <slot name="after"></slot>
-        <div class="az-form__buttons">
-          <slot name="buttons"></slot>
+        <fieldset>
+          {cap}
+          {this.items.length > 0 ? tagize(this.items) : <slot></slot>}
+        </fieldset>
+        <div class="az-form__footer">
+          <slot name="footer"></slot>
         </div>
       </form>
-    ]
+    )
   }
 }
 

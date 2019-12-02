@@ -1,9 +1,10 @@
 az-form {
+  display: flex;
+  flex-direction: column;
   form {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--az-border-color);
-    padding: 1em;
+    padding: 0;
     &.label-left .az-caption {
       text-align: left;
     }
@@ -14,6 +15,9 @@ az-form {
       display: block;
       margin-bottom: 0.5em;
     }
+  }
+  fieldset {
+    border: 1px solid var(--az-border-color);
   }
   az-form-item {
     display: inline-flex;
@@ -29,5 +33,10 @@ az-form {
     .az-caption ~ * {
       flex-grow: 1;
     }
+  }
+  .az-form__footer {
+    margin: 0.5em 0;
+    display: flex;
+    justify-content: flex-end;
   }
 }
