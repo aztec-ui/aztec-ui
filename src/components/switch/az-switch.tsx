@@ -1,4 +1,4 @@
-import { Component, Prop, Element, h, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Element, h, Event, EventEmitter, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { ComponentStyle, ComponentSize } from '../../global/typing';
 
@@ -27,6 +27,18 @@ export class AzSwitch {
 
   onClick() {
     this.changed.emit(this.value = !this.value);
+  }
+
+  @Method()
+  async toJson(detailed: boolean = false) {
+    return Object.assign({
+      tag: 'az-switch',
+      caption: this.caption,
+      value: this.value
+    }, detailed ? {
+      type: this.type,
+      size: this.size
+    } : null);
   }
 
   render() {

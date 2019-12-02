@@ -30,13 +30,14 @@ export class AzCheckbox {
   }
 
   @Method()
-  async toJson() {
-    return {
+  async toJson(detailed: boolean = false) {
+    return Object.assign({
       tag: 'az-checkbox',
       caption: this.caption,
-      checked: this.checked,
+      checked: this.checked
+    }, detailed ? {
       indeterminate: this.indeterminate
-    };
+    } : null);
   }
 
   render () {
