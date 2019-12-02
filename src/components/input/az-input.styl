@@ -1,13 +1,15 @@
 az-input {
   position: relative;
+  display: inline-flex;
   input {
-    background: #252525;
+    flex-grow: 1;
+    outline: 0;
     border: none;
-    color: var(--az-caption-color);
-    padding: 2px;
     border: 1px solid #888;
     border-radius: var(--az-border-radius-mini);
-    outline: 0;
+    background: #252525;
+    padding: 2px;
+    color: var(--az-caption-color);
   }
   &:hover input[type=text] {
     border-color: var(--az-caption-color);

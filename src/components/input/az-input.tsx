@@ -1,4 +1,4 @@
-import { Component, Prop, Element, h, Watch, Host} from '@stencil/core';
+import { Component, Prop, Element, h, Watch, Host, Method} from '@stencil/core';
 import { Inject } from '../../utils/utils';
 import { HostElement } from '@stencil/core/dist/declarations';
 
@@ -74,6 +74,18 @@ export class AzInput {
     if (this.type === 'color-picker' && this.colorPicker) {
       this.colorPicker.style.display = 'none';
     }
+  }
+
+  @Method()
+  async toJson(detailed: boolean = false) {
+    return Object.assign({
+      tag: 'az-input',
+      caption: this.caption,
+      value: this.value
+    }, detailed ? {
+      type: this.type,
+      clearable: this.clearable
+    } : null);
   }
 
   render() {
