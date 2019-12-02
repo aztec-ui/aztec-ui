@@ -1,0 +1,33 @@
+az-form {
+  form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--az-border-color);
+    padding: 1em;
+    &.label-left .az-caption {
+      text-align: left;
+    }
+    &.label-right .az-caption {
+      text-align: right;
+    }
+    &.label-top .az-caption {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+  }
+  az-form-item {
+    display: inline-flex;
+    width: 100%;
+    margin: 0.5em 0;
+    & > *:first-child {
+      width: 100%;
+    }
+    .az-caption {
+      display: inline-block;
+      width: 100px;
+    }
+    .az-caption ~ * {
+      flex-grow: 1;
+    }
+  }
+}
