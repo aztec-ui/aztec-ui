@@ -209,7 +209,7 @@
         <option value="0">Success</option>
       </az-select>
     </az-section>
-    <az-section caption="Checkbox & Switch & Radio">
+    <az-section caption="Checkbox & Switch & Radio" arrow-position="right">
       <az-checkbox slot="header" class="right">Checkbox</az-checkbox>
       <az-checkbox checked="true">Beijing</az-checkbox>
       <az-checkbox>Shanghai</az-checkbox>
@@ -446,6 +446,13 @@
       <az-button caption="center"></az-button>
       <az-button caption="toast" onclick="aztec.Notification.toast('Toast Message')"></az-button>
     </az-section>
+    <az-section caption="Form">
+      <az-form id="form1" caption="Form" onsubmit="return false" label-position="right">
+        <slot name="buttons">
+          <az-button caption="Submit"></az-button>
+        </slot>
+      </az-form>
+    </az-section>
   </az-panel>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
@@ -497,6 +504,11 @@
       });
       ctxmenu1.addEventListener('selected', e => alert(e.detail));
       ctxmenu2.addEventListener('selected', e => alert(e.detail));
+
+      form1.fromJson([
+        {tag: 'az-input', name: 'user.name', props: {caption:'Name'}},
+        {tag: 'az-switch', name: 'user.gender', props: {caption: 'Male'}}
+      ]);
     });
     createDialog.onclick = () => {
       aztec.Dialog.create({
