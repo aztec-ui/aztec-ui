@@ -16,6 +16,9 @@ import {
   ButtonConfig,
 } from './components/dialog/az-dialog';
 import {
+  IFormItem,
+} from './components/form/az-form';
+import {
   ButtonConfig as ButtonConfig1,
 } from './components/notification/az-notification';
 import {
@@ -44,6 +47,7 @@ export namespace Components {
     'caption': string;
     'checked': boolean;
     'indeterminate': boolean;
+    'toJson': (detailed?: boolean) => Promise<{ tag: string; caption: string; checked: boolean; } & { indeterminate: boolean; }>;
     'toggle': () => Promise<void>;
   }
   interface AzColorPicker {
@@ -75,6 +79,13 @@ export namespace Components {
     'modal': boolean;
     'show': () => Promise<this>;
   }
+  interface AzForm {
+    'caption': string;
+    'fromJson': (items: IFormItem[]) => Promise<void>;
+    'items': IFormItem[];
+    'labelPosition': 'left' | 'right' | 'top';
+    'toJson': (detailed?: boolean) => Promise<any[]>;
+  }
   interface AzGroup {
     'caption': string;
     'itemEvent': string;
@@ -99,6 +110,7 @@ export namespace Components {
     'popupalign': string;
     'readonly': boolean;
     'spellcheck': boolean;
+    'toJson': (detailed?: boolean) => Promise<{ tag: string; caption: string; value: string; } & { type: string; clearable: boolean; }>;
     'type': string;
     'value': string;
   }
@@ -142,9 +154,13 @@ export namespace Components {
     'type': ComponentStyle;
   }
   interface AzSection {
+    'arrowPosition': 'left' | 'right';
     'caption': string;
     'collapsable': boolean;
+    'collapse': () => Promise<void>;
     'collapsed': boolean;
+    'expand': () => Promise<void>;
+    'icon': string;
   }
   interface AzSelect {}
   interface AzSlider {
@@ -161,6 +177,7 @@ export namespace Components {
   interface AzSwitch {
     'caption': string;
     'size': ComponentSize;
+    'toJson': (detailed?: boolean) => Promise<{ tag: string; caption: string; value: boolean; } & { type: ComponentStyle; size: ComponentSize; }>;
     'type': ComponentStyle;
     'value': boolean;
   }
@@ -226,6 +243,12 @@ declare global {
   var HTMLAzDialogElement: {
     prototype: HTMLAzDialogElement;
     new (): HTMLAzDialogElement;
+  };
+
+  interface HTMLAzFormElement extends Components.AzForm, HTMLStencilElement {}
+  var HTMLAzFormElement: {
+    prototype: HTMLAzFormElement;
+    new (): HTMLAzFormElement;
   };
 
   interface HTMLAzGroupElement extends Components.AzGroup, HTMLStencilElement {}
@@ -335,6 +358,7 @@ declare global {
     'az-color-picker': HTMLAzColorPickerElement;
     'az-contextual-menu': HTMLAzContextualMenuElement;
     'az-dialog': HTMLAzDialogElement;
+    'az-form': HTMLAzFormElement;
     'az-group': HTMLAzGroupElement;
     'az-icon': HTMLAzIconElement;
     'az-input': HTMLAzInputElement;
@@ -405,6 +429,11 @@ declare namespace LocalJSX {
     'onClosed'?: (event: CustomEvent<any>) => void;
     'onHid'?: (event: CustomEvent<any>) => void;
   }
+  interface AzForm {
+    'caption'?: string;
+    'items'?: IFormItem[];
+    'labelPosition'?: 'left' | 'right' | 'top';
+  }
   interface AzGroup {
     'caption'?: string;
     'itemEvent'?: string;
@@ -473,9 +502,11 @@ declare namespace LocalJSX {
     'type'?: ComponentStyle;
   }
   interface AzSection {
+    'arrowPosition'?: 'left' | 'right';
     'caption'?: string;
     'collapsable'?: boolean;
     'collapsed'?: boolean;
+    'icon'?: string;
   }
   interface AzSelect {}
   interface AzSlider {
@@ -531,6 +562,7 @@ declare namespace LocalJSX {
     'az-color-picker': AzColorPicker;
     'az-contextual-menu': AzContextualMenu;
     'az-dialog': AzDialog;
+    'az-form': AzForm;
     'az-group': AzGroup;
     'az-icon': AzIcon;
     'az-input': AzInput;
@@ -562,6 +594,7 @@ declare module "@stencil/core" {
       'az-color-picker': LocalJSX.AzColorPicker & JSXBase.HTMLAttributes<HTMLAzColorPickerElement>;
       'az-contextual-menu': LocalJSX.AzContextualMenu & JSXBase.HTMLAttributes<HTMLAzContextualMenuElement>;
       'az-dialog': LocalJSX.AzDialog & JSXBase.HTMLAttributes<HTMLAzDialogElement>;
+      'az-form': LocalJSX.AzForm & JSXBase.HTMLAttributes<HTMLAzFormElement>;
       'az-group': LocalJSX.AzGroup & JSXBase.HTMLAttributes<HTMLAzGroupElement>;
       'az-icon': LocalJSX.AzIcon & JSXBase.HTMLAttributes<HTMLAzIconElement>;
       'az-input': LocalJSX.AzInput & JSXBase.HTMLAttributes<HTMLAzInputElement>;
