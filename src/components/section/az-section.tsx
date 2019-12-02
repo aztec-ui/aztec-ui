@@ -1,4 +1,4 @@
-import { Component, Prop, Element, h } from '@stencil/core';
+import { Component, Prop, Element, h, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
 import { Inject } from '../../utils/utils';
 
@@ -9,21 +9,23 @@ import { Inject } from '../../utils/utils';
 })
 export class AzSection {
   @Element() el: HostElement;
-  @Prop() caption: string = '';
-  @Prop() collapsed: boolean = false;
-  @Prop() collapsable: boolean = true;
+  @Prop({reflect: true}) caption: string = '';
+  @Prop({reflect: true}) collapsed: boolean = false;
+  @Prop({reflect: true}) collapsable: boolean = true;
+  @Prop({reflect: true}) arrowPosition: 'left' | 'right' = 'left';
+  @Prop({reflect: true}) icon: string = 'arrow-up';
 
-  @Inject({
-    sync: ['collapse', 'expand']
-  })
+  @Inject({})
   componentDidLoad() {
   }
 
-  collapse() {
+  @Method()
+  async collapse() {
     this.collapsed = true;
   }
 
-  expand() {
+  @Method()
+  async expand() {
     this.collapsed = false;
   }
 
@@ -34,9 +36,12 @@ export class AzSection {
         collapsable: this.collapsable,
         collapsed: this.collapsed
       }}>
-        <div class="header">
+        <div class={{
+          header: true,
+          [`arrow-${this.arrowPosition}`]: true
+        }}>
           <span class="az-section-caption az-caption" onClick={() => this.collapsed = !this.collapsed}>
-            <az-icon icon="arrow-right"></az-icon>
+            <az-icon class="az-section__arrow" icon={this.icon}></az-icon>
             {this.caption}
           </span>
           <slot name="header"></slot>

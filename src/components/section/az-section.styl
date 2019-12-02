@@ -21,15 +21,20 @@ az-section section {
       cursor: pointer;
       & az-icon {
         display: inline-block;
-        transform: rotate(90deg);
-        transition: transform var(--az-transform-animation-duration-normal);
         margin-right: 0.5em;
         text-align: center;
+        svg {
+          transform: rotate(180deg);
+          transition: transform var(--az-transform-animation-duration-normal);
+        }
       }
     }
     .right {
       float: right;
     }
+  }
+  .header.arrow-right .az-section__arrow {
+    float: right;
   }
   .content {
     transition: transform var(--az-transform-animation-duration-normal);
@@ -37,7 +42,7 @@ az-section section {
     tansform-origin: top;
   }
   &.collapsed {
-    .header .az-section-caption az-icon {
+    .header .az-section-caption az-icon svg {
       transform: rotate(0deg);
     }
     .content {
