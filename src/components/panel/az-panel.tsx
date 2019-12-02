@@ -24,7 +24,7 @@ export class AzPanel {
     };
     return (
       <Host class={cls} style={styl}>
-        {this.caption && <legend>{this.caption}</legend>}
+        {this.caption && <legend class="az-panel__caption az-caption">{this.caption}</legend>}
         <slot></slot>
       </Host>
     );
