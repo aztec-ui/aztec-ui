@@ -72,10 +72,18 @@ az-input {
       .az-icon {
         height: 100%;
         border-left: 1px solid var(--az-border-color);
+        path {
+          fill: var(--az-border-color);
+        }
       }
     }
     &:hover .az-input__adjustor .az-icon {
       border-color: var(--az-caption-color);
+    }
+    & .az-icon:hover {
+      path {
+        fill: var(--az-caption-color);
+      }
     }
   }
 
