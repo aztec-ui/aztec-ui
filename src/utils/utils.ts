@@ -219,6 +219,44 @@ export function isNumber(num) {
   return false;
 };
 
+// https://stackoverflow.com/questions/54733539/javascript-implementation-of-lodash-set-method
+/**
+ * set value to path on obj
+ * @param {any} obj
+ * @param {string} path
+ * @param {any} value
+ *
+ * var obj = { test: true };
+ * set(obj, "test.1.it", "hello");
+ * => {"test":[null,{"it":"hello"}]}
+ */
+export function set(obj: any, path: string, value: any) {
+  // When obj is not an object
+  if (Object(obj) !== obj) return obj;
+
+  // If not yet an array, get the keys from the string-path
+  let pathArr = [];
+  if (!Array.isArray(path)) pathArr = path.toString().match(/[^.[\]]+/g) || pathArr;
+
+  // Iterate all of them except the last one
+  const o = pathArr.slice(0, -1).reduce((a, c, i) => {
+    // The key does not exist, create the key.
+    // If the next key a potential array-index
+    // assign a new array object otherwise assign a new object
+    if (Object(a[c]) !== a[c]) {
+      const isArrayIndex = Math.abs(pathArr[i+1]) >> 0 === +pathArr[i+1];
+      a[c] = isArrayIndex ? [] : {};
+    }
+    return a[c];
+  }, obj);
+
+  // Finally assign the value to the last key
+  o[pathArr[pathArr.length-1]] = value;
+
+  // Return the top-level object to allow chaining
+  return obj;
+};
+
 import version from '../version';
 exportToGlobal('version', {
   get() {
