@@ -4,9 +4,26 @@ az-menu-item {
   flex: auto;
   padding: var(--az-padding-normal);
   cursor: default;
+  border-left: 1px solid transparent;
   &:hover {
     background-color: var(--az-highlight-color);
+    .az-caption {
+      color: var(--az-caption-color);
+    }
   }
+
+  for comptype in plain primary success info warning danger {
+    &.{comptype}:hover {
+      border-left: 1px solid s("var(--az-%s-color)", comptype);
+      & > .az-caption {
+        color: s("var(--az-%s-color)", comptype);
+      }
+      & > .az-icon svg path{
+        fill: s("var(--az-%s-color)", comptype);
+      }
+    }
+  }
+
   .az-caption {
     margin: auto 0.5em;
   }
