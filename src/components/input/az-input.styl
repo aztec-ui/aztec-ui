@@ -5,17 +5,23 @@ az-input {
     flex-grow: 1;
     outline: 0;
     border: none;
-    border: 1px solid #888;
+    border: 1px solid var(--az-border-color);
     border-radius: var(--az-border-radius-mini);
     background: #252525;
     padding: 2px;
     color: var(--az-caption-color);
+    width: 10em;
   }
-  &:hover input[type=text] {
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+  &:hover input {
     border-color: var(--az-caption-color);
   }
   .az-input-caption {
     margin-right: 0.5em;
+    align-self: center;
   }
   az-icon.clear {
     position: absolute;
@@ -52,4 +58,25 @@ az-input {
       transform: translateY(-100%) translateY(-4px)
     }
   }
+  &.az-input-number {
+    input {
+      padding-right: 32px;
+    }
+    .az-input__adjustor {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: inline-flex;
+      align-items: center;
+      .az-icon {
+        height: 100%;
+        border-left: 1px solid var(--az-border-color);
+      }
+    }
+    &:hover .az-input__adjustor .az-icon {
+      border-color: var(--az-caption-color);
+    }
+  }
+
 }
