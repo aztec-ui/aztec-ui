@@ -1,6 +1,6 @@
 import { Component, Prop, Element, h, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
-import { Inject } from '../../utils/utils';
+import { Inject, set } from '../../utils/utils';
 
 export interface IFormItem {
   name: string;
@@ -49,6 +49,20 @@ export class AzForm {
     return Promise.all(promises);
   }
 
+  @Method()
+  async serialize() {
+    const items = this.el.querySelectorAll('az-form-item');
+    return Array.from(items).reduce((all: any, child: HTMLElement) => {
+      if (child.children.length && 'value' in child.children[0]) {
+        const name = child.getAttribute('name');
+        if (!name) return all;
+        const realFormItem = child.children[0];
+        set(all, name, realFormItem['value']);
+      }
+      return all;
+    }, {});
+  }
+
   render() {
     const cap = this.caption ? <legend class="az-form__caption az-caption">{this.caption}</legend> : null;
     return (
@@ -70,7 +84,7 @@ export class AzForm {
 
 function tagize(items: IFormItem[]) {
   return items.map((it: IFormItem) => {
-    return Array.isArray(it) ? tagize(it) : (<az-form-item class="az-form-item">
+    return Array.isArray(it) ? tagize(it) : (<az-form-item class="az-form-item" name={it.name}>
       <it.tag name={it.name} {...it.props}>{it.children && it.children.length ? tagize(it.children) : null}</it.tag>
     </az-form-item>)
   });
