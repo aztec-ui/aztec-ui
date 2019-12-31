@@ -1,6 +1,7 @@
 import { Component, Prop, Element, h, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
-import { Inject, set } from '../../utils/utils';
+import { Inject, set, isNumber, capitalize, decamelize } from '../../utils/utils';
+import parseColor from 'parse-color';
 
 export interface IFormItem {
   name: string;
@@ -31,12 +32,12 @@ export class AzForm {
   componentDidLoad() {}
 
   @Method()
-  async fromJson(items: IFormItem[]) {
+  async deserialize(items: IFormItem[]) {
     this.items = items;
   }
 
   @Method()
-  async toJson(detailed: boolean = false) {
+  async serialize(detailed: boolean = false) {
     const items = this.el.querySelectorAll('az-form-item');
     const promises = Array.from(items).reduce((all: any[], child: HTMLElement) => {
       if (child.children.length && typeof child.children[0]['toJson'] === 'function') {
@@ -50,18 +51,34 @@ export class AzForm {
   }
 
   @Method()
-  async serialize() {
-    const items = this.el.querySelectorAll('az-form-item');
-    return Array.from(items).reduce((all: any, child: HTMLElement) => {
-      if (child.children.length && 'value' in child.children[0]) {
+  async toJson() {
+    const form = this.el.querySelector('form');
+    const initialValue = form.dataset.hint === 'array' ? [] : {};
+    const fieldset = form.querySelector('fieldset');
+    const items = Array.from(fieldset.children).filter(it => it.tagName === 'AZ-FORM-ITEM');
+    return Array.from(items).reduce(async (all: any, child: HTMLElement) => {
+      const firstChild = child.children[0];
+      if (child.children.length && ('value' in firstChild || firstChild.tagName === 'AZ-FORM')) {
         const name = child.getAttribute('name');
         if (!name) return all;
-        const realFormItem = child.children[0];
-        set(all, name, realFormItem['value']);
+        const realFormItem = firstChild;
+        if ((realFormItem as HTMLElement).tagName === 'AZ-FORM') {
+          // @ts-ignore
+          const val = await (realFormItem as AzForm).toJson();
+          set(all, name, val);
+        } else {
+          set(all, name, realFormItem['value']);
+        }
       }
       return all;
-    }, {});
+    }, initialValue);
   }
+
+  @Method()
+  async fromJson(data: Record<string, any>) {
+    this.items = this.guessSchemaFromJson(data);
+  }
+
 
   render() {
     const cap = this.caption ? <legend class="az-form__caption az-caption">{this.caption}</legend> : null;
@@ -79,6 +96,71 @@ export class AzForm {
         </div>
       </form>
     )
+  }
+
+  private guessSchemaFromJson(data: Record<string, any>, root: string = 'root') {
+    const items: any[] = [];
+    for (let key in data) {
+      let item: IFormItem | IFormItem[] | null = null;
+      let val = data[key];
+      let type = typeof val;
+      const name = `${root}.${key}`;
+      if (type === 'boolean') {
+        item = schemas.boolean(key, val);
+      } else if (type === 'number') {
+        item = schemas.number(key, val);
+      } else if (type === 'string') {
+        if (!val.length) {
+          item = schemas.string(key, val);
+        } else {
+          if (isNumber(val)) {
+            item = schemas.number(key, val);
+          } else if (parseColor(val).rgb) {
+            item = schemas.color(key, val);
+          } else {
+            item = schemas.string(key, val);
+          }
+        }
+      } else if (type === 'object') {
+        item = schemas.form(name);
+        if (Array.isArray(val)) {
+          item.props['data-hint'] = 'array';
+          item.children = val.map((v: any, index) => {
+            const form = schemas.form(String(index));
+            form.props.items = this.guessSchemaFromJson(v);
+            return form;
+          }) as IFormItem[];
+        } else {
+          item.props['data-hint'] = 'object';
+          item.props.items = [this.guessSchemaFromJson(val)];
+        }
+      }
+      items.push(item);
+    }
+    return items;
+  }
+}
+
+const schemas = {
+  boolean(name: string, value: any) {
+    const caption = capitalize(decamelize(name));
+    return {tag: 'az-switch', name, props: {caption, value, }};
+  },
+  number(name: string, value: any) {
+    const caption = capitalize(decamelize(name));
+    return {tag: 'az-input', name, props: {caption, value, type: 'number'}}
+  },
+  color(name: string, value: any) {
+    const caption = capitalize(decamelize(name));
+    return {tag: 'az-input', name, props: {caption, value, type: 'color-picker'}}
+  },
+  string(name: string, value: any) {
+    const caption = capitalize(decamelize(name));
+    return {tag: 'az-input', name, props: {caption, value, }};
+  },
+  form(name: string) {
+    const caption = capitalize(decamelize(name));
+    return {tag: 'az-form', name, props: {caption, items: []}};
   }
 }
 

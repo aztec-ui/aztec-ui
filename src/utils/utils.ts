@@ -49,15 +49,16 @@ function isPlainObject(obj) {
 	return Object.prototype.toString.call(obj) === '[object Object]';
 }
 
+
 function safeEval(json) {
   const f = new Function(`return ${json}`);
   return f();
 }
 
-function decamelize(str){
+export function decamelize(str){
 	const separator = '_';
 	return str
-        .replace(/([a-z\d])([A-Z])/g, '$1' +  + '$2')
+        .replace(/([a-z\d])([A-Z])/g, '$1' + ' ' + '$2')
         .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2')
         .toLowerCase();
 }
@@ -218,6 +219,11 @@ export function isNumber(num) {
   }
   return false;
 };
+
+export function capitalize(str) {
+  if (!str) return str;
+  return str.replace(/^[a-z]|( [a-z])/g, (m: string) => m.toUpperCase());
+}
 
 // https://stackoverflow.com/questions/54733539/javascript-implementation-of-lodash-set-method
 /**

@@ -451,7 +451,7 @@
       <az-button caption="toast" onclick="aztec.Notification.toast('Toast Message')"></az-button>
     </az-section>
     <az-section caption="Form">
-      <az-form id="form1" caption="Form" onsubmit="return false" label-position="right">
+      <az-form id="form1" caption="Form" onsubmit="return false" style="width: 400px">
         <az-button slot="footer" caption="Submit"></az-button>
       </az-form>
     </az-section>
@@ -507,9 +507,17 @@
       ctxmenu1.addEventListener('selected', e => alert(e.detail));
       ctxmenu2.addEventListener('selected', e => alert(e.detail));
 
-      form1.fromJson([
-        {tag: 'az-input', name: 'user.name', props: {caption:'Name'}},
-        {tag: 'az-switch', name: 'user.gender', props: {caption: 'Male'}}
+      form1.deserialize([
+        {tag: 'az-input', name: 'user.name', props: {caption:'Name', value: 'aztec'}},
+        {tag: 'az-switch', name: 'user.gender', props: {caption: 'Male', value: true}},
+        {tag: 'az-form', name: 'user.pets', props: {caption: 'Pets', 'data-hint': 'array', items: [
+          {tag: 'az-form', name: '0', props: { 'data-hint': 'object', items: [
+            {tag: 'az-input', name: 'name', props: {caption: 'Name', value: 'cat'}}
+          ]}},
+          {tag: 'az-form', name: '0', props:{ 'data-hint': 'object', items: [
+            {tag: 'az-input', name: 'name', props: {caption: 'Name', value: 'dog'}}
+          ]}}
+        ]}}
       ]);
     });
     createDialog.onclick = () => {

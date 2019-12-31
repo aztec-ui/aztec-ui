@@ -81,10 +81,12 @@ export namespace Components {
   }
   interface AzForm {
     'caption': string;
-    'fromJson': (items: IFormItem[]) => Promise<void>;
+    'deserialize': (items: IFormItem[]) => Promise<void>;
+    'fromJson': (data: Record<string, any>) => Promise<void>;
     'items': IFormItem[];
     'labelPosition': 'left' | 'right' | 'top';
-    'toJson': (detailed?: boolean) => Promise<any[]>;
+    'serialize': (detailed?: boolean) => Promise<any[]>;
+    'toJson': () => Promise<any>;
   }
   interface AzGroup {
     'caption': string;
@@ -106,7 +108,11 @@ export namespace Components {
     'autocomplete': string;
     'autocorrect': string;
     'caption': string;
+    'clear': () => Promise<void>;
     'clearable': boolean;
+    'constrain': boolean;
+    'max': number;
+    'min': number;
     'popupalign': string;
     'readonly': boolean;
     'spellcheck': boolean;
@@ -118,6 +124,7 @@ export namespace Components {
     'action': string;
     'caption': string;
     'icon': string;
+    'type': ComponentStyle;
   }
   interface AzNotification {
     'buttons': ButtonConfig[];
@@ -455,6 +462,9 @@ declare namespace LocalJSX {
     'autocorrect'?: string;
     'caption'?: string;
     'clearable'?: boolean;
+    'constrain'?: boolean;
+    'max'?: number;
+    'min'?: number;
     'popupalign'?: string;
     'readonly'?: boolean;
     'spellcheck'?: boolean;
@@ -466,6 +476,7 @@ declare namespace LocalJSX {
     'caption'?: string;
     'icon'?: string;
     'onSelected'?: (event: CustomEvent<any>) => void;
+    'type'?: ComponentStyle;
   }
   interface AzNotification {
     'buttons'?: ButtonConfig[];
