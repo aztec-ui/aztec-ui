@@ -56,7 +56,7 @@ export class AzForm {
     const initialValue = form.dataset.hint === 'array' ? [] : {};
     const fieldset = form.querySelector('fieldset');
     const items = Array.from(fieldset.children).filter(it => it.tagName === 'AZ-FORM-ITEM');
-    return Array.from(items).reduce(async (all: any, child: HTMLElement) => {
+    const ret = await Array.from(items).reduce(async (all: any, child: HTMLElement) => {
       const firstChild = child.children[0];
       if (child.children.length && ('value' in firstChild || firstChild.tagName === 'AZ-FORM')) {
         const name = child.getAttribute('name');
@@ -72,6 +72,7 @@ export class AzForm {
       }
       return all;
     }, initialValue);
+    return ret;
   }
 
   @Method()
