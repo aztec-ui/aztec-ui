@@ -86,7 +86,7 @@ export namespace Components {
     'items': IFormItem[];
     'labelPosition': 'left' | 'right' | 'top';
     'serialize': (detailed?: boolean) => Promise<any[]>;
-    'toJson': () => Promise<any>;
+    'toJson': (initialValue?: {}, root?: string) => Promise<any>;
   }
   interface AzGroup {
     'caption': string;

@@ -1,6 +1,6 @@
 import { Component, Prop, Element, h, Method } from '@stencil/core';
 import { HostElement } from '@stencil/core/dist/declarations';
-import { Inject, set, isNumber, capitalize, decamelize } from '../../utils/utils';
+import { Inject, set, isNumber, capitalize, decamelize, isPlainObject } from '../../utils/utils';
 import parseColor from 'parse-color';
 
 export interface IFormItem {
@@ -51,23 +51,25 @@ export class AzForm {
   }
 
   @Method()
-  async toJson() {
+  async toJson(initialValue = {}, root: string = '') {
     const form = this.el.querySelector('form');
-    const initialValue = form.dataset.hint === 'array' ? [] : {};
+    if (!Array.isArray(initialValue) && !isPlainObject(initialValue)) {
+      initialValue = form.dataset.hint === 'array' ? [] : {};
+      console.warn(`initialValue must be an array or an object!`);
+    }
     const fieldset = form.querySelector('fieldset');
     const items = Array.from(fieldset.children).filter(it => it.tagName === 'AZ-FORM-ITEM');
-    const ret = await Array.from(items).reduce(async (all: any, child: HTMLElement) => {
+    const ret = await Array.from(items).reduce((all: any, child: HTMLElement) => {
       const firstChild = child.children[0];
       if (child.children.length && ('value' in firstChild || firstChild.tagName === 'AZ-FORM')) {
         const name = child.getAttribute('name');
         if (!name) return all;
-        const realFormItem = firstChild;
-        if ((realFormItem as HTMLElement).tagName === 'AZ-FORM') {
-          // @ts-ignore
-          const val = await (realFormItem as AzForm).toJson();
-          set(all, name, val);
+        const realFormItem = firstChild as HTMLElement;
+        const key = root ? `${root}.${name}` : name;
+        if (realFormItem.tagName === 'AZ-FORM') {
+          (realFormItem as HTMLAzFormElement).toJson(initialValue, key);
         } else {
-          set(all, name, realFormItem['value']);
+          set(all, key, realFormItem['value']);
         }
       }
       return all;
@@ -99,13 +101,13 @@ export class AzForm {
     )
   }
 
-  private guessSchemaFromJson(data: Record<string, any>, root: string = 'root') {
+  private guessSchemaFromJson(data: Record<string, any>, root: string = '') {
     const items: any[] = [];
     for (let key in data) {
       let item: IFormItem | IFormItem[] | null = null;
       let val = data[key];
       let type = typeof val;
-      const name = `${root}.${key}`;
+      const name = root ? `${root}.${key}`: key;
       if (type === 'boolean') {
         item = schemas.boolean(key, val);
       } else if (type === 'number') {
@@ -126,7 +128,7 @@ export class AzForm {
         item = schemas.form(name);
         if (Array.isArray(val)) {
           item.props['data-hint'] = 'array';
-          item.children = val.map((v: any, index) => {
+          item.props.items = val.map((v: any, index) => {
             const form = schemas.form(String(index));
             form.props.items = this.guessSchemaFromJson(v);
             return form;
