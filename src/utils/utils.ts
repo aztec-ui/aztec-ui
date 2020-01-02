@@ -45,7 +45,7 @@ export function moveChildren(host: HostElement, filters?: Function[]) {
   }
 }
 
-function isPlainObject(obj) {
+export function isPlainObject(obj) {
 	return Object.prototype.toString.call(obj) === '[object Object]';
 }
 
