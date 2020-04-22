@@ -3,4 +3,6 @@
 
 [![NPM version](https://badge.fury.io/js/aztec-ui.png)](http://badge.fury.io/js/aztec-ui)
 
+[JSBin Demo](https://output.jsbin.com/zupewug)
+
 ![screenshot](screenshot.png)
