@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default |
-| --------- | --------- | ----------- | -------- | ------- |
-| `action`  | `action`  |             | `string` | `''`    |
-| `caption` | `caption` |             | `string` | `''`    |
-| `icon`    | `icon`    |             | `string` | `''`    |
+| Property  | Attribute | Description | Type                                                                   | Default   |
+| --------- | --------- | ----------- | ---------------------------------------------------------------------- | --------- |
+| `action`  | `action`  |             | `string`                                                               | `''`      |
+| `caption` | `caption` |             | `string`                                                               | `''`      |
+| `icon`    | `icon`    |             | `string`                                                               | `''`      |
+| `type`    | `type`    |             | `"danger" \| "info" \| "plain" \| "primary" \| "success" \| "warning"` | `'plain'` |
 
 
 ## Events

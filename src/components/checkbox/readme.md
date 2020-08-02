@@ -23,6 +23,16 @@
 
 ## Methods
 
+### `toJson(detailed?: boolean) => Promise<{ tag: string; caption: string; checked: boolean; } & { indeterminate: boolean; }>`
+
+
+
+#### Returns
+
+Type: `Promise<{ tag: string; caption: string; checked: boolean; } & { indeterminate: boolean; }>`
+
+
+
 ### `toggle() => Promise<void>`
 
 

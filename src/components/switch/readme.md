@@ -22,6 +22,19 @@
 | `changed` |             | `CustomEvent<any>` |
 
 
+## Methods
+
+### `toJson(detailed?: boolean) => Promise<{ tag: string; caption: string; value: boolean; } & { type: ComponentStyle; size: ComponentSize; }>`
+
+
+
+#### Returns
+
+Type: `Promise<{ tag: string; caption: string; value: boolean; } & { type: ComponentStyle; size: ComponentSize; }>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

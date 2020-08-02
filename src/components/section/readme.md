@@ -7,11 +7,36 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default |
-| ------------- | ------------- | ----------- | --------- | ------- |
-| `caption`     | `caption`     |             | `string`  | `''`    |
-| `collapsable` | `collapsable` |             | `boolean` | `true`  |
-| `collapsed`   | `collapsed`   |             | `boolean` | `false` |
+| Property        | Attribute        | Description | Type                | Default      |
+| --------------- | ---------------- | ----------- | ------------------- | ------------ |
+| `arrowPosition` | `arrow-position` |             | `"left" \| "right"` | `'left'`     |
+| `caption`       | `caption`        |             | `string`            | `''`         |
+| `collapsable`   | `collapsable`    |             | `boolean`           | `true`       |
+| `collapsed`     | `collapsed`      |             | `boolean`           | `false`      |
+| `icon`          | `icon`           |             | `string`            | `'arrow-up'` |
+
+
+## Methods
+
+### `collapse() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `expand() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Dependencies
