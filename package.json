@@ -1,6 +1,6 @@
 {
   "name": "aztec-ui",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An UI Framework for Electron/NW.js Desktop Apps",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
